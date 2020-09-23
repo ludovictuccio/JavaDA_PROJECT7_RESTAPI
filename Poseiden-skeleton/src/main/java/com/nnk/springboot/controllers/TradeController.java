@@ -1,23 +1,23 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.domain.Trade;
-import org.springframework.stereotype.Controller;
+import javax.validation.Valid;
+
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
+import com.nnk.springboot.domain.Trade;
 
-@Controller
+@RestController
 public class TradeController {
     // TODO: Inject Trade service
 
     @RequestMapping("/trade/list")
-    public String home(Model model)
-    {
+    public String home(Model model) {
         // TODO: find all Trade, add to model
         return "trade/list";
     }
@@ -28,7 +28,8 @@ public class TradeController {
     }
 
     @PostMapping("/trade/validate")
-    public String validate(@Valid Trade trade, BindingResult result, Model model) {
+    public String validate(@Valid Trade trade, BindingResult result,
+            Model model) {
         // TODO: check data valid and save to db, after saving return Trade list
         return "trade/add";
     }
@@ -40,9 +41,10 @@ public class TradeController {
     }
 
     @PostMapping("/trade/update/{id}")
-    public String updateTrade(@PathVariable("id") Integer id, @Valid Trade trade,
-                             BindingResult result, Model model) {
-        // TODO: check required fields, if valid call service to update Trade and return Trade list
+    public String updateTrade(@PathVariable("id") Integer id,
+            @Valid Trade trade, BindingResult result, Model model) {
+        // TODO: check required fields, if valid call service to update Trade
+        // and return Trade list
         return "redirect:/trade/list";
     }
 

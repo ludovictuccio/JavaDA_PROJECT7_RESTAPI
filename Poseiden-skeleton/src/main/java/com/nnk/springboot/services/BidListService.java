@@ -1,0 +1,62 @@
+package com.nnk.springboot.services;
+
+import java.util.List;
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.nnk.springboot.domain.BidList;
+import com.nnk.springboot.repositories.BidListRepository;
+
+/**
+ * BidListService class.
+ *
+ * @author Ludovic Tuccio
+ */
+@Service
+public class BidListService implements IBidListService {
+
+    private static final Logger LOGGER = LogManager.getLogger("BidListService");
+
+    @Autowired
+    private BidListRepository bidListRepository;
+
+    /**
+     * Validator used to validate javax constraints in model classes.
+     */
+    private Validator validator;
+
+    /**
+     *
+     */
+    public List<BidList> findAllBids() {
+        return bidListRepository.findAll();
+    }
+
+    /**
+     *
+     */
+    public BidList saveBidList(final BidList bid) {
+        // Check constraints violations
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        validator = factory.getValidator();
+        Set<ConstraintViolation<BidList>> constraintViolations = validator
+                .validate(bid);
+        if (constraintViolations.size() > 0) {
+            LOGGER.error(
+                    "ERROR: a constraint was violated for bid account: '{}'. Please check the informations entered.",
+                    bid.getAccount());
+            return null;
+        }
+        return bidListRepository.save(bid);
+    }
+
+}
