@@ -1,12 +1,8 @@
 package com.nnk.springboot.services;
 
 import java.util.List;
-import java.util.Set;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
 import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -35,27 +31,43 @@ public class BidListService implements IBidListService {
     private Validator validator;
 
     /**
+     * Method used to check if the bidList entity entered is valid
      *
+     * @param bid
+     * @return isValid boolean
      */
+//    public BidList checkValidBid(final BidList bid) {
+//        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+//        validator = factory.getValidator();
+//        Set<ConstraintViolation<BidList>> constraintViolations = validator
+//                .validate(bid);
+//        if (constraintViolations.size() > 0) {
+//            LOGGER.error(
+//                    "ERROR: a constraint was violated. Please check the informations entered.");
+//            return null;
+//        }
+//        return bid;
+//    }
+
     public List<BidList> findAllBids() {
         return bidListRepository.findAll();
     }
 
-    /**
-     *
-     */
+    public BidList saveBid(final String bidAccount, final String bidType,
+            final Double bidQuantity) {
+        BidList bid = new BidList();
+        bid.setAccount(bidAccount);
+        bid.setType(bidType);
+        bid.setBidQuantity(bidQuantity);
+
+        // checkValidBid(bid);
+
+        bidListRepository.save(bid);
+        return bid;
+    }
+
     public BidList saveBidList(final BidList bid) {
-        // Check constraints violations
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        validator = factory.getValidator();
-        Set<ConstraintViolation<BidList>> constraintViolations = validator
-                .validate(bid);
-        if (constraintViolations.size() > 0) {
-            LOGGER.error(
-                    "ERROR: a constraint was violated for bid account: '{}'. Please check the informations entered.",
-                    bid.getAccount());
-            return null;
-        }
+        // checkValidBid(bid);
         return bidListRepository.save(bid);
     }
 

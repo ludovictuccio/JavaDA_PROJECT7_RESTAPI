@@ -1,4 +1,4 @@
-package com.nnk.springboot;
+package com.nnk.springboot.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
@@ -19,7 +19,6 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.repositories.BidListRepository;
-import com.nnk.springboot.services.IBidListService;
 
 @SpringBootTest
 //@TestPropertySource(locations = "classpath:application.properties")
@@ -33,7 +32,9 @@ public class BidListServiceTest {
     @MockBean
     private BidListRepository bidListRepository;
 
-    private BidList bid, bidTwo, result;
+    private BidList bid;
+    private BidList bidTwo;
+    private BidList result;
 
     private List<BidList> allBidList;
 
@@ -78,7 +79,7 @@ public class BidListServiceTest {
     @DisplayName("Save bidList - OK - Account entry max size (30)")
     public void givenMaxAccountSizeEntry_whenSaveBid_thenReturnSaved() {
         // GIVEN
-        bid.setAccount("Type text with 30 size - Type ");
+        bid.setAccount("Type text with 30 size - Type0");
         when(bidListService.saveBidList(bid)).thenReturn(bid);
         // WHEN
         result = bidListService.saveBidList(bid);
@@ -108,7 +109,7 @@ public class BidListServiceTest {
         assertThat(result.getAccount()).isEqualTo("Account Test");
         assertThat(result.getType()).isNotNull();
         assertThat(result.getType())
-                .isEqualTo("Type text with 30 size - Type ");
+                .isEqualTo("Type text with 30 size - Type0");
         assertThat(result.getBidQuantity()).isEqualTo(10d);
         verify(bidListRepository, times(1)).save(bid);
     }
@@ -295,23 +296,43 @@ public class BidListServiceTest {
         verify(bidListRepository, times(0)).save(bid);
     }
 
-//    @Test
-//    @Tag("FIND")
-//    @DisplayName("Find bid - OK")
-//    public void aaaa() {
-//
-//        // GIVEN
-//        bid = bidListRepository.save(bid);
-//
-//        // WHEN
-//        List<BidList> resultList = bidListService.findAllBids();
-//
-//        // THEN
-//        assertThat(bid.getBidListId()).isNotNull();
-//        assertThat(bid.getBidQuantity()).isEqualTo(10d);
-//        assertThat(resultList.size()).isEqualTo(1);
-//
-//    }
+    @Test
+    @Tag("FIND")
+    @DisplayName("Find all - OK")
+    public void givenTwoBids_whenFindAll_thenReturnTwo() {
+        // GIVEN
+        when(bidListService.findAllBids()).thenReturn(allBidList);
+
+        // WHEN
+        List<BidList> resultList = bidListService.findAllBids();
+
+        // THEN
+        assertThat(resultList.size()).isNotNull();
+        assertThat(resultList.size()).isEqualTo(2);
+        assertThat(bidListRepository.findAll().size()).isEqualTo(2);
+        assertThat(bidListRepository.findAll().get(0).getBidQuantity())
+                .isEqualTo(10d);
+        assertThat(bidListRepository.findAll().get(1).getBidQuantity())
+                .isEqualTo(20d);
+
+    }
+
+    @Test
+    @Tag("FIND")
+    @DisplayName("Find all - Ok - Empty list / 0 size")
+    public void givenZeroBid_whenFindAll_thenReturnEmptyList() {
+        // GIVEN
+        allBidList.clear();
+        when(bidListService.findAllBids()).thenReturn(allBidList);
+
+        // WHEN
+        List<BidList> resultList = bidListService.findAllBids();
+
+        // THEN
+        assertThat(resultList.size()).isNotNull();
+        assertThat(resultList.size()).isEqualTo(0);
+        assertThat(bidListRepository.findAll().size()).isEqualTo(0);
+    }
 
 //    @Test
 //    @Tag("CREATE")

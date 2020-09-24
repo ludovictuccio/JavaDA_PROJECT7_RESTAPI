@@ -35,7 +35,7 @@ public class BidList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // @Column(name = "bid_list_id")
+    @Column(name = "bid_list_id")
     private Integer bidListId;
 
     @NotBlank
@@ -53,20 +53,20 @@ public class BidList {
     @Digits(fraction = 2, integer = BID_QUANTITY_INT_MAX_SIZE, message = "Must be a number < 1 000 000 000 000  with 2 fractional digits max")
     private Double bidQuantity;
 
-    // @Column(name = "ask_quantity")
+    @Column(name = "ask_quantity")
     private Double askQuantity;
 
-    // @Column(name = "bid")
+    @Column(name = "bid")
     private Double bid;
 
-    // @Column(name = "ask")
+    @Column(name = "ask")
     private Double ask;
 
     @Column(length = 125)
     @Length(max = 125)
     private String benchmark;
 
-    // @Column(name = "bid_list_date")
+    @Column(name = "bid_list_date")
     private LocalDateTime bidListDate;
 
     @Column(length = 125)
@@ -93,14 +93,14 @@ public class BidList {
     @Length(max = 125)
     private String creationName;
 
-    // @Column(name = "creation_date")
+    @Column(name = "creation_date")
     private LocalDateTime creationDate;
 
     @Column(length = 125)
     @Length(max = 125)
     private String revisionName;
 
-    // @Column(name = "revision_date")
+    @Column(name = "revision_date")
     private LocalDateTime revisionDate;
 
     @Column(length = 125)

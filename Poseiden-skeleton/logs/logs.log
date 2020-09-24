@@ -515,3 +515,143 @@
 [DEBUG] 23 sept. 2020 16:50:11 [main] BidListServiceTest - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
 [INFO ] 23 sept. 2020 16:50:11 [main] BidListServiceTest - The following profiles are active: test
 [INFO ] 23 sept. 2020 16:50:18 [main] BidListServiceTest - Started BidListServiceTest in 7.37 seconds (JVM running for 9.241)
+[INFO ] 23 sept. 2020 17:38:11 [main] BidListServiceTest - Starting BidListServiceTest on PC-LUDO-2020 with PID 10352 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 23 sept. 2020 17:38:11 [main] BidListServiceTest - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 23 sept. 2020 17:38:11 [main] BidListServiceTest - The following profiles are active: test
+[INFO ] 23 sept. 2020 17:38:18 [main] BidListServiceTest - Started BidListServiceTest in 7.231 seconds (JVM running for 8.923)
+[INFO ] 23 sept. 2020 17:38:56 [main] BidListServiceTest - Starting BidListServiceTest on PC-LUDO-2020 with PID 18648 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 23 sept. 2020 17:38:56 [main] BidListServiceTest - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 23 sept. 2020 17:38:56 [main] BidListServiceTest - The following profiles are active: test
+[INFO ] 23 sept. 2020 17:39:03 [main] BidListServiceTest - Started BidListServiceTest in 7.48 seconds (JVM running for 9.321)
+[INFO ] 23 sept. 2020 17:41:16 [main] Application - Starting Application on PC-LUDO-2020 with PID 22736 (C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton\target\classes started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 23 sept. 2020 17:41:16 [main] Application - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 23 sept. 2020 17:41:16 [main] Application - The following profiles are active: dev
+[INFO ] 23 sept. 2020 17:41:23 [main] Application - Started Application in 7.491 seconds (JVM running for 8.477)
+[INFO ] 23 sept. 2020 17:58:23 [main] BidListServiceTest - Starting BidListServiceTest on PC-LUDO-2020 with PID 7020 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 23 sept. 2020 17:58:23 [main] BidListServiceTest - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 23 sept. 2020 17:58:23 [main] BidListServiceTest - The following profiles are active: test
+[INFO ] 23 sept. 2020 17:58:30 [main] BidListServiceTest - Started BidListServiceTest in 7.176 seconds (JVM running for 9.042)
+[INFO ] 23 sept. 2020 17:58:51 [main] BidListServiceTest - Starting BidListServiceTest on PC-LUDO-2020 with PID 27368 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 23 sept. 2020 17:58:51 [main] BidListServiceTest - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 23 sept. 2020 17:58:51 [main] BidListServiceTest - The following profiles are active: test
+[INFO ] 23 sept. 2020 17:58:58 [main] BidListServiceTest - Started BidListServiceTest in 6.968 seconds (JVM running for 8.634)
+[INFO ] 23 sept. 2020 18:02:15 [main] BidListServiceTest - Starting BidListServiceTest on PC-LUDO-2020 with PID 28628 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 23 sept. 2020 18:02:15 [main] BidListServiceTest - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 23 sept. 2020 18:02:15 [main] BidListServiceTest - The following profiles are active: test
+[INFO ] 23 sept. 2020 18:02:21 [main] BidListServiceTest - Started BidListServiceTest in 7.007 seconds (JVM running for 8.746)
+[INFO ] 23 sept. 2020 18:03:39 [main] BidListServiceTest - Starting BidListServiceTest on PC-LUDO-2020 with PID 29188 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 23 sept. 2020 18:03:39 [main] BidListServiceTest - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 23 sept. 2020 18:03:39 [main] BidListServiceTest - The following profiles are active: test
+[INFO ] 23 sept. 2020 18:03:46 [main] BidListServiceTest - Started BidListServiceTest in 6.902 seconds (JVM running for 8.596)
+[INFO ] 23 sept. 2020 18:04:37 [main] BidListServiceTest - Starting BidListServiceTest on PC-LUDO-2020 with PID 1484 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 23 sept. 2020 18:04:37 [main] BidListServiceTest - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 23 sept. 2020 18:04:37 [main] BidListServiceTest - The following profiles are active: test
+[INFO ] 23 sept. 2020 18:04:44 [main] BidListServiceTest - Started BidListServiceTest in 7.408 seconds (JVM running for 9.194)
+[INFO ] 24 sept. 2020 11:17:18 [main] BidListControllerIT - Starting BidListControllerIT on PC-LUDO-2020 with PID 33300 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 24 sept. 2020 11:17:18 [main] BidListControllerIT - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 24 sept. 2020 11:17:18 [main] BidListControllerIT - The following profiles are active: test
+[INFO ] 24 sept. 2020 11:17:25 [main] BidListControllerIT - Started BidListControllerIT in 7.522 seconds (JVM running for 9.393)
+[INFO ] 24 sept. 2020 11:19:21 [main] BidListControllerIT - Starting BidListControllerIT on PC-LUDO-2020 with PID 26600 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 24 sept. 2020 11:19:21 [main] BidListControllerIT - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 24 sept. 2020 11:19:21 [main] BidListControllerIT - The following profiles are active: test
+[INFO ] 24 sept. 2020 11:19:27 [main] BidListControllerIT - Started BidListControllerIT in 7.014 seconds (JVM running for 8.731)
+[INFO ] 24 sept. 2020 11:20:05 [main] BidListControllerIT - Starting BidListControllerIT on PC-LUDO-2020 with PID 3340 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 24 sept. 2020 11:20:05 [main] BidListControllerIT - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 24 sept. 2020 11:20:05 [main] BidListControllerIT - The following profiles are active: test
+[INFO ] 24 sept. 2020 11:20:12 [main] BidListControllerIT - Started BidListControllerIT in 7.809 seconds (JVM running for 9.584)
+[INFO ] 24 sept. 2020 11:21:23 [main] BidListControllerIT - Starting BidListControllerIT on PC-LUDO-2020 with PID 7420 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 24 sept. 2020 11:21:23 [main] BidListControllerIT - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 24 sept. 2020 11:21:23 [main] BidListControllerIT - The following profiles are active: test
+[INFO ] 24 sept. 2020 11:21:30 [main] BidListControllerIT - Started BidListControllerIT in 7.475 seconds (JVM running for 9.252)
+[INFO ] 24 sept. 2020 11:24:50 [main] BidListControllerIT - Starting BidListControllerIT on PC-LUDO-2020 with PID 36068 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 24 sept. 2020 11:24:50 [main] BidListControllerIT - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 24 sept. 2020 11:24:50 [main] BidListControllerIT - The following profiles are active: test
+[INFO ] 24 sept. 2020 11:24:58 [main] BidListControllerIT - Started BidListControllerIT in 7.843 seconds (JVM running for 10.115)
+[INFO ] 24 sept. 2020 11:25:49 [main] BidListControllerIT - Starting BidListControllerIT on PC-LUDO-2020 with PID 31420 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 24 sept. 2020 11:25:49 [main] BidListControllerIT - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 24 sept. 2020 11:25:49 [main] BidListControllerIT - The following profiles are active: test
+[INFO ] 24 sept. 2020 11:25:55 [main] BidListControllerIT - Started BidListControllerIT in 6.727 seconds (JVM running for 8.442)
+[INFO ] 24 sept. 2020 11:26:18 [main] BidListControllerIT - Starting BidListControllerIT on PC-LUDO-2020 with PID 8304 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 24 sept. 2020 11:26:18 [main] BidListControllerIT - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 24 sept. 2020 11:26:18 [main] BidListControllerIT - The following profiles are active: test
+[INFO ] 24 sept. 2020 11:26:26 [main] BidListControllerIT - Started BidListControllerIT in 7.729 seconds (JVM running for 9.9)
+[INFO ] 24 sept. 2020 11:28:27 [main] BidListControllerIT - Starting BidListControllerIT on PC-LUDO-2020 with PID 25384 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 24 sept. 2020 11:28:27 [main] BidListControllerIT - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 24 sept. 2020 11:28:27 [main] BidListControllerIT - The following profiles are active: test
+[INFO ] 24 sept. 2020 11:28:35 [main] BidListControllerIT - Started BidListControllerIT in 7.732 seconds (JVM running for 9.944)
+[INFO ] 24 sept. 2020 11:28:48 [main] BidListControllerIT - Starting BidListControllerIT on PC-LUDO-2020 with PID 30160 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 24 sept. 2020 11:28:48 [main] BidListControllerIT - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 24 sept. 2020 11:28:48 [main] BidListControllerIT - The following profiles are active: test
+[INFO ] 24 sept. 2020 11:28:55 [main] BidListControllerIT - Started BidListControllerIT in 7.553 seconds (JVM running for 9.741)
+[INFO ] 24 sept. 2020 11:30:31 [main] BidListControllerIT - Starting BidListControllerIT on PC-LUDO-2020 with PID 13588 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 24 sept. 2020 11:30:31 [main] BidListControllerIT - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 24 sept. 2020 11:30:31 [main] BidListControllerIT - The following profiles are active: test
+[INFO ] 24 sept. 2020 11:30:38 [main] BidListControllerIT - Started BidListControllerIT in 7.482 seconds (JVM running for 9.67)
+[INFO ] 24 sept. 2020 11:31:27 [main] BidListControllerIT - Starting BidListControllerIT on PC-LUDO-2020 with PID 31560 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 24 sept. 2020 11:31:27 [main] BidListControllerIT - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 24 sept. 2020 11:31:27 [main] BidListControllerIT - The following profiles are active: test
+[INFO ] 24 sept. 2020 11:31:35 [main] BidListControllerIT - Started BidListControllerIT in 8.091 seconds (JVM running for 9.798)
+[INFO ] 24 sept. 2020 11:33:12 [main] BidListControllerIT - Starting BidListControllerIT on PC-LUDO-2020 with PID 4448 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 24 sept. 2020 11:33:12 [main] BidListControllerIT - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 24 sept. 2020 11:33:12 [main] BidListControllerIT - The following profiles are active: test
+[INFO ] 24 sept. 2020 11:33:20 [main] BidListControllerIT - Started BidListControllerIT in 7.896 seconds (JVM running for 9.554)
+[INFO ] 24 sept. 2020 11:39:54 [main] BidListControllerIT - Starting BidListControllerIT on PC-LUDO-2020 with PID 33280 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 24 sept. 2020 11:39:54 [main] BidListControllerIT - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 24 sept. 2020 11:39:54 [main] BidListControllerIT - The following profiles are active: test
+[INFO ] 24 sept. 2020 11:40:04 [main] BidListControllerIT - Started BidListControllerIT in 9.968 seconds (JVM running for 11.842)
+[INFO ] 24 sept. 2020 11:44:15 [main] BidListControllerIT - Starting BidListControllerIT on PC-LUDO-2020 with PID 23440 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 24 sept. 2020 11:44:15 [main] BidListControllerIT - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 24 sept. 2020 11:44:15 [main] BidListControllerIT - The following profiles are active: test
+[INFO ] 24 sept. 2020 11:44:23 [main] BidListControllerIT - Started BidListControllerIT in 8.274 seconds (JVM running for 10.622)
+[INFO ] 24 sept. 2020 11:45:03 [main] BidListControllerIT - Starting BidListControllerIT on PC-LUDO-2020 with PID 28164 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 24 sept. 2020 11:45:03 [main] BidListControllerIT - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 24 sept. 2020 11:45:03 [main] BidListControllerIT - The following profiles are active: test
+[INFO ] 24 sept. 2020 11:45:11 [main] BidListControllerIT - Started BidListControllerIT in 8.246 seconds (JVM running for 10.568)
+[INFO ] 24 sept. 2020 11:48:19 [main] BidListControllerIT - Starting BidListControllerIT on PC-LUDO-2020 with PID 4988 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 24 sept. 2020 11:48:19 [main] BidListControllerIT - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 24 sept. 2020 11:48:19 [main] BidListControllerIT - The following profiles are active: test
+[INFO ] 24 sept. 2020 11:48:28 [main] BidListControllerIT - Started BidListControllerIT in 9.169 seconds (JVM running for 11.778)
+[INFO ] 24 sept. 2020 11:49:40 [main] BidListControllerIT - Starting BidListControllerIT on PC-LUDO-2020 with PID 7328 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 24 sept. 2020 11:49:40 [main] BidListControllerIT - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 24 sept. 2020 11:49:40 [main] BidListControllerIT - The following profiles are active: test
+[INFO ] 24 sept. 2020 11:49:47 [main] BidListControllerIT - Started BidListControllerIT in 7.633 seconds (JVM running for 9.933)
+[INFO ] 24 sept. 2020 12:21:43 [main] BidListControllerIT - Starting BidListControllerIT on PC-LUDO-2020 with PID 26592 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 24 sept. 2020 12:21:43 [main] BidListControllerIT - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 24 sept. 2020 12:21:43 [main] BidListControllerIT - The following profiles are active: test
+[INFO ] 24 sept. 2020 12:21:50 [main] BidListControllerIT - Started BidListControllerIT in 7.434 seconds (JVM running for 9.739)
+[INFO ] 24 sept. 2020 12:22:55 [main] BidListControllerIT - Starting BidListControllerIT on PC-LUDO-2020 with PID 23540 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 24 sept. 2020 12:22:55 [main] BidListControllerIT - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 24 sept. 2020 12:22:55 [main] BidListControllerIT - The following profiles are active: test
+[INFO ] 24 sept. 2020 12:23:02 [main] BidListControllerIT - Started BidListControllerIT in 7.473 seconds (JVM running for 9.658)
+[INFO ] 24 sept. 2020 12:56:58 [main] BidListControllerIT - Starting BidListControllerIT on PC-LUDO-2020 with PID 18144 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 24 sept. 2020 12:56:58 [main] BidListControllerIT - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 24 sept. 2020 12:56:58 [main] BidListControllerIT - The following profiles are active: test
+[INFO ] 24 sept. 2020 12:57:05 [main] BidListControllerIT - Started BidListControllerIT in 7.839 seconds (JVM running for 10.094)
+[INFO ] 24 sept. 2020 12:58:07 [main] BidListControllerIT - Starting BidListControllerIT on PC-LUDO-2020 with PID 16716 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 24 sept. 2020 12:58:07 [main] BidListControllerIT - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 24 sept. 2020 12:58:07 [main] BidListControllerIT - The following profiles are active: test
+[INFO ] 24 sept. 2020 12:58:14 [main] BidListControllerIT - Started BidListControllerIT in 7.408 seconds (JVM running for 9.581)
+[INFO ] 24 sept. 2020 12:59:00 [main] BidListControllerIT - Starting BidListControllerIT on PC-LUDO-2020 with PID 13172 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 24 sept. 2020 12:59:00 [main] BidListControllerIT - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 24 sept. 2020 12:59:00 [main] BidListControllerIT - The following profiles are active: test
+[INFO ] 24 sept. 2020 12:59:07 [main] BidListControllerIT - Started BidListControllerIT in 7.34 seconds (JVM running for 9.547)
+[INFO ] 24 sept. 2020 13:00:15 [main] BidListControllerIT - Starting BidListControllerIT on PC-LUDO-2020 with PID 12584 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 24 sept. 2020 13:00:15 [main] BidListControllerIT - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 24 sept. 2020 13:00:15 [main] BidListControllerIT - The following profiles are active: test
+[INFO ] 24 sept. 2020 13:00:23 [main] BidListControllerIT - Started BidListControllerIT in 8.093 seconds (JVM running for 10.465)
+[INFO ] 24 sept. 2020 13:16:35 [main] BidListServiceTest - Starting BidListServiceTest on PC-LUDO-2020 with PID 29812 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 24 sept. 2020 13:16:35 [main] BidListServiceTest - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 24 sept. 2020 13:16:35 [main] BidListServiceTest - The following profiles are active: test
+[INFO ] 24 sept. 2020 13:16:44 [main] BidListServiceTest - Started BidListServiceTest in 8.956 seconds (JVM running for 11.03)
+[INFO ] 24 sept. 2020 13:19:18 [main] BidListControllerIT - Starting BidListControllerIT on PC-LUDO-2020 with PID 27604 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 24 sept. 2020 13:19:18 [main] BidListControllerIT - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 24 sept. 2020 13:19:18 [main] BidListControllerIT - The following profiles are active: test
+[INFO ] 24 sept. 2020 13:19:27 [main] BidListControllerIT - Started BidListControllerIT in 9.9 seconds (JVM running for 12.555)
+[INFO ] 24 sept. 2020 15:54:15 [main] BidListControllerApiRestIT - Starting BidListControllerApiRestIT on PC-LUDO-2020 with PID 20280 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 24 sept. 2020 15:54:15 [main] BidListControllerApiRestIT - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 24 sept. 2020 15:54:15 [main] BidListControllerApiRestIT - The following profiles are active: test
+[INFO ] 24 sept. 2020 15:54:22 [main] BidListControllerApiRestIT - Started BidListControllerApiRestIT in 7.026 seconds (JVM running for 8.782)
+[INFO ] 24 sept. 2020 15:54:36 [main] BidListControllerApiRestIT - Starting BidListControllerApiRestIT on PC-LUDO-2020 with PID 18276 (started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 24 sept. 2020 15:54:36 [main] BidListControllerApiRestIT - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 24 sept. 2020 15:54:36 [main] BidListControllerApiRestIT - The following profiles are active: test
+[INFO ] 24 sept. 2020 15:54:43 [main] BidListControllerApiRestIT - Started BidListControllerApiRestIT in 7.455 seconds (JVM running for 9.204)

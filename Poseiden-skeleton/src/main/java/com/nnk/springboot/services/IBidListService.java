@@ -17,5 +17,7 @@ public interface IBidListService {
 
     List<BidList> findAllBids();
 
+    BidList saveBid(String bidAccount, String bidType, Double bidQuantity);
+
     BidList saveBidList(BidList bid);
 }
