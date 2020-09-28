@@ -1,5 +1,7 @@
 package com.nnk.springboot.controllers.api;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.apache.logging.log4j.LogManager;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,7 +21,7 @@ import com.nnk.springboot.services.IBidListService;
 
 @RestController
 @Validated
-@RequestMapping("/bidList")
+@RequestMapping("/api/bidList")
 public class BidListControllerApiRest {
 
     private static final Logger LOGGER = LogManager
@@ -27,7 +30,7 @@ public class BidListControllerApiRest {
     @Autowired
     private IBidListService bidListService;
 
-    @PostMapping
+    @PostMapping("/add")
     public ResponseEntity<BidList> addBidList(
             @Valid @RequestParam final String bidAccount,
             @Valid @RequestParam final String bidType,
@@ -40,6 +43,11 @@ public class BidListControllerApiRest {
             return new ResponseEntity<BidList>(HttpStatus.CREATED);
         }
         return new ResponseEntity<BidList>(HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/get")
+    public List<BidList> getBidList() {
+        return bidListService.findAllBids();
     }
 
 }
