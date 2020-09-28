@@ -1,8 +1,12 @@
 package com.nnk.springboot.services;
 
 import java.util.List;
+import java.util.Set;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
 import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,33 +30,45 @@ public class BidListService implements IBidListService {
     private BidListRepository bidListRepository;
 
     /**
-     * Validator used to validate javax constraints in model classes.
-     */
-    private Validator validator;
-
-    /**
-     * Method used to check if the bidList entity entered is valid
+     * Method used to check if the bidList entity entered is valid (to validate
+     * javax constraints in model classes)
      *
      * @param bid
      * @return isValid boolean
      */
-//    public BidList checkValidBid(final BidList bid) {
-//        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-//        validator = factory.getValidator();
-//        Set<ConstraintViolation<BidList>> constraintViolations = validator
-//                .validate(bid);
-//        if (constraintViolations.size() > 0) {
-//            LOGGER.error(
-//                    "ERROR: a constraint was violated. Please check the informations entered.");
-//            return null;
-//        }
-//        return bid;
-//    }
+    public BidList checkValidBid(final BidList bid) {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<BidList>> constraintViolations = validator
+                .validate(bid);
+        if (constraintViolations.size() > 0) {
+            LOGGER.error(
+                    "ERROR: a constraint was violated. Please check the informations entered.");
+            for (ConstraintViolation<BidList> contraintes : constraintViolations) {
+                LOGGER.error(contraintes.getRootBeanClass().getSimpleName()
+                        + "." + contraintes.getPropertyPath() + " "
+                        + contraintes.getMessage());
+            }
+            return null;
+        }
+        return bid;
+    }
 
+    /**
+     * Method service used to find all bid lists.
+     */
     public List<BidList> findAllBids() {
         return bidListRepository.findAll();
     }
 
+    /**
+     * Method service used to save a valid bidList.
+     * 
+     * @param bidAccount
+     * @param bidType
+     * @param bidQuantity
+     * @return bid or null
+     */
     public BidList saveBid(final String bidAccount, final String bidType,
             final Double bidQuantity) {
         BidList bid = new BidList();
@@ -60,15 +76,11 @@ public class BidListService implements IBidListService {
         bid.setType(bidType);
         bid.setBidQuantity(bidQuantity);
 
-        // checkValidBid(bid);
-
+        if (checkValidBid(bid) == null) {
+            return null;
+        }
         bidListRepository.save(bid);
         return bid;
-    }
-
-    public BidList saveBidList(final BidList bid) {
-        // checkValidBid(bid);
-        return bidListRepository.save(bid);
     }
 
 }

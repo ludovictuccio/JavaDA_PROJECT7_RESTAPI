@@ -12,14 +12,16 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.Length;
-
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.FieldDefaults;
 
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -40,12 +42,12 @@ public class BidList {
 
     @NotBlank
     @Column(length = 30)
-    @Length(max = 30)
+    @Size(min = 2, max = 30)
     private String account;
 
     @NotBlank
     @Column(length = 30)
-    @Length(max = 30)
+    @Size(min = 2, max = 30)
     private String type;
 
     @NotNull
@@ -63,60 +65,60 @@ public class BidList {
     private Double ask;
 
     @Column(length = 125)
-    @Length(max = 125)
+    @Size(max = 125)
     private String benchmark;
 
     @Column(name = "bid_list_date")
     private LocalDateTime bidListDate;
 
     @Column(length = 125)
-    @Length(max = 125)
+    @Size(max = 125)
     private String commentary;
 
     @Column(length = 125)
-    @Length(max = 125)
+    @Size(max = 125)
     private String security;
 
     @Column(length = 10)
-    @Length(max = 10)
+    @Size(max = 10)
     private String status;
 
     @Column(length = 125)
-    @Length(max = 125)
+    @Size(max = 125)
     private String trader;
 
     @Column(length = 125)
-    @Length(max = 125)
+    @Size(max = 125)
     private String book;
 
     @Column(length = 125)
-    @Length(max = 125)
+    @Size(max = 125)
     private String creationName;
 
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
 
     @Column(length = 125)
-    @Length(max = 125)
+    @Size(max = 125)
     private String revisionName;
 
     @Column(name = "revision_date")
     private LocalDateTime revisionDate;
 
     @Column(length = 125)
-    @Length(max = 125)
+    @Size(max = 125)
     private String dealName;
 
     @Column(length = 125)
-    @Length(max = 125)
+    @Size(max = 125)
     private String dealType;
 
     @Column(length = 125)
-    @Length(max = 125)
+    @Size(max = 125)
     private String sourceListId;
 
     @Column(length = 125)
-    @Length(max = 125)
+    @Size(max = 125)
     private String side;
 
 }

@@ -50,11 +50,14 @@ public class BidListControllerApiRestIT {
     @Tag("CREATE")
     @DisplayName("Create - OK")
     public void aaa() throws Exception {
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/bidList")
-                .contentType(APPLICATION_JSON).param("bidAccount", "myAccount")
-                .param("bidType", "type").param("bidQuantity", "15"))
-                .andExpect(status().isOk()).andDo(MockMvcResultHandlers.print())
-                .andExpect(status().isOk());
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.post("/bidList")
+                        .contentType(APPLICATION_JSON)
+                        .param("bidAccount", "myAccount")
+                        .param("bidType", "type").param("bidQuantity", "15"))
+                .andExpect(status().isCreated())
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isCreated()).andReturn();
     }
 
     @Test
@@ -74,6 +77,16 @@ public class BidListControllerApiRestIT {
         this.mockMvc.perform(MockMvcRequestBuilders.post("/bidList")
                 .contentType(APPLICATION_JSON).param("bidAccount", "myAccount")
                 .param("bidType", "type").param("bidQuantity", "-50"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Tag("CREATE")
+    @DisplayName("Create - ERROR - Bad quantity - character")
+    public void aaaaza() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/bidList")
+                .contentType(APPLICATION_JSON).param("bidAccount", "myAccount")
+                .param("bidType", "type").param("bidQuantity", "*"))
                 .andExpect(status().isBadRequest());
     }
 
