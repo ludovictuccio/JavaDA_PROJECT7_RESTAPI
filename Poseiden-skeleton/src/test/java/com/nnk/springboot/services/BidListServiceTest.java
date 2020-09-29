@@ -326,7 +326,7 @@ public class BidListServiceTest {
 
     @Test
     @Tag("UPDATE")
-    @DisplayName("Update - OK - Exising id")
+    @DisplayName("Update - OK - Existing id")
     public void givenTwoBids_whenUpdateValidInfos_thenReturnSaved() {
         // GIVEN
         BidList bidInfosToUpdate = new BidList();
@@ -408,6 +408,78 @@ public class BidListServiceTest {
         assertThat(result).isNull();
         verify(bidListRepository, times(0)).delete(bid);
         verify(bidListRepository, times(0)).save(result);
+    }
+
+    @Test
+    @Tag("DELETE")
+    @DisplayName("Delete - OK")
+    public void givenBidInDb_whenDeleteWithCorrectValues_thenReturnTrue() {
+        // GIVEN
+        BidList bidToDelete = new BidList();
+        bidToDelete.setBidListId(10);
+        bidToDelete.setAccount("Account Test");
+        bidToDelete.setType("Type Test");
+        bidToDelete.setBidQuantity(15.90d);
+
+        when(bidListRepository.save(bidToDelete)).thenReturn(bidToDelete);
+        when(bidListRepository.findById(10))
+                .thenReturn(Optional.of(bidToDelete));
+
+        // WHEN
+        // 10 = bidToDelete id
+        boolean isDeleted = bidListService.deleteBid(10, "Account Test");
+
+        // THEN
+        assertThat(isDeleted).isTrue();
+        verify(bidListRepository, times(1)).delete(bidToDelete);
+    }
+
+    @Test
+    @Tag("DELETE")
+    @DisplayName("Delete - ERROR - Bad id")
+    public void givenBidInDb_whenDeleteWithBadId_thenReturnFalse() {
+        // GIVEN
+        BidList bidToDelete = new BidList();
+        bidToDelete.setBidListId(10);
+        bidToDelete.setAccount("Account Test");
+        bidToDelete.setType("Type Test");
+        bidToDelete.setBidQuantity(15.90d);
+
+        when(bidListRepository.save(bidToDelete)).thenReturn(bidToDelete);
+        when(bidListRepository.findById(10))
+                .thenReturn(Optional.of(bidToDelete));
+
+        // WHEN
+        // 10 = bidToDelete id
+        boolean isDeleted = bidListService.deleteBid(1056, "Account Test");
+
+        // THEN
+        assertThat(isDeleted).isFalse();
+        verify(bidListRepository, times(0)).delete(bidToDelete);
+    }
+
+    @Test
+    @Tag("DELETE")
+    @DisplayName("Delete - ERROR - Bad account")
+    public void givenBidInDb_whenDeleteWithBadAccount_thenReturnFalse() {
+        // GIVEN
+        BidList bidToDelete = new BidList();
+        bidToDelete.setBidListId(10);
+        bidToDelete.setAccount("Account Test");
+        bidToDelete.setType("Type Test");
+        bidToDelete.setBidQuantity(15.90d);
+
+        when(bidListRepository.save(bidToDelete)).thenReturn(bidToDelete);
+        when(bidListRepository.findById(10))
+                .thenReturn(Optional.of(bidToDelete));
+
+        // WHEN
+        // 10 = bidToDelete id
+        boolean isDeleted = bidListService.deleteBid(10, "Account BAD ENTRY");
+
+        // THEN
+        assertThat(isDeleted).isFalse();
+        verify(bidListRepository, times(0)).delete(bidToDelete);
     }
 
 }

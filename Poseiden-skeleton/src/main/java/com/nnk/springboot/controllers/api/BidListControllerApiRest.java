@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -80,6 +81,26 @@ public class BidListControllerApiRest {
         BidList result = bidListService.updateBid(bid, bidAccount, bidType);
 
         if (result != null) {
+            return new ResponseEntity<BidList>(HttpStatus.OK);
+        }
+        return new ResponseEntity<BidList>(HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Method controller used to delete a bidList.
+     *
+     * @param bidId
+     * @param bidAccount
+     * @return ResponseEntity (created or bad request)
+     */
+    @DeleteMapping("/delete")
+    public ResponseEntity<BidList> deleteBidList(
+            @Valid @RequestParam final Integer bidId,
+            @Valid @RequestParam final String bidAccount) {
+
+        boolean result = bidListService.deleteBid(bidId, bidAccount);
+
+        if (result) {
             return new ResponseEntity<BidList>(HttpStatus.OK);
         }
         return new ResponseEntity<BidList>(HttpStatus.BAD_REQUEST);

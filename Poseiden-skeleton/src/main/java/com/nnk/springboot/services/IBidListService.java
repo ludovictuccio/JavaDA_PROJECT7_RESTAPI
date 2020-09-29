@@ -21,4 +21,6 @@ public interface IBidListService {
 
     BidList updateBid(BidList bid, String bidAccount, String bidType);
 
+    boolean deleteBid(Integer bidId, String bidAccount);
+
 }

@@ -112,4 +112,29 @@ public class BidListService implements IBidListService {
         return bidListRepository.save(bid);
     }
 
+    /**
+     * Method service used to delete a bidList by his id.
+     *
+     * @param bidId
+     * @param bidAccount
+     * @return isDeleted boolean
+     */
+    public boolean deleteBid(final Integer bidId, final String bidAccount) {
+        boolean isDeleted = false;
+
+        BidList existingBid = bidListRepository.findById(bidId).orElse(null);
+
+        if (existingBid == null) {
+            LOGGER.error("Unknow id bidList");
+            return isDeleted;
+        } else if (!bidAccount.equals(existingBid.getAccount())) {
+            LOGGER.error(
+                    "Invalid account entry. Please check the informations: the account must be the same as the bid to delete.");
+            return isDeleted;
+        } else
+            bidListRepository.delete(existingBid);
+        isDeleted = true;
+        return isDeleted;
+    }
+
 }

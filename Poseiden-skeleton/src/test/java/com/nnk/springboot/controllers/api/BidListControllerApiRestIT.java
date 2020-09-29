@@ -21,11 +21,9 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.repositories.BidListRepository;
-import com.nnk.springboot.services.IBidListService;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-//@ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class BidListControllerApiRestIT {
 
@@ -39,15 +37,11 @@ public class BidListControllerApiRestIT {
     private ObjectMapper objectMapper;
 
     @Autowired
-    private IBidListService bidListService;
-
-    @Autowired
     private BidListRepository bidListRepository;
 
     @Before
     public void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
-
     }
 
     @BeforeEach
@@ -157,7 +151,8 @@ public class BidListControllerApiRestIT {
     @Test
     @Tag("PUT")
     @DisplayName("Put - OK")
-    public void aaaaa() throws Exception {
+    public void givenBidToUpdate_whenCorrectValues_thenReturnOk()
+            throws Exception {
         BidList bid = new BidList();
         bid.setAccount("Account");
         bid.setType("Type");
@@ -244,6 +239,44 @@ public class BidListControllerApiRestIT {
         this.mockMvc.perform(MockMvcRequestBuilders.put("/api/bidList/update")
                 .contentType(APPLICATION_JSON).param("bidAccount", "Account")
                 .param("bidType", "Type").content(jsonContent))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Tag("DELETE")
+    @DisplayName("Delete - ERROR - Empty Account")
+    public void givenBidToDelete_whenBadAccount_thenReturnBadRequest()
+            throws Exception {
+        BidList bid = new BidList();
+        bid.setAccount("Account");
+        bid.setType("Type");
+        bid.setBidQuantity(15d);
+        bidListRepository.save(bid);
+        bidListRepository.findAll().get(0).setBidListId(1);
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.delete("/api/bidList/delete")
+                        .contentType(APPLICATION_JSON).param("bidId", "1")
+                        .param("bidAccount", ""))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Tag("DELETE")
+    @DisplayName("Delete - ERROR - Bad id")
+    public void givenBidToDelete_whenBadId_thenReturnBadRequest()
+            throws Exception {
+        BidList bid = new BidList();
+        bid.setAccount("Account");
+        bid.setType("Type");
+        bid.setBidQuantity(15d);
+        bidListRepository.save(bid);
+        bidListRepository.findAll().get(0).setBidListId(1);
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.delete("/api/bidList/delete")
+                        .contentType(APPLICATION_JSON).param("bidId", "-15")
+                        .param("bidAccount", "Account"))
                 .andExpect(status().isBadRequest());
     }
 
