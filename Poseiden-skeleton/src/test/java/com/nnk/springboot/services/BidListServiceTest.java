@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -323,332 +324,90 @@ public class BidListServiceTest {
         assertThat(bidListRepository.findAll().size()).isEqualTo(0);
     }
 
-//    @Test
-//    @Tag("CREATE")
-//    @DisplayName("Create new bid - OK")
-//    public void bidListTest() {
-//        BidList bid = new BidList("Account Test", "Type Test", 10d);
-//
-//        // Save
-//        bid = bidListRepository.save(bid);
-//
-//        assertThat(bid.getBidListId()).isNotNull();
-//        assertThat(bid.getBidQuantity()).isEqualTo(10d);
-//        // Assert.assertEquals(bid.getBidQuantity(), 10d, 10d);
-//
-//        // Update
-//        bid.setBidQuantity(20d);
-//        bid = bidListRepository.save(bid);
-//        assertThat(bid.getBidQuantity()).isEqualTo(20d);
-//        // Assert.assertEquals(bid.getBidQuantity(), 20d, 20d);
-//
-//        // Find
-//        List<BidList> listResult = bidListRepository.findAll();
-//        assertThat(listResult.size() > 0).isTrue();
-//
-//        // Delete
-//        Integer id = bid.getBidListId();
-//        bidListRepository.delete(bid);
-//        Optional<BidList> bidList = bidListRepository.findById(id);
-//        assertThat(bidList.isPresent()).isFalse();
-//
-//    }
-//
-//    @Test
-//    @Tag("UPDATE")
-//    @DisplayName("Update  bid - OK")
-//    public void a() {
-//        BidList bid = new BidList("Account Test", "Type Test", 10d);
-//
-//        // Save
-//        bid = bidListRepository.save(bid);
-//
-//        assertThat(bid.getBidListId()).isNotNull();
-//        assertThat(bid.getBidQuantity()).isEqualTo(10d);
-//        // Assert.assertEquals(bid.getBidQuantity(), 10d, 10d);
-//
-//        // Update
-//        bid.setBidQuantity(20d);
-//        bid = bidListRepository.save(bid);
-//        assertThat(bid.getBidQuantity()).isEqualTo(20d);
-//        // Assert.assertEquals(bid.getBidQuantity(), 20d, 20d);
-//
-//    }
-//
-//    @Test
-//    @Tag("DELETE")
-//    @DisplayName("Delete bid - OK")
-//    public void aa() {
-//        BidList bid = new BidList("Account Test", "Type Test", 10d);
-//
-//        Integer id = bid.getBidListId();
-//        bidListRepository.delete(bid);
-//        Optional<BidList> bidList = bidListRepository.findById(id);
-//        assertThat(bidList.isPresent()).isFalse();
-//
-//    }
+    @Test
+    @Tag("UPDATE")
+    @DisplayName("Update - OK - Exising id")
+    public void givenTwoBids_whenUpdateValidInfos_thenReturnSaved() {
+        // GIVEN
+        BidList bidInfosToUpdate = new BidList();
+        bidInfosToUpdate.setBidListId(10);
+        bidInfosToUpdate.setAccount("new account");
+        bidInfosToUpdate.setType("new type");
+        bidInfosToUpdate.setBidQuantity(150.98d);
+        bidInfosToUpdate.setBook("book");
 
-//  @Test
-//  @Tag("SAVE")
-//  @DisplayName("Save bidList - OK - 1 saved")
-//  public void givenOneBid_whenSave_thenReturnSaved() {
-//      // GIVEN
-//      when(bidListService.saveBidList(bid)).thenReturn(bid);
-//      // WHEN
-//      result = bidListService.saveBidList(bid);
-//
-//      // THEN
-//      assertThat(result.getAccount()).isNotNull();
-//      assertThat(result.getAccount()).isEqualTo("Account Test");
-//      assertThat(result.getType()).isNotNull();
-//      assertThat(result.getType()).isEqualTo("Type Test");
-//      assertThat(result.getBidQuantity()).isEqualTo(10d);
-//      verify(bidListRepository, times(1)).save(bid);
-//  }
-//
-//  @Test
-//  @Tag("SAVE")
-//  @DisplayName("Save bidList - OK - Account entry max size (30)")
-//  public void givenMaxAccountSizeEntry_whenSaveBid_thenReturnSaved() {
-//      // GIVEN
-//      bid.setAccount("Type text with 30 size - Type0");
-//      when(bidListService.saveBidList(bid)).thenReturn(bid);
-//      // WHEN
-//      result = bidListService.saveBidList(bid);
-//
-//      // THEN
-//      assertThat(result.getAccount()).isNotNull();
-//      assertThat(result.getAccount())
-//              .isEqualTo("Type text with 30 size - Type0");
-//      assertThat(result.getType()).isNotNull();
-//      assertThat(result.getType()).isEqualTo("Type Test");
-//      assertThat(result.getBidQuantity()).isEqualTo(10d);
-//      verify(bidListRepository, times(1)).save(bid);
-//  }
-//
-//  @Test
-//  @Tag("SAVE")
-//  @DisplayName("Save bidList - OK - Type entry max size (30)")
-//  public void givenMaxTypeSizeEntry_whenSaveBid_thenReturnSaved() {
-//      // GIVEN
-//      bid.setType("Type text with 30 size - Type0");
-//      when(bidListService.saveBidList(bid)).thenReturn(bid);
-//      // WHEN
-//      result = bidListService.saveBidList(bid);
-//
-//      // THEN
-//      assertThat(result.getAccount()).isNotNull();
-//      assertThat(result.getAccount()).isEqualTo("Account Test");
-//      assertThat(result.getType()).isNotNull();
-//      assertThat(result.getType())
-//              .isEqualTo("Type text with 30 size - Type0");
-//      assertThat(result.getBidQuantity()).isEqualTo(10d);
-//      verify(bidListRepository, times(1)).save(bid);
-//  }
-//
-//  @Test
-//  @Tag("SAVE")
-//  @DisplayName("Save - Account - ERROR - Empty")
-//  public void givenEmptyAccount_whenSaveBid_thenReturnNull() {
-//      // GIVEN
-//      bid.setAccount("");
-//
-//      // WHEN
-//      result = bidListService.saveBidList(bid);
-//
-//      // THEN
-//      assertThat(result).isNull();
-//      assertThat(bidListRepository.findAll().isEmpty());
-//      verify(bidListRepository, times(0)).save(bid);
-//  }
-//
-//  @Test
-//  @Tag("SAVE")
-//  @DisplayName("Save - Account - ERROR - Null")
-//  public void givenNullAccount_whenSaveBid_thenReturnNull() {
-//      // GIVEN
-//      bid.setAccount(null);
-//
-//      // WHEN
-//      result = bidListService.saveBidList(bid);
-//
-//      // THEN
-//      assertThat(result).isNull();
-//      assertThat(bidListRepository.findAll().isEmpty());
-//      verify(bidListRepository, times(0)).save(bid);
-//  }
-//
-//  @Test
-//  @Tag("SAVE")
-//  @DisplayName("Save - Account - ERROR - More than max size (31)")
-//  public void givenAccountWithMoreThanMaxSizeEntry_whenSaveBid_thenReturnNull() {
-//      // GIVEN
-//      bid.setAccount("Type text with 31 size - Type t");
-//
-//      // WHEN
-//      result = bidListService.saveBidList(bid);
-//
-//      // THEN
-//      assertThat(result).isNull();
-//      assertThat(bidListRepository.findAll().isEmpty());
-//      verify(bidListRepository, times(0)).save(bid);
-//  }
-//
-//  @Test
-//  @Tag("SAVE")
-//  @DisplayName("Save - Type - ERROR - Empty")
-//  public void givenEmptyType_whenSaveBid_thenReturnNull() {
-//      // GIVEN
-//      bid.setType("");
-//
-//      // WHEN
-//      result = bidListService.saveBidList(bid);
-//
-//      // THEN
-//      assertThat(result).isNull();
-//      assertThat(bidListRepository.findAll().isEmpty());
-//      verify(bidListRepository, times(0)).save(bid);
-//  }
-//
-//  @Test
-//  @Tag("SAVE")
-//  @DisplayName("Save - Type - ERROR - More than max size (31)")
-//  public void givenTypeWithMoreThanMaxSizeEntry_whenSaveBid_thenReturnNull() {
-//      // GIVEN
-//      bid.setType("Type text with 31 size - Type t");
-//
-//      // WHEN
-//      result = bidListService.saveBidList(bid);
-//
-//      // THEN
-//      assertThat(result).isNull();
-//      assertThat(bidListRepository.findAll().isEmpty());
-//      verify(bidListRepository, times(0)).save(bid);
-//  }
-//
-//  @Test
-//  @Tag("SAVE")
-//  @DisplayName("Save - Type - ERROR - Null")
-//  public void givenNullType_whenSaveBid_thenReturnNull() {
-//      // GIVEN
-//      bid.setType(null);
-//
-//      // WHEN
-//      result = bidListService.saveBidList(bid);
-//
-//      // THEN
-//      assertThat(result).isNull();
-//      assertThat(bidListRepository.findAll().isEmpty());
-//      verify(bidListRepository, times(0)).save(bid);
-//  }
-//
-//  @Test
-//  @Tag("SAVE")
-//  @DisplayName("Save - Quantity - ERROR - Null bid quantity entry")
-//  public void givenNullBidQuantity_whenSaveBid_thenReturnNull() {
-//      // GIVEN
-//      bid.setBidQuantity(null);
-//
-//      // WHEN
-//      result = bidListService.saveBidList(bid);
-//
-//      // THEN
-//      assertThat(result).isNull();
-//      assertThat(bidListRepository.findAll().isEmpty());
-//      verify(bidListRepository, times(0)).save(bid);
-//  }
-//
-//  @Test
-//  @Tag("SAVE")
-//  @DisplayName("Save - Quantity - Ok - 0 bid quantity entry")
-//  public void givenNullZeroQuantity_whenSaveBid_thenReturnSaved() {
-//      // GIVEN
-//      bid.setBidQuantity(0d);
-//      when(bidListService.saveBidList(bid)).thenReturn(bid);
-//      // WHEN
-//      result = bidListService.saveBidList(bid);
-//
-//      // THEN
-//      assertThat(result.getAccount()).isNotNull();
-//      assertThat(result.getAccount()).isEqualTo("Account Test");
-//      assertThat(result.getType()).isNotNull();
-//      assertThat(result.getType()).isEqualTo("Type Test");
-//      assertThat(result.getBidQuantity()).isEqualTo(0d);
-//      verify(bidListRepository, times(1)).save(bid);
-//  }
-//
-//  @Test
-//  @Tag("SAVE")
-//  @DisplayName("Save - Quantity - Ok - 1599,87 bid quantity entry")
-//  public void givenValidFractionnalBidQuantity_whenSaveBid_thenReturnSaved() {
-//      // GIVEN
-//      bid.setBidQuantity(1599.87d);
-//      when(bidListService.saveBidList(bid)).thenReturn(bid);
-//      // WHEN
-//      result = bidListService.saveBidList(bid);
-//
-//      // THEN
-//      assertThat(result.getAccount()).isNotNull();
-//      assertThat(result.getAccount()).isEqualTo("Account Test");
-//      assertThat(result.getType()).isNotNull();
-//      assertThat(result.getType()).isEqualTo("Type Test");
-//      assertThat(result.getBidQuantity()).isEqualTo(1599.87d);
-//      verify(bidListRepository, times(1)).save(bid);
-//  }
-//
-//  @Test
-//  @Tag("SAVE")
-//  @DisplayName("Save - Quantity - ERROR - 1599,876 bid quantity entry")
-//  public void givenInvalidFractionnalBidQuantity_whenSaveBid_thenReturnNull() {
-//      // GIVEN
-//      bid.setBidQuantity(1599.876d);
-//
-//      // WHEN
-//      result = bidListService.saveBidList(bid);
-//
-//      // THEN
-//      assertThat(result).isNull();
-//      assertThat(bidListRepository.findAll().isEmpty());
-//      verify(bidListRepository, times(0)).save(bid);
-//  }
-//
-//  @Test
-//  @Tag("SAVE")
-//  @DisplayName("Save - Quantity - ERROR - Negative number entry")
-//  public void givenNegativeBidQuantity_whenSaveBid_thenReturnNull() {
-//      // GIVEN
-//      bid.setBidQuantity(-1599.98d);
-//
-//      // WHEN
-//      result = bidListService.saveBidList(bid);
-//
-//      // THEN
-//      assertThat(result).isNull();
-//      assertThat(bidListRepository.findAll().isEmpty());
-//      verify(bidListRepository, times(0)).save(bid);
-//  }
-//    
-//    private BidList bid;
-//    private BidList bidTwo;
-//    private BidList result;
-//
-//    private List<BidList> allBidList;
-//
-//    @BeforeEach
-//    public void setup() {
-//        allBidList = new ArrayList<>();
-//        bid = new BidList();
-//        bid.setBidListId(10);
-//        bid.setAccount("Account Test");
-//        bid.setType("Type Test");
-//        bid.setBidQuantity(10d);
-//        allBidList.add(bid);
-//
-//        bidTwo = new BidList();
-//        bidTwo.setBidListId(20);
-//        bidTwo.setAccount("Account Test 2");
-//        bidTwo.setType("Type Test 2");
-//        bidTwo.setBidQuantity(20d);
-//        allBidList.add(bidTwo);
-//    }
+        when(bidListRepository.save(bid)).thenReturn(bid);
+        when(bidListRepository.save(bidInfosToUpdate))
+                .thenReturn(bidInfosToUpdate);
+        when(bidListRepository.findById(10)).thenReturn(Optional.of(bid));
+
+        // WHEN
+        // 10 = bid id
+        result = bidListService.updateBid(bidInfosToUpdate, "Account Test",
+                "Type Test");
+
+        // THEN
+        assertThat(result).isNotNull();
+        assertThat(result.getBidListId()).isEqualTo(10);
+        assertThat(result.getAccount()).isEqualTo("new account");
+        assertThat(result.getType()).isEqualTo("new type");
+        assertThat(result.getBook()).isEqualTo("book");
+        assertThat(result.getBidQuantity()).isEqualTo(150.98d);
+        verify(bidListRepository, times(1)).delete(bid);
+        verify(bidListRepository, times(1)).save(result);
+    }
+
+    @Test
+    @Tag("UPDATE")
+    @DisplayName("Update - ERROR - invalid info (bad quantity)")
+    public void givenTwoBids_whenUpdateInvalidQuantity_thenReturnNull() {
+        // GIVEN
+        BidList bidInfosToUpdate = new BidList();
+        bidInfosToUpdate.setBidListId(10);
+        bidInfosToUpdate.setAccount("new account");
+        bidInfosToUpdate.setType("new type");
+        bidInfosToUpdate.setBidQuantity(150.985d);
+        bidInfosToUpdate.setBook("book");
+
+        when(bidListRepository.save(bid)).thenReturn(bid);
+        // when(bidListRepository.save(bidInfosToUpdate))
+        // .thenReturn(bidInfosToUpdate);
+        when(bidListRepository.findById(10)).thenReturn(Optional.of(bid));
+
+        // WHEN
+        // 10 = bid id
+        result = bidListService.updateBid(bidInfosToUpdate, "Account Test",
+                "Type Test");
+
+        // THEN
+        assertThat(result).isNull();
+        verify(bidListRepository, times(0)).delete(bid);
+        verify(bidListRepository, times(0)).save(result);
+    }
+
+    @Test
+    @Tag("UPDATE")
+    @DisplayName("Update - ERROR - invalid id")
+    public void givenTwoBids_whenSearchInvalidId_thenReturnNull() {
+        // GIVEN
+        BidList bidInfosToUpdate = new BidList();
+        bidInfosToUpdate.setBidListId(19999);
+        bidInfosToUpdate.setAccount("new account");
+        bidInfosToUpdate.setType("new type");
+        bidInfosToUpdate.setBidQuantity(150.985d);
+        bidInfosToUpdate.setBook("book");
+
+        when(bidListRepository.save(bid)).thenReturn(bid);
+        when(bidListRepository.findById(10)).thenReturn(Optional.of(bid));
+
+        // WHEN
+        result = bidListService.updateBid(bidInfosToUpdate, "Account Test",
+                "Type Test");
+
+        // THEN
+        assertThat(result).isNull();
+        verify(bidListRepository, times(0)).delete(bid);
+        verify(bidListRepository, times(0)).save(result);
+    }
+
 }

@@ -83,4 +83,33 @@ public class BidListService implements IBidListService {
         return bid;
     }
 
+    /**
+     * Method service used to update a bidList by his id.
+     * 
+     * @param bidId
+     * @param bid   list
+     * @return bid saved or null
+     */
+    public BidList updateBid(final BidList bid, final String bidAccount,
+            final String bidType) {
+
+        BidList existingBid = bidListRepository.findById(bid.getBidListId())
+                .orElse(null);
+
+        if (existingBid == null) {
+            LOGGER.error("Unknow id bidList");
+            return null;
+        } else if (checkValidBid(bid) == null) {
+            LOGGER.error("Invalid bidlist. Please check the informations.");
+            return null;
+        } else if (!bidAccount.equals(existingBid.getAccount())
+                || !bidType.equals(existingBid.getType())) {
+            LOGGER.error(
+                    "Invalid account or type. Please check the informations: the account and type must be the same as the bid to update.");
+            return null;
+        } else
+            bidListRepository.delete(existingBid);
+        return bidListRepository.save(bid);
+    }
+
 }
