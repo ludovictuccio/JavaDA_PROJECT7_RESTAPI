@@ -99,10 +99,10 @@ public class CurvePointService implements ICurvePointService {
 
     /**
      * Method service used to update a curve point by his curve id.
-     * 
-     * @param
-     * @param
-     * @return
+     *
+     * @param curveId
+     * @param term
+     * @param value
      */
     public CurvePoint updateCurvePoint(final Integer curveId, final Double term,
             final Double value) {
@@ -118,6 +118,27 @@ public class CurvePointService implements ICurvePointService {
         existingCurvePoint.setTerm(term);
         existingCurvePoint.setValue(value);
         return curvePointRepository.save(existingCurvePoint);
+    }
+
+    /**
+     * Method service used to delete a curve point by his curve id.
+     *
+     * @param curveId
+     * @return isDeleted boolean
+     */
+    public boolean deleteCurvePoint(final Integer curveId) {
+        boolean isDeleted = false;
+
+        CurvePoint existingCurvePoint = curvePointRepository
+                .findByCurveId(curveId);
+
+        if (existingCurvePoint == null) {
+            LOGGER.error("Unknow curve id for number: {}", curveId);
+            return isDeleted;
+        }
+        curvePointRepository.delete(existingCurvePoint);
+        isDeleted = true;
+        return isDeleted;
     }
 
 }

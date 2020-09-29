@@ -17,4 +17,6 @@ public interface ICurvePointService {
 
     CurvePoint updateCurvePoint(Integer curveId, Double term, Double value);
 
+    boolean deleteCurvePoint(Integer curveId);
+
 }

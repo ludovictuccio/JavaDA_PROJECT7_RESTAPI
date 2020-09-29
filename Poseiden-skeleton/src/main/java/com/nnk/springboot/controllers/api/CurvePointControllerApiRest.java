@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -76,6 +77,24 @@ public class CurvePointControllerApiRest {
                 value);
 
         if (result != null) {
+            return new ResponseEntity<CurvePoint>(HttpStatus.OK);
+        }
+        return new ResponseEntity<CurvePoint>(HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Method controller used to delete a curve point.
+     *
+     * @param curveId
+     * @return ResponseEntity (ok or bad request)
+     */
+    @DeleteMapping("/delete")
+    public ResponseEntity<CurvePoint> deleteBidList(
+            @Valid @RequestParam final Integer curveId) {
+
+        boolean result = curvePointService.deleteCurvePoint(curveId);
+
+        if (result) {
             return new ResponseEntity<CurvePoint>(HttpStatus.OK);
         }
         return new ResponseEntity<CurvePoint>(HttpStatus.BAD_REQUEST);

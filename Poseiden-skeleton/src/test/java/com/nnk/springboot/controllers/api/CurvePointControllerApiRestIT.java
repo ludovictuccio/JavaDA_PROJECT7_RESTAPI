@@ -232,4 +232,75 @@ public class CurvePointControllerApiRestIT {
                         .param("term", "999").param("value", "888"))
                 .andExpect(status().isBadRequest());
     }
+
+    @Test
+    @Tag("DELETE")
+    @DisplayName("Delete - OK - Valid curve id")
+    public void givenCurveToDelete_whenExistingCurveId_thenReturnOk()
+            throws Exception {
+
+        curvePointService.saveCurvePoint(15, 10d, 10d);
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.delete("/api/curvePoint/delete")
+                        .contentType(APPLICATION_JSON).param("curveId", "15"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @Tag("DELETE")
+    @DisplayName("Delete - ERROR - Unknow curve id in DB")
+    public void givenCurveToDelete_whenUnknowCurveId_thenReturnBadRequest()
+            throws Exception {
+
+        curvePointService.saveCurvePoint(15, 10d, 10d);
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.delete("/api/curvePoint/delete")
+                        .contentType(APPLICATION_JSON).param("curveId", "1"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Tag("DELETE")
+    @DisplayName("Delete - ERROR - Invalid curve id (letter)")
+    public void givenCurveToDelete_whenLetterForCurveId_thenReturnBadRequest()
+            throws Exception {
+
+        curvePointService.saveCurvePoint(15, 10d, 10d);
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.delete("/api/curvePoint/delete")
+                        .contentType(APPLICATION_JSON)
+                        .param("curveId", "letter"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Tag("DELETE")
+    @DisplayName("Delete - ERROR - Invalid curve id (character)")
+    public void givenCurveToDelete_whenCharacterEntry_thenReturnBadRequest()
+            throws Exception {
+
+        curvePointService.saveCurvePoint(15, 10d, 10d);
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.delete("/api/curvePoint/delete")
+                        .contentType(APPLICATION_JSON).param("curveId", "*"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Tag("DELETE")
+    @DisplayName("Delete - ERROR - Invalid curve id (empty)")
+    public void givenCurveToDelete_whenemptyCurveId_thenReturnBadRequest()
+            throws Exception {
+
+        curvePointService.saveCurvePoint(15, 10d, 10d);
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.delete("/api/curvePoint/delete")
+                        .contentType(APPLICATION_JSON).param("curveId", ""))
+                .andExpect(status().isBadRequest());
+    }
 }

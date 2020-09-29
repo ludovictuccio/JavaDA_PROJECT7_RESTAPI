@@ -232,4 +232,40 @@ public class CurvePointServiceTest {
         verify(curvePointRepository, times(0)).save(result);
     }
 
+    @Test
+    @Tag("DELETE")
+    @DisplayName("Delete - OK")
+    public void givenCurveInDb_whenDeleteWithCorrectCurveId_thenReturnTrue() {
+        // GIVEN
+        when(curvePointRepository.save(curvepoint)).thenReturn(curvepoint);
+        when(curvePointRepository.findByCurveId(curvepoint.getCurveId()))
+                .thenReturn(curvepoint);
+
+        // WHEN
+        // 10 = curvepoint curve id
+        boolean isDeleted = curvePointService.deleteCurvePoint(10);
+
+        // THEN
+        assertThat(isDeleted).isTrue();
+        verify(curvePointRepository, times(1)).delete(curvepoint);
+    }
+
+    @Test
+    @Tag("DELETE")
+    @DisplayName("Delete - Error - Unknow curve id")
+    public void givenCurveInDb_whenDeleteWithIncorrectCurveId_thenReturnFalse() {
+        // GIVEN
+        when(curvePointRepository.save(curvepoint)).thenReturn(curvepoint);
+        when(curvePointRepository.findByCurveId(curvepoint.getCurveId()))
+                .thenReturn(curvepoint);
+
+        // WHEN
+        // 10 or 20 are valid
+        boolean isDeleted = curvePointService.deleteCurvePoint(99);
+
+        // THEN
+        assertThat(isDeleted).isFalse();
+        verify(curvePointRepository, times(0)).delete(curvepoint);
+    }
+
 }
