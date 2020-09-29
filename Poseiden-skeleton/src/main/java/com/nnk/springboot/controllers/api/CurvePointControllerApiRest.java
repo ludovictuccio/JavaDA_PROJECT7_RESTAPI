@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -55,6 +56,29 @@ public class CurvePointControllerApiRest {
     @GetMapping("/get")
     public List<CurvePoint> getAllCurvePoints() {
         return curvePointService.findAllCurvePoints();
+    }
+
+    /**
+     * Method controller used to update a curve point.
+     *
+     * @param curveId
+     * @param term
+     * @param value
+     * @return ResponseEntity (ok or bad request)
+     */
+    @PutMapping("/update")
+    public ResponseEntity<CurvePoint> updateCurvePoint(
+            @Valid @RequestParam final Integer curveId,
+            @Valid @RequestParam final Double term,
+            @Valid @RequestParam final Double value) {
+
+        CurvePoint result = curvePointService.updateCurvePoint(curveId, term,
+                value);
+
+        if (result != null) {
+            return new ResponseEntity<CurvePoint>(HttpStatus.OK);
+        }
+        return new ResponseEntity<CurvePoint>(HttpStatus.BAD_REQUEST);
     }
 
 }

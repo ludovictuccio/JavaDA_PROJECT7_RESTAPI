@@ -451,7 +451,6 @@ public class BidListServiceTest {
                 .thenReturn(Optional.of(bidToDelete));
 
         // WHEN
-        // 10 = bidToDelete id
         boolean isDeleted = bidListService.deleteBid(1056, "Account Test");
 
         // THEN

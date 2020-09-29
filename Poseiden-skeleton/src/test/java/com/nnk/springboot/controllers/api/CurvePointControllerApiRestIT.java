@@ -204,4 +204,32 @@ public class CurvePointControllerApiRestIT {
                 .andExpect(status().isOk()).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk()).andReturn();
     }
+
+    @Test
+    @Tag("PUT")
+    @DisplayName("Put - OK")
+    public void givenCurveToUpdate_whenExistingCurveId_thenReturnOk()
+            throws Exception {
+
+        curvePointService.saveCurvePoint(95, 150d, 160d);
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.put("/api/curvePoint/update")
+                        .contentType(APPLICATION_JSON).param("curveId", "95")
+                        .param("term", "999").param("value", "888"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @Tag("PUT")
+    @DisplayName("Put - ERROR - Unknow curve id")
+    public void givenCurveToUpdate_whenUnknowCurveId_thenReturnBadRequest()
+            throws Exception {
+
+        curvePointService.saveCurvePoint(95, 150d, 160d);
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.put("/api/curvePoint/update")
+                        .contentType(APPLICATION_JSON).param("curveId", "1")
+                        .param("term", "999").param("value", "888"))
+                .andExpect(status().isBadRequest());
+    }
 }

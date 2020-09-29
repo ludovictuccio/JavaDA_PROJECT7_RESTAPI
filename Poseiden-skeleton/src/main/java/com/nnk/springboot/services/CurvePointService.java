@@ -97,4 +97,27 @@ public class CurvePointService implements ICurvePointService {
         return curvePointRepository.findAll();
     }
 
+    /**
+     * Method service used to update a curve point by his curve id.
+     * 
+     * @param
+     * @param
+     * @return
+     */
+    public CurvePoint updateCurvePoint(final Integer curveId, final Double term,
+            final Double value) {
+
+        CurvePoint existingCurvePoint = curvePointRepository
+                .findByCurveId(curveId);
+
+        if (existingCurvePoint == null) {
+            LOGGER.error("Unknow id curve point for: {}", curveId);
+            return null;
+        }
+        existingCurvePoint.setAsOfDate(LocalDateTime.now());
+        existingCurvePoint.setTerm(term);
+        existingCurvePoint.setValue(value);
+        return curvePointRepository.save(existingCurvePoint);
+    }
+
 }

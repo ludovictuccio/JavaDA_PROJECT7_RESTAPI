@@ -65,7 +65,7 @@ public class BidListControllerApiRest {
      * Method controller used to update a bidList.
      *
      * @param bid
-     * @return ResponseEntity (created or bad request)
+     * @return ResponseEntity (ok or bad request)
      */
     @PutMapping("/update")
     public ResponseEntity<BidList> updateBidList(

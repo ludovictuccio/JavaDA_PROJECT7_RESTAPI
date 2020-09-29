@@ -33,7 +33,7 @@ public class CurvePoint {
     private Integer id;
 
     @NotNull
-    @Min(value = -128)
+    @Min(value = -128) // tynint(4)
     @Max(value = 127)
     @Column(name = "curve_id")
     private Integer curveId;

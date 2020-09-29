@@ -56,7 +56,7 @@ public class CurvePointServiceTest {
 
         curvepointTwo = new CurvePoint();
         curvepointTwo.setCreationDate(creationDateCurve2);
-        curvepoint.setCurveId(20);
+        curvepointTwo.setCurveId(20);
         curvepointTwo.setTerm(20d);
         curvepointTwo.setValue(200d);
         allCurvepoints.add(curvepointTwo);
@@ -194,6 +194,42 @@ public class CurvePointServiceTest {
         assertThat(resultList.size()).isNotNull();
         assertThat(resultList.size()).isEqualTo(0);
         assertThat(curvePointRepository.findAll().size()).isEqualTo(0);
+    }
+
+    @Test
+    @Tag("UPDATE")
+    @DisplayName("Update - OK - Existing curve id")
+    public void givenOneCurvePoints_whenUpdate_thenReturnUpdated() {
+        // GIVEN
+        when(curvePointRepository.save(curvepoint)).thenReturn(curvepoint);
+        when(curvePointRepository.findByCurveId(10)).thenReturn(curvepoint);
+
+        // WHEN
+        result = curvePointService.updateCurvePoint(10, 500d, 666d);
+
+        // THEN
+        assertThat(result).isNotNull();
+        assertThat(result.getAsOfDate()).isNotNull();// date for curve update
+        assertThat(result.getCreationDate()).isEqualTo(creationDateCurve1);
+        assertThat(result.getCurveId()).isEqualTo(10);
+        assertThat(result.getTerm()).isEqualTo(500d);
+        assertThat(result.getValue()).isEqualTo(666d);
+        verify(curvePointRepository, times(1)).save(result);
+    }
+
+    @Test
+    @Tag("UPDATE")
+    @DisplayName("Update - ERROR - Unknow curve id")
+    public void givenOneCurvePoints_whenUpdateWithUnknowCurveId_thenReturnNull() {
+        // GIVEN
+        when(curvePointRepository.save(curvepoint)).thenReturn(curvepoint);
+
+        // WHEN
+        result = curvePointService.updateCurvePoint(1, 500d, 666d);
+
+        // THEN
+        assertThat(result).isNull();
+        verify(curvePointRepository, times(0)).save(result);
     }
 
 }
