@@ -31,10 +31,10 @@ public class BidListService implements IBidListService {
 
     /**
      * Method used to check if the bidList entity entered is valid (to validate
-     * javax constraints in model classes)
+     * javax constraints in model class)
      *
      * @param bid
-     * @return isValid boolean
+     * @return bid
      */
     public BidList checkValidBid(final BidList bid) {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
