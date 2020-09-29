@@ -1,5 +1,7 @@
 package com.nnk.springboot.services;
 
+import java.util.List;
+
 import com.nnk.springboot.domain.CurvePoint;
 
 /**
@@ -10,5 +12,7 @@ import com.nnk.springboot.domain.CurvePoint;
 public interface ICurvePointService {
 
     CurvePoint saveCurvePoint(Integer curveId, Double term, Double value);
+
+    List<CurvePoint> findAllCurvePoints();
 
 }

@@ -1,13 +1,14 @@
 package com.nnk.springboot.controllers.api;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,9 +21,6 @@ import com.nnk.springboot.services.ICurvePointService;
 @Validated
 @RequestMapping("/api/curvePoint")
 public class CurvePointControllerApiRest {
-
-    private static final Logger LOGGER = LogManager
-            .getLogger("CurvePointControllerApiRest");
 
     @Autowired
     private ICurvePointService curvePointService;
@@ -47,6 +45,16 @@ public class CurvePointControllerApiRest {
             return new ResponseEntity<CurvePoint>(HttpStatus.CREATED);
         }
         return new ResponseEntity<CurvePoint>(HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Method controller used to find all curve points.
+     *
+     * @return all curve points
+     */
+    @GetMapping("/get")
+    public List<CurvePoint> getAllCurvePoints() {
+        return curvePointService.findAllCurvePoints();
     }
 
 }

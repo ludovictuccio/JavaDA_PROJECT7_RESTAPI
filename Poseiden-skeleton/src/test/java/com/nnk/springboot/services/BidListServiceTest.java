@@ -38,8 +38,9 @@ public class BidListServiceTest {
     private List<BidList> allBidList;
 
     @BeforeEach
-    public void setup() {
+    public void setUpPerTest() {
         allBidList = new ArrayList<>();
+
         bid = new BidList();
         bid.setBidListId(10);
         bid.setAccount("Account Test");

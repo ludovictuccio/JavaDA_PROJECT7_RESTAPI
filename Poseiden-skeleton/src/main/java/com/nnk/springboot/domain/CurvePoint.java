@@ -8,8 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -32,7 +33,8 @@ public class CurvePoint {
     private Integer id;
 
     @NotNull
-    @PositiveOrZero
+    @Min(value = -128)
+    @Max(value = 127)
     @Column(name = "curve_id")
     private Integer curveId;
 
@@ -46,6 +48,6 @@ public class CurvePoint {
     private Double value;
 
     @Column(name = "creation_date")
-    private LocalDateTime creationDate; // use for create new curvepoint
+    private LocalDateTime creationDate; // use for create a new curvepoint
 
 }

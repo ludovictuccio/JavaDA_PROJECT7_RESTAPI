@@ -1,6 +1,7 @@
 package com.nnk.springboot.services;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -72,11 +73,28 @@ public class CurvePointService implements ICurvePointService {
         curvepoint.setTerm(term);
         curvepoint.setValue(value);
 
+        // check that the curve id is not already existing
+        for (CurvePoint existingCurvePoint : curvePointRepository.findAll()) {
+            if (existingCurvePoint.getCurveId().equals(curveId)) {
+                LOGGER.error(
+                        "Failed to create a new curve point: the id {} already exists.",
+                        curveId);
+                return null;
+            }
+        }
+
         if (checkValidCurvePoint(curvepoint) == null) {
             return null;
         }
         curvePointRepository.save(curvepoint);
         return curvepoint;
+    }
+
+    /**
+     * Method service used to find all curve points.
+     */
+    public List<CurvePoint> findAllCurvePoints() {
+        return curvePointRepository.findAll();
     }
 
 }

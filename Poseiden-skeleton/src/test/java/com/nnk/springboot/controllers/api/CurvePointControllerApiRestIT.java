@@ -20,6 +20,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nnk.springboot.repositories.CurvePointRepository;
+import com.nnk.springboot.services.ICurvePointService;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -36,6 +37,9 @@ public class CurvePointControllerApiRestIT {
     private ObjectMapper objectMapper;
 
     @Autowired
+    private ICurvePointService curvePointService;
+
+    @Autowired
     private CurvePointRepository curvePointRepository;
 
     @Before
@@ -50,11 +54,11 @@ public class CurvePointControllerApiRestIT {
 
     @Test
     @Tag("CREATE")
-    @DisplayName("Create - OK")
-    public void a() throws Exception {
+    @DisplayName("Create - OK - Max value")
+    public void givenMaxValue_whenCreate_thenReturnCreated() throws Exception {
         this.mockMvc
                 .perform(MockMvcRequestBuilders.post("/api/curvePoint/add")
-                        .contentType(APPLICATION_JSON).param("id", "15")
+                        .contentType(APPLICATION_JSON).param("id", "127")
                         .param("term", "150").param("value", "1500"))
                 .andExpect(status().isCreated())
                 .andDo(MockMvcResultHandlers.print())
@@ -63,12 +67,29 @@ public class CurvePointControllerApiRestIT {
 
     @Test
     @Tag("CREATE")
-    @DisplayName("Create - ERROR - Negative id")
-    public void aa() throws Exception {
+    @DisplayName("Create - OK - Min value")
+    public void givenMinValue_whenCreate_thenReturnCreated() throws Exception {
         this.mockMvc
                 .perform(MockMvcRequestBuilders.post("/api/curvePoint/add")
-                        .contentType(APPLICATION_JSON).param("id", "-15")
+                        .contentType(APPLICATION_JSON).param("id", "-128")
                         .param("term", "150").param("value", "1500"))
+                .andExpect(status().isCreated())
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isCreated()).andReturn();
+    }
+
+    @Test
+    @Tag("CREATE")
+    @DisplayName("Create - ERROR - Already existing ID in DB")
+    public void givenCurveIdAlreadyExisting_whenCreate_thenReturnBadRequest()
+            throws Exception {
+
+        curvePointService.saveCurvePoint(125, 150d, 160d);
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.post("/api/curvePoint/add")
+                        .contentType(APPLICATION_JSON).param("id", "125")
+                        .param("term", "1520").param("value", "12"))
                 .andExpect(status().isBadRequest())
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isBadRequest()).andReturn();
@@ -77,7 +98,8 @@ public class CurvePointControllerApiRestIT {
     @Test
     @Tag("CREATE")
     @DisplayName("Create - ERROR - Letter for id")
-    public void aaa() throws Exception {
+    public void givenLetterForId_whenCreate_thenReturnBadRequest()
+            throws Exception {
         this.mockMvc
                 .perform(MockMvcRequestBuilders.post("/api/curvePoint/add")
                         .contentType(APPLICATION_JSON).param("id", "a")
@@ -90,7 +112,8 @@ public class CurvePointControllerApiRestIT {
     @Test
     @Tag("CREATE")
     @DisplayName("Create - ERROR - Character for id")
-    public void aaaa() throws Exception {
+    public void givenCharacterForId_whenCreate_thenReturnBadRequest()
+            throws Exception {
         this.mockMvc
                 .perform(MockMvcRequestBuilders.post("/api/curvePoint/add")
                         .contentType(APPLICATION_JSON).param("id", "/")
@@ -103,7 +126,8 @@ public class CurvePointControllerApiRestIT {
     @Test
     @Tag("CREATE")
     @DisplayName("Create - ERROR - Character for term")
-    public void aaaaa() throws Exception {
+    public void givenCharacterForTerm_whenCreate_thenReturnBadRequest()
+            throws Exception {
         this.mockMvc
                 .perform(MockMvcRequestBuilders.post("/api/curvePoint/add")
                         .contentType(APPLICATION_JSON).param("id", "15")
@@ -116,7 +140,8 @@ public class CurvePointControllerApiRestIT {
     @Test
     @Tag("CREATE")
     @DisplayName("Create - ERROR - Letter for term")
-    public void aaaaaa() throws Exception {
+    public void givenLetterForTerm_whenCreate_thenReturnBadRequest()
+            throws Exception {
         this.mockMvc
                 .perform(MockMvcRequestBuilders.post("/api/curvePoint/add")
                         .contentType(APPLICATION_JSON).param("id", "15")
@@ -129,7 +154,8 @@ public class CurvePointControllerApiRestIT {
     @Test
     @Tag("CREATE")
     @DisplayName("Create - ERROR - Letter for value")
-    public void aaaaaaa() throws Exception {
+    public void givenLetterForValue_whenCreate_thenReturnBadRequest()
+            throws Exception {
         this.mockMvc
                 .perform(MockMvcRequestBuilders.post("/api/curvePoint/add")
                         .contentType(APPLICATION_JSON).param("id", "15")
@@ -142,7 +168,8 @@ public class CurvePointControllerApiRestIT {
     @Test
     @Tag("CREATE")
     @DisplayName("Create - ERROR - Character for value")
-    public void aaaaaaaa() throws Exception {
+    public void givenCharacterForValue_whenCreate_thenReturnBadRequest()
+            throws Exception {
         this.mockMvc
                 .perform(MockMvcRequestBuilders.post("/api/curvePoint/add")
                         .contentType(APPLICATION_JSON).param("id", "15")
@@ -150,5 +177,31 @@ public class CurvePointControllerApiRestIT {
                 .andExpect(status().isBadRequest())
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isBadRequest()).andReturn();
+    }
+
+    @Test
+    @Tag("GET")
+    @DisplayName("Get - OK - 2 curvepoints in db")
+    public void givenTwoCurvePointsInDb_whenGet_thenReturnListWithOneBid()
+            throws Exception {
+        curvePointService.saveCurvePoint(125, 150d, 160d);
+        curvePointService.saveCurvePoint(15, 10d, 10d);
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.get("/api/curvePoint/get")
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk()).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk()).andReturn();
+    }
+
+    @Test
+    @Tag("GET")
+    @DisplayName("Get - OK - 0 curvepoint in db")
+    public void givenZeroCurvePointInDb_whenGet_thenReturnEmptyList()
+            throws Exception {
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.get("/api/curvePoint/get")
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk()).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk()).andReturn();
     }
 }

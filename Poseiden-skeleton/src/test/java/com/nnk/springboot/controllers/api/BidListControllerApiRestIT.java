@@ -120,7 +120,7 @@ public class BidListControllerApiRestIT {
     }
 
     @Test
-    @Tag("Get")
+    @Tag("GET")
     @DisplayName("Get - OK - 1 bid in db")
     public void givenOneBidInDb_whenGet_thenReturnListWithOneBid()
             throws Exception {
@@ -137,7 +137,7 @@ public class BidListControllerApiRestIT {
     }
 
     @Test
-    @Tag("Get")
+    @Tag("GET")
     @DisplayName("Get - OK - 0 bid in db")
     public void givenZeroBidInDb_whenGet_thenReturnEmptyList()
             throws Exception {

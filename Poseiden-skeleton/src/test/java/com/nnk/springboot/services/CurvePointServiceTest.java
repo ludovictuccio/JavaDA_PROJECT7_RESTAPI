@@ -3,6 +3,7 @@ package com.nnk.springboot.services;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class CurvePointServiceTest {
     private LocalDateTime creationDateCurve2;
 
     @BeforeEach
-    public void setup() {
+    public void setUpPerTest() {
         creationDateCurve1 = LocalDateTime.of(2000, 12, 31, 23, 59, 00);
         creationDateCurve2 = LocalDateTime.of(2020, 12, 31, 23, 59, 00);
 
@@ -155,6 +156,44 @@ public class CurvePointServiceTest {
         // THEN
         assertThat(result).isNull();
         verify(curvePointRepository, times(0)).save(result);
+    }
+
+    @Test
+    @Tag("FIND")
+    @DisplayName("Find all - OK - 2 curve points")
+    public void givenTwoCurvePoints_whenFindAll_thenReturnTwo() {
+        // GIVEN
+        when(curvePointService.findAllCurvePoints()).thenReturn(allCurvepoints);
+
+        // WHEN
+        List<CurvePoint> resultList = curvePointService.findAllCurvePoints();
+
+        // THEN
+        assertThat(resultList.size()).isNotNull();
+        assertThat(resultList.size()).isEqualTo(2);
+        assertThat(curvePointRepository.findAll().size()).isEqualTo(2);
+//        assertThat(curvePointRepository.findAll().get(0).getCurveId())
+//                .isEqualTo(10);
+//        assertThat(curvePointRepository.findAll().get(1).getCurveId())
+//                .isEqualTo(20);
+
+    }
+
+    @Test
+    @Tag("FIND")
+    @DisplayName("Find all - Ok - Empty list / 0 size")
+    public void givenZeroCurvePoints_whenFindAll_thenReturnEmptyList() {
+        // GIVEN
+        allCurvepoints.clear();
+        when(curvePointService.findAllCurvePoints()).thenReturn(allCurvepoints);
+
+        // WHEN
+        List<CurvePoint> resultList = curvePointService.findAllCurvePoints();
+
+        // THEN
+        assertThat(resultList.size()).isNotNull();
+        assertThat(resultList.size()).isEqualTo(0);
+        assertThat(curvePointRepository.findAll().size()).isEqualTo(0);
     }
 
 }
