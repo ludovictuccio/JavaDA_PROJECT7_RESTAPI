@@ -173,4 +173,15 @@ public class RatingControllerApiRestIT {
                 .andExpect(status().isBadRequest());
     }
 
+    @Test
+    @Tag("DELETE")
+    @DisplayName("Delete - ERROR - Unknow id")
+    public void givenZeroRating_whenDeleteInvalidId_thenReturnBadRequest()
+            throws Exception {
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.delete("/api/rating/delete")
+                        .contentType(APPLICATION_JSON).param("id", "99"))
+                .andExpect(status().isBadRequest());
+    }
+
 }

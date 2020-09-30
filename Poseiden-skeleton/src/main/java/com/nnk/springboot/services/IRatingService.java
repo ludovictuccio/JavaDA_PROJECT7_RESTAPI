@@ -17,4 +17,6 @@ public interface IRatingService {
 
     boolean updateRating(Integer ratingId, Rating rating);
 
+    boolean deleteRating(Integer ratingId);
+
 }

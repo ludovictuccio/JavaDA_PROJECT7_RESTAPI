@@ -261,4 +261,39 @@ public class RatingServiceTest {
                 .isEqualTo("Moodys 2");
     }
 
+    @Test
+    @Tag("DELETE")
+    @DisplayName("Delete - OK - Valid id")
+    public void givenRatingInDb_whenDeleteWithValidId_thenReturnTrue() {
+        // GIVEN
+        when(ratingRepository.save(rating)).thenReturn(rating);
+        when(ratingRepository.save(ratingTwo)).thenReturn(ratingTwo);
+        when(ratingRepository.findById(10)).thenReturn(Optional.of(rating));
+
+        // WHEN
+        // 10 = rating id
+        boolean isDeleted = ratingService.deleteRating(10);
+
+        // THEN
+        assertThat(isDeleted).isTrue();
+        verify(ratingRepository, times(1)).delete(rating);
+    }
+
+    @Test
+    @Tag("DELETE")
+    @DisplayName("Delete - ERROR - Unknow  id")
+    public void givenRatingInDb_whenDeleteWithInvalidId_thenReturnFalse() {
+        // GIVEN
+        when(ratingRepository.save(rating)).thenReturn(rating);
+        when(ratingRepository.save(ratingTwo)).thenReturn(ratingTwo);
+
+        // WHEN
+        // 10 or 20 are valid
+        boolean isDeleted = ratingService.deleteRating(99);
+
+        // THEN
+        assertThat(isDeleted).isFalse();
+        verify(ratingRepository, times(0)).delete(rating);
+    }
+
 }

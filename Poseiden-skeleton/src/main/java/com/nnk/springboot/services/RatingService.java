@@ -104,4 +104,25 @@ public class RatingService implements IRatingService {
         isUpdated = true;
         return isUpdated;
     }
+
+    /**
+     * Method service used to delete a rating with his id.
+     *
+     * @param ratingId the rating id
+     * @return isDeleted boolean
+     */
+    public boolean deleteRating(final Integer ratingId) {
+        boolean isDeleted = false;
+
+        Rating existingRating = ratingRepository.findById(ratingId)
+                .orElse(null);
+
+        if (existingRating == null) {
+            LOGGER.error("Unknow rating id for number: {}", ratingId);
+            return isDeleted;
+        }
+        ratingRepository.delete(existingRating);
+        isDeleted = true;
+        return isDeleted;
+    }
 }

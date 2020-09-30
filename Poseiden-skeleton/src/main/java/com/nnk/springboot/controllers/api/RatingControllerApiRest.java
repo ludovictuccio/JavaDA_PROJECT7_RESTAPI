@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -68,6 +69,23 @@ public class RatingControllerApiRest {
             @Valid @RequestBody final Rating rating) {
 
         boolean result = ratingService.updateRating(id, rating);
+
+        if (result) {
+            return new ResponseEntity<Rating>(HttpStatus.OK);
+        }
+        return new ResponseEntity<Rating>(HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Method controller used to delete a rating.
+     *
+     * @param id the rating id
+     * @return ResponseEntity (ok or bad request)
+     */
+    @DeleteMapping("/delete")
+    public ResponseEntity<Rating> deleteBidList(
+            @Valid @RequestParam final Integer id) {
+        boolean result = ratingService.deleteRating(id);
 
         if (result) {
             return new ResponseEntity<Rating>(HttpStatus.OK);
