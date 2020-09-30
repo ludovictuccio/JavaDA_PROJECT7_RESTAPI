@@ -113,7 +113,7 @@ public class RatingControllerApiRestIT {
 
         Rating ratingToCreate = new Rating(
                 "123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456",
-                "sandprating", "fitch", 200);
+                "sandprating", "fitch", 15);
         String jsonContent = objectMapper.writeValueAsString(ratingToCreate);
 
         this.mockMvc
@@ -152,4 +152,25 @@ public class RatingControllerApiRestIT {
                 .andExpect(status().isOk()).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk()).andReturn();
     }
+
+    @Test
+    @Tag("PUT")
+    @DisplayName("Put - ERROR - Invalid id")
+    public void givenRatingToUpdate_whenInvalidId_thenReturnOk()
+            throws Exception {
+        ratingService
+                .saveRating(new Rating("moodys", "sandprating", "fitch", 10));
+        ratingRepository.findAll().get(0).setId(1);
+
+        Rating ratingForUpdate = new Rating("other moodys", "other sandprating",
+                "other fitch", 99);
+        String jsonContent = objectMapper.writeValueAsString(ratingForUpdate);
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.put("/api/rating/update")
+                        .contentType(APPLICATION_JSON).param("id", "120")
+                        .content(jsonContent))
+                .andExpect(status().isBadRequest());
+    }
+
 }

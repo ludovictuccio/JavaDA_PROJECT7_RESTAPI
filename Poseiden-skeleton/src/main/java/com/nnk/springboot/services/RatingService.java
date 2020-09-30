@@ -76,4 +76,32 @@ public class RatingService implements IRatingService {
         return ratingRepository.findAll();
     }
 
+    /**
+     * Method service used to update a rating.
+     *
+     * @param rating
+     * @param ratingId  the rating id
+     * @param isUpdated boolean
+     */
+    public boolean updateRating(final Integer ratingId, final Rating rating) {
+        boolean isUpdated = false;
+
+        if (checkValidRating(rating) == null) {
+            return isUpdated;
+        }
+        Rating existingRating = ratingRepository.findById(ratingId)
+                .orElse(null);
+
+        if (existingRating == null) {
+            LOGGER.error("Unknow rating id for number: {}", ratingId);
+            return isUpdated;
+        }
+        existingRating.setFitchRating(rating.getFitchRating());
+        existingRating.setMoodysRating(rating.getMoodysRating());
+        existingRating.setSandPRating(rating.getSandPRating());
+        existingRating.setOrderNumber(rating.getOrderNumber());
+        ratingRepository.save(existingRating);
+        isUpdated = true;
+        return isUpdated;
+    }
 }

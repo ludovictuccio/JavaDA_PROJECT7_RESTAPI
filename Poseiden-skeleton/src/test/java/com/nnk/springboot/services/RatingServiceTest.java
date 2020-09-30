@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -148,4 +149,116 @@ public class RatingServiceTest {
         assertThat(resultList.size()).isEqualTo(0);
         assertThat(ratingRepository.findAll().size()).isEqualTo(0);
     }
+
+    @Test
+    @Tag("UPDATE")
+    @DisplayName("Update - OK - Existing id")
+    public void givenValidId_whenUpdate_thenReturnTrue() {
+        // GIVEN
+        when(ratingRepository.save(rating)).thenReturn(rating);
+        when(ratingRepository.save(ratingTwo)).thenReturn(ratingTwo);
+        when(ratingRepository.findById(10)).thenReturn(Optional.of(rating));
+        when(ratingService.findAllRating()).thenReturn(allRatings);
+
+        Rating ratingForUpdate = new Rating("other moodys", "other sandp",
+                "other fitch", 50);
+
+        // WHEN
+        boolean result = ratingService.updateRating(10, ratingForUpdate);
+
+        // THEN
+        assertThat(result).isTrue();
+        verify(ratingRepository, times(1)).save(rating);
+        assertThat(ratingRepository.findAll().size()).isEqualTo(2); // unchanged
+        assertThat(ratingRepository.findAll().get(0).getId()).isEqualTo(10);
+        assertThat(ratingRepository.findAll().get(0).getMoodysRating())
+                .isEqualTo("other moodys");
+        assertThat(ratingRepository.findAll().get(1).getId()).isEqualTo(20);
+        assertThat(ratingRepository.findAll().get(1).getMoodysRating())
+                .isEqualTo("Moodys 2");
+    }
+
+    @Test
+    @Tag("UPDATE")
+    @DisplayName("Update - ERROR - Bad id")
+    public void givenInvalidId_whenUpdate_thenReturnFalse() {
+        // GIVEN
+        when(ratingRepository.save(rating)).thenReturn(rating);
+        when(ratingRepository.save(ratingTwo)).thenReturn(ratingTwo);
+        when(ratingRepository.findById(10)).thenReturn(Optional.of(rating));
+        when(ratingService.findAllRating()).thenReturn(allRatings);
+
+        Rating ratingForUpdate = new Rating("other moodys", "other sandp",
+                "other fitch", 50);
+
+        // WHEN
+        boolean result = ratingService.updateRating(11, ratingForUpdate);
+
+        // THEN
+        assertThat(result).isFalse();
+        verify(ratingRepository, times(0)).save(rating);
+        assertThat(ratingRepository.findAll().size()).isEqualTo(2); // unchanged
+        assertThat(ratingRepository.findAll().get(0).getId()).isEqualTo(10);
+        assertThat(ratingRepository.findAll().get(0).getMoodysRating())
+                .isEqualTo("Moodys");
+        assertThat(ratingRepository.findAll().get(1).getId()).isEqualTo(20);
+        assertThat(ratingRepository.findAll().get(1).getMoodysRating())
+                .isEqualTo("Moodys 2");
+    }
+
+    @Test
+    @Tag("UPDATE")
+    @DisplayName("Update - ERROR - Invalid attributes - Order number size > max size (127)")
+    public void givenInvalidAttributes_whenUpdate_thenReturnFalse() {
+        // GIVEN
+        when(ratingRepository.save(rating)).thenReturn(rating);
+        when(ratingRepository.save(ratingTwo)).thenReturn(ratingTwo);
+        when(ratingService.findAllRating()).thenReturn(allRatings);
+
+        Rating ratingForUpdate = new Rating("other moodys", "other sandp",
+                "other fitch", 900);
+
+        // WHEN
+        boolean result = ratingService.updateRating(10, ratingForUpdate);
+
+        // THEN
+        assertThat(result).isFalse();
+        verify(ratingRepository, times(0)).save(rating);
+        assertThat(ratingRepository.findAll().size()).isEqualTo(2); // unchanged
+        assertThat(ratingRepository.findAll().get(0).getId()).isEqualTo(10);
+        assertThat(ratingRepository.findAll().get(0).getMoodysRating())
+                .isEqualTo("Moodys");
+        assertThat(ratingRepository.findAll().get(1).getId()).isEqualTo(20);
+        assertThat(ratingRepository.findAll().get(1).getMoodysRating())
+                .isEqualTo("Moodys 2");
+    }
+
+    @Test
+    @Tag("UPDATE")
+    @DisplayName("Update - ERROR - Invalid attributes size > max size (125)")
+    public void givenInvalidAttributesSize_whenUpdate_thenReturnFalse() {
+        // GIVEN
+        when(ratingRepository.save(rating)).thenReturn(rating);
+        when(ratingRepository.save(ratingTwo)).thenReturn(ratingTwo);
+        when(ratingService.findAllRating()).thenReturn(allRatings);
+
+        Rating ratingForUpdate = new Rating(
+                "123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456",
+                "other sandp", "other fitch", 900);
+
+        // WHEN
+        boolean result = ratingService.updateRating(10, ratingForUpdate);
+
+        // THEN
+        assertThat(result).isFalse();
+        verify(ratingRepository, times(0)).save(rating);
+        assertThat(ratingRepository.findAll().size()).isEqualTo(2); // unchanged
+        assertThat(ratingRepository.findAll().get(0).getId()).isEqualTo(10);
+        assertThat(ratingRepository.findAll().get(0).getMoodysRating())
+                .isEqualTo("Moodys");
+        assertThat(ratingRepository.findAll().get(1).getId()).isEqualTo(20);
+        assertThat(ratingRepository.findAll().get(1).getMoodysRating())
+                .isEqualTo("Moodys 2");
+    }
+
 }

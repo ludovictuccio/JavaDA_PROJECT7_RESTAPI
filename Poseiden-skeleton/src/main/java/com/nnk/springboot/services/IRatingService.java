@@ -15,4 +15,6 @@ public interface IRatingService {
 
     List<Rating> findAllRating();
 
+    boolean updateRating(Integer ratingId, Rating rating);
+
 }
