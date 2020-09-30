@@ -156,4 +156,14 @@ public class RuleNameControllerApiRestIT {
                 .andExpect(status().isBadRequest());
     }
 
+    @Test
+    @Tag("DELETE")
+    @DisplayName("Delete - ERROR - Unknow id")
+    public void givenZeroRuleName_whenDeleteInvalidId_thenReturnBadRequest()
+            throws Exception {
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.delete("/api/rulename/delete")
+                        .contentType(APPLICATION_JSON).param("id", "99"))
+                .andExpect(status().isBadRequest());
+    }
 }

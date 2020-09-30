@@ -95,7 +95,7 @@ public class RuleNameService implements IRuleNameService {
                 .orElse(null);
 
         if (existingRuleName == null) {
-            LOGGER.error("Unknow rating id for number: {}", ruleNameId);
+            LOGGER.error("Unknow rule name id for number: {}", ruleNameId);
             return isUpdated;
         }
         existingRuleName.setName(ruleName.getName());
@@ -107,6 +107,27 @@ public class RuleNameService implements IRuleNameService {
         ruleNameRepository.save(existingRuleName);
         isUpdated = true;
         return isUpdated;
+    }
+
+    /**
+     * Method service used to delete a rulename with his id.
+     *
+     * @param ruleNameId the ruleName id
+     * @return isDeleted boolean
+     */
+    public boolean deleteRuleName(final Integer ruleNameId) {
+        boolean isDeleted = false;
+
+        RuleName existingRuleName = ruleNameRepository.findById(ruleNameId)
+                .orElse(null);
+
+        if (existingRuleName == null) {
+            LOGGER.error("Unknow rule name id for number: {}", ruleNameId);
+            return isDeleted;
+        }
+        ruleNameRepository.delete(existingRuleName);
+        isDeleted = true;
+        return isDeleted;
     }
 
 }

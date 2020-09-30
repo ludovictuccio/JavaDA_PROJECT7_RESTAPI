@@ -17,4 +17,6 @@ public interface IRuleNameService {
 
     boolean updateRuleName(Integer ruleNameId, RuleName ruleName);
 
+    boolean deleteRuleName(Integer ruleNameId);
+
 }

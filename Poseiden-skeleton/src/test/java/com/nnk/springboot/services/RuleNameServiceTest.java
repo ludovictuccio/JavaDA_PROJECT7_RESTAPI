@@ -216,4 +216,38 @@ public class RuleNameServiceTest {
                 .isEqualTo("description 2");
     }
 
+    @Test
+    @Tag("DELETE")
+    @DisplayName("Delete - OK - Valid id")
+    public void givenRulenameInDb_whenDeleteWithValidId_thenReturnTrue() {
+        // GIVEN
+        when(ruleNameRepository.save(ruleName)).thenReturn(ruleName);
+        when(ruleNameRepository.save(ruleNameTwo)).thenReturn(ruleNameTwo);
+        when(ruleNameRepository.findById(1)).thenReturn(Optional.of(ruleName));
+
+        // WHEN
+        // 1 = ruleName id
+        boolean isDeleted = ruleNameService.deleteRuleName(1);
+
+        // THEN
+        assertThat(isDeleted).isTrue();
+        verify(ruleNameRepository, times(1)).delete(ruleName);
+    }
+
+    @Test
+    @Tag("DELETE")
+    @DisplayName("Delete - ERROR - Unknow  id")
+    public void givenRulenameInDb_whenDeleteWithInvalidId_thenReturnFalse() {
+        // GIVEN
+        when(ruleNameRepository.save(ruleName)).thenReturn(ruleName);
+        when(ruleNameRepository.save(ruleNameTwo)).thenReturn(ruleNameTwo);
+
+        // WHEN
+        // 1 or 2 are valid
+        boolean isDeleted = ruleNameService.deleteRuleName(99);
+
+        // THEN
+        assertThat(isDeleted).isFalse();
+        verify(ruleNameRepository, times(0)).delete(ruleName);
+    }
 }
