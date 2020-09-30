@@ -18,7 +18,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nnk.springboot.repositories.CurvePointRepository;
 import com.nnk.springboot.services.ICurvePointService;
 
@@ -32,9 +31,6 @@ public class CurvePointControllerApiRestIT {
 
     @Autowired
     private WebApplicationContext wac;
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @Autowired
     private ICurvePointService curvePointService;
