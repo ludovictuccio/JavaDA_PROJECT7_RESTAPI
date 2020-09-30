@@ -178,7 +178,7 @@ public class CurvePointControllerApiRestIT {
     @Test
     @Tag("GET")
     @DisplayName("Get - OK - 2 curvepoints in db")
-    public void givenTwoCurvePointsInDb_whenGet_thenReturnListWithOneBid()
+    public void givenTwoCurvePointsInDb_whenGet_thenReturnListWithTwoBid()
             throws Exception {
         curvePointService.saveCurvePoint(125, 150d, 160d);
         curvePointService.saveCurvePoint(15, 10d, 10d);

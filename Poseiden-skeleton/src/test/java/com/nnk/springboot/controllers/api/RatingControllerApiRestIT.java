@@ -123,4 +123,33 @@ public class RatingControllerApiRestIT {
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isBadRequest()).andReturn();
     }
+
+    @Test
+    @Tag("GET")
+    @DisplayName("Get - OK - 2 rating in db")
+    public void givenTwoRatingInDb_whenGet_thenReturnListWithTwoRating()
+            throws Exception {
+        ratingService
+                .saveRating(new Rating("moodys", "sandprating", "fitch", 10));
+        ratingService.saveRating(
+                new Rating("moodys 2", "sandprating 2", "fitch 2", 20));
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.get("/api/rating/get")
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk()).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk()).andReturn();
+    }
+
+    @Test
+    @Tag("GET")
+    @DisplayName("Get - OK - 0 rating in db")
+    public void givenZeroRatingInDb_whenGet_thenReturnEmptyList()
+            throws Exception {
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.get("/api/rating/get")
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk()).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk()).andReturn();
+    }
 }
