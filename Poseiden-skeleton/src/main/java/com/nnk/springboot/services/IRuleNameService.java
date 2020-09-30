@@ -1,0 +1,14 @@
+package com.nnk.springboot.services;
+
+import com.nnk.springboot.domain.RuleName;
+
+/**
+ * IRuleNameService interface class.
+ *
+ * @author Ludovic Tuccio
+ */
+public interface IRuleNameService {
+
+    RuleName saveRuleName(RuleName ruleName);
+
+}
