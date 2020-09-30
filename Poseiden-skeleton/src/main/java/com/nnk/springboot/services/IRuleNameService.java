@@ -15,4 +15,6 @@ public interface IRuleNameService {
 
     List<RuleName> findAllRuleNames();
 
+    boolean updateRuleName(Integer ruleNameId, RuleName ruleName);
+
 }

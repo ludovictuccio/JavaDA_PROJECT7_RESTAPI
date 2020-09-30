@@ -156,7 +156,7 @@ public class RatingControllerApiRestIT {
     @Test
     @Tag("PUT")
     @DisplayName("Put - ERROR - Invalid id")
-    public void givenRatingToUpdate_whenInvalidId_thenReturnOk()
+    public void givenRatingToUpdate_whenInvalidId_thenReturnBadRequest()
             throws Exception {
         ratingService
                 .saveRating(new Rating("moodys", "sandprating", "fitch", 10));

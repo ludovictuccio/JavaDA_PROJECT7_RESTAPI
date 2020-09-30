@@ -77,4 +77,36 @@ public class RuleNameService implements IRuleNameService {
         return ruleNameRepository.findAll();
     }
 
+    /**
+     * Method service used to update a ruleName.
+     *
+     * @param ruleName
+     * @param ruleNameId the ruleName id
+     * @param isUpdated  boolean
+     */
+    public boolean updateRuleName(final Integer ruleNameId,
+            final RuleName ruleName) {
+        boolean isUpdated = false;
+
+        if (checkValidRuleName(ruleName) == null) {
+            return isUpdated;
+        }
+        RuleName existingRuleName = ruleNameRepository.findById(ruleNameId)
+                .orElse(null);
+
+        if (existingRuleName == null) {
+            LOGGER.error("Unknow rating id for number: {}", ruleNameId);
+            return isUpdated;
+        }
+        existingRuleName.setName(ruleName.getName());
+        existingRuleName.setDescription(ruleName.getDescription());
+        existingRuleName.setJson(ruleName.getJson());
+        existingRuleName.setTemplate(ruleName.getTemplate());
+        existingRuleName.setSqlStr(ruleName.getSqlStr());
+        existingRuleName.setSqlPart(ruleName.getSqlPart());
+        ruleNameRepository.save(existingRuleName);
+        isUpdated = true;
+        return isUpdated;
+    }
+
 }

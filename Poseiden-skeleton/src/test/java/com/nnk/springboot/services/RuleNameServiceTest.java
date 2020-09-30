@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -42,6 +43,7 @@ public class RuleNameServiceTest {
 
         ruleName = new RuleName();
         ruleName.setId(1);
+        ruleName.setName("name 1");
         ruleName.setDescription("description 1");
         ruleName.setJson("json 1");
         ruleName.setTemplate("template 1");
@@ -51,6 +53,7 @@ public class RuleNameServiceTest {
 
         ruleNameTwo = new RuleName();
         ruleNameTwo.setId(2);
+        ruleNameTwo.setName("name 2");
         ruleNameTwo.setDescription("description 2");
         ruleNameTwo.setJson("json 2");
         ruleNameTwo.setTemplate("template 2");
@@ -127,6 +130,90 @@ public class RuleNameServiceTest {
         assertThat(resultList.size()).isNotNull();
         assertThat(resultList.size()).isEqualTo(0);
         assertThat(ruleNameRepository.findAll().size()).isEqualTo(0);
+    }
+
+    @Test
+    @Tag("UPDATE")
+    @DisplayName("Update - OK - Existing id")
+    public void givenValidId_whenUpdate_thenReturnTrue() {
+        // GIVEN
+        when(ruleNameRepository.save(ruleName)).thenReturn(ruleName);
+        when(ruleNameRepository.save(ruleNameTwo)).thenReturn(ruleNameTwo);
+        when(ruleNameRepository.findById(1)).thenReturn(Optional.of(ruleName));
+        when(ruleNameService.findAllRuleNames()).thenReturn(allRuleName);
+
+        RuleName rulenameForUpdate = new RuleName("name", "description updated",
+                "json", "template", "sql str", "sql part");
+
+        // WHEN
+        boolean result = ruleNameService.updateRuleName(1, rulenameForUpdate);
+
+        // THEN
+        assertThat(result).isTrue();
+        verify(ruleNameRepository, times(1)).save(ruleName);
+        assertThat(ruleNameRepository.findAll().size()).isEqualTo(2); // unchanged
+        assertThat(ruleNameRepository.findAll().get(0).getId()).isEqualTo(1);
+        assertThat(ruleNameRepository.findAll().get(0).getDescription())
+                .isEqualTo("description updated");
+        assertThat(ruleNameRepository.findAll().get(1).getId()).isEqualTo(2);
+        assertThat(ruleNameRepository.findAll().get(1).getDescription())
+                .isEqualTo("description 2");
+    }
+
+    @Test
+    @Tag("UPDATE")
+    @DisplayName("Update - ERROR - Bad id")
+    public void givenInvalidId_whenUpdate_thenReturnFalse() {
+        // GIVEN
+        when(ruleNameRepository.save(ruleName)).thenReturn(ruleName);
+        when(ruleNameRepository.save(ruleNameTwo)).thenReturn(ruleNameTwo);
+        when(ruleNameRepository.findById(1)).thenReturn(Optional.of(ruleName));
+        when(ruleNameService.findAllRuleNames()).thenReturn(allRuleName);
+
+        RuleName rulenameForUpdate = new RuleName("name", "description updated",
+                "json", "template", "sql str", "sql part");
+
+        // WHEN
+        boolean result = ruleNameService.updateRuleName(99, rulenameForUpdate);
+
+        // THEN
+        assertThat(result).isFalse();
+        verify(ruleNameRepository, times(0)).save(ruleName);
+        assertThat(ruleNameRepository.findAll().size()).isEqualTo(2); // unchanged
+        assertThat(ruleNameRepository.findAll().get(0).getId()).isEqualTo(1);
+        assertThat(ruleNameRepository.findAll().get(0).getDescription())
+                .isEqualTo("description 1");
+        assertThat(ruleNameRepository.findAll().get(1).getId()).isEqualTo(2);
+        assertThat(ruleNameRepository.findAll().get(1).getDescription())
+                .isEqualTo("description 2");
+    }
+
+    @Test
+    @Tag("UPDATE")
+    @DisplayName("Update - ERROR - Invalid attributes > max size (125)")
+    public void givenInvalidAttributes_whenUpdate_thenReturnFalse() {
+        // GIVEN
+        when(ruleNameRepository.save(ruleName)).thenReturn(ruleName);
+        when(ruleNameRepository.save(ruleNameTwo)).thenReturn(ruleNameTwo);
+        when(ruleNameService.findAllRuleNames()).thenReturn(allRuleName);
+
+        RuleName rulenameForUpdate = new RuleName("name",
+                "123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456 95gf",
+                "json", "template", "sql str", "sql part");
+
+        // WHEN
+        boolean result = ruleNameService.updateRuleName(1, rulenameForUpdate);
+
+        // THEN
+        assertThat(result).isFalse();
+        verify(ruleNameRepository, times(0)).save(ruleName);
+        assertThat(ruleNameRepository.findAll().size()).isEqualTo(2); // unchanged
+        assertThat(ruleNameRepository.findAll().get(0).getId()).isEqualTo(1);
+        assertThat(ruleNameRepository.findAll().get(0).getDescription())
+                .isEqualTo("description 1");
+        assertThat(ruleNameRepository.findAll().get(1).getId()).isEqualTo(2);
+        assertThat(ruleNameRepository.findAll().get(1).getDescription())
+                .isEqualTo("description 2");
     }
 
 }

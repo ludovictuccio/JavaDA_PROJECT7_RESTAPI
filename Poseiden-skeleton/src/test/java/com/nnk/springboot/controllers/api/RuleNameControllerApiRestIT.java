@@ -136,4 +136,24 @@ public class RuleNameControllerApiRestIT {
                 .andExpect(status().isOk()).andReturn();
     }
 
+    @Test
+    @Tag("PUT")
+    @DisplayName("Put - ERROR - Invalid id")
+    public void givenRulenameToUpdate_whenInvalidId_thenReturnBadRequest()
+            throws Exception {
+        ruleNameService.saveRuleName(new RuleName("name", "description", "json",
+                "template", "sql str", "sql part"));
+        ruleNameRepository.findAll().get(0).setId(1);
+
+        RuleName rulenameToUpdate = new RuleName("name", "description", "json",
+                "template", "sql str", "sql part");
+        String jsonContent = objectMapper.writeValueAsString(rulenameToUpdate);
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.put("/api/rulename/update")
+                        .contentType(APPLICATION_JSON).param("id", "99")
+                        .content(jsonContent))
+                .andExpect(status().isBadRequest());
+    }
+
 }

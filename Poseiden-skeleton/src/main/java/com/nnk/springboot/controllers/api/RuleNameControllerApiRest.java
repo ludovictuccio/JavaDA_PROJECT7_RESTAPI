@@ -10,8 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nnk.springboot.domain.RuleName;
@@ -51,5 +53,25 @@ public class RuleNameControllerApiRest {
     @GetMapping("/get")
     public List<RuleName> getAllRulename() {
         return ruleNameService.findAllRuleNames();
+    }
+
+    /**
+     * Method controller used to update a rulename.
+     *
+     * @param id
+     * @param ruleName
+     * @return ResponseEntity (ok or bad request)
+     */
+    @PutMapping("/update")
+    public ResponseEntity<RuleName> updateRating(
+            @Valid @RequestParam final Integer id,
+            @Valid @RequestBody final RuleName ruleName) {
+
+        boolean result = ruleNameService.updateRuleName(id, ruleName);
+
+        if (result) {
+            return new ResponseEntity<RuleName>(HttpStatus.OK);
+        }
+        return new ResponseEntity<RuleName>(HttpStatus.BAD_REQUEST);
     }
 }
