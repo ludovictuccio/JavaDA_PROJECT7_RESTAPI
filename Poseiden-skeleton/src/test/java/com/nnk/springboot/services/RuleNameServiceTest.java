@@ -3,6 +3,7 @@ package com.nnk.springboot.services;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,6 +88,45 @@ public class RuleNameServiceTest {
         // THEN
         assertThat(result).isNull();
         verify(ruleNameRepository, times(0)).save(ruleName);
+    }
+
+    @Test
+    @Tag("FIND")
+    @DisplayName("Find all - OK - 2 rating")
+    public void givenTwoRulename_whenFindAll_thenReturnTwoSizeList() {
+        // GIVEN
+        when(ruleNameService.findAllRuleNames()).thenReturn(allRuleName);
+
+        // WHEN
+        List<RuleName> resultList = ruleNameService.findAllRuleNames();
+
+        // THEN
+        assertThat(resultList.size()).isNotNull();
+        assertThat(resultList.size()).isEqualTo(2);
+        assertThat(ruleNameRepository.findAll().size()).isEqualTo(2);
+        assertThat(ruleNameRepository.findAll().get(0).getId()).isNotNull();
+        assertThat(ruleNameRepository.findAll().get(0).getDescription())
+                .isEqualTo("description 1");
+        assertThat(ruleNameRepository.findAll().get(1).getId()).isNotNull();
+        assertThat(ruleNameRepository.findAll().get(1).getDescription())
+                .isEqualTo("description 2");
+    }
+
+    @Test
+    @Tag("FIND")
+    @DisplayName("Find all - Ok - Empty list / size = 0")
+    public void givenZeroRulename_whenFindAll_thenReturnEmptyList() {
+        // GIVEN
+        allRuleName.clear();
+        when(ruleNameService.findAllRuleNames()).thenReturn(allRuleName);
+
+        // WHEN
+        List<RuleName> resultList = ruleNameService.findAllRuleNames();
+
+        // THEN
+        assertThat(resultList.size()).isNotNull();
+        assertThat(resultList.size()).isEqualTo(0);
+        assertThat(ruleNameRepository.findAll().size()).isEqualTo(0);
     }
 
 }

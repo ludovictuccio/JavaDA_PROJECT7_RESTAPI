@@ -1,5 +1,7 @@
 package com.nnk.springboot.services;
 
+import java.util.List;
+
 import com.nnk.springboot.domain.RuleName;
 
 /**
@@ -10,5 +12,7 @@ import com.nnk.springboot.domain.RuleName;
 public interface IRuleNameService {
 
     RuleName saveRuleName(RuleName ruleName);
+
+    List<RuleName> findAllRuleNames();
 
 }

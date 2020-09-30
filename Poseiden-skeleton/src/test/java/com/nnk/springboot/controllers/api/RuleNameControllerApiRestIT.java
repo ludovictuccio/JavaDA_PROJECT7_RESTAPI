@@ -107,4 +107,33 @@ public class RuleNameControllerApiRestIT {
                 .andExpect(status().isBadRequest()).andReturn();
     }
 
+    @Test
+    @Tag("GET")
+    @DisplayName("Get - OK - 2 ruleName in db")
+    public void givenTwoRuleNameInDb_whenGet_thenReturnListWithTwoRuleName()
+            throws Exception {
+        ruleNameService.saveRuleName(new RuleName("name", "description", "json",
+                "template", "sql str", "sql part"));
+        ruleNameService.saveRuleName(new RuleName("name 2", "description 2",
+                "json 2", "template 2", "sql str 2", "sql part 2"));
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.get("/api/rulename/get")
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk()).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk()).andReturn();
+    }
+
+    @Test
+    @Tag("GET")
+    @DisplayName("Get - OK - 0 ruleName in db")
+    public void givenZeroRuleNameInDb_whenGet_thenReturnEmptyList()
+            throws Exception {
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.get("/api/rulename/get")
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk()).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk()).andReturn();
+    }
+
 }

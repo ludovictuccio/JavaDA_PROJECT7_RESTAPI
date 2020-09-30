@@ -1,5 +1,6 @@
 package com.nnk.springboot.services;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -67,6 +68,13 @@ public class RuleNameService implements IRuleNameService {
         }
         ruleNameRepository.save(ruleName);
         return ruleName;
+    }
+
+    /**
+     * Method service used to find all rulenames.
+     */
+    public List<RuleName> findAllRuleNames() {
+        return ruleNameRepository.findAll();
     }
 
 }
