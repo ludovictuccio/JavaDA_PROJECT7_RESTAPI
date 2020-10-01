@@ -1,6 +1,7 @@
 package com.nnk.springboot.services;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -50,7 +51,8 @@ public class TradeService implements ITradeService {
                         + contraintes.getMessage());
             }
             return null;
-        } else if (trade.getTradeDate().isAfter(LocalDateTime.now())) {
+        } else if (trade.getTradeDate() != null
+                && trade.getTradeDate().isAfter(LocalDateTime.now())) {
             LOGGER.error(
                     "The trade date can not be after actual date. Please check the format: dd/MM/yyyy HH:mm");
             return null;
@@ -72,14 +74,24 @@ public class TradeService implements ITradeService {
             LOGGER.error(
                     "Failed to add a new trade. Please check that 'creation name' is not empty.");
             return null;
-        } else if (!trade.getRevisionName().isEmpty()) {
+        } else if (!trade.getRevisionName().isBlank()) {
             LOGGER.error(
-                    "The revision name can not be no-empty. Itis use for trade update process.");
+                    "The revision name can not be no-empty. It's use for trade update process.");
+            return null;
+        } else if (trade.getCreationName().isBlank()) {
+            LOGGER.error("The creation name can not be empty.");
             return null;
         }
         trade.setCreationDate(LocalDateTime.now());
         tradeRepository.save(trade);
         return trade;
+    }
+
+    /**
+     * Method service used to find all Trades.
+     */
+    public List<Trade> findAllTrade() {
+        return tradeRepository.findAll();
     }
 
 //    //for update

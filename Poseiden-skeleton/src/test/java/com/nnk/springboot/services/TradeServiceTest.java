@@ -3,6 +3,7 @@ package com.nnk.springboot.services;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -60,6 +61,7 @@ public class TradeServiceTest {
     @DisplayName("Save RuleName - OK")
     public void givenValidRuleName_whenSave_thenReturnSaved() {
         // GIVEN
+        trade.setCreationName("Creation name");
 
         // WHEN
         result = tradeService.saveTrade(trade);
@@ -80,6 +82,7 @@ public class TradeServiceTest {
     public void givenTradeDateAfterActualDate_whenSave_thenReturnNull() {
         // GIVEN
         trade.setTradeDate(LocalDateTime.now().plusHours(1));
+        trade.setCreationName("Creation name");
 
         // WHEN
         result = tradeService.saveTrade(trade);
@@ -95,6 +98,7 @@ public class TradeServiceTest {
     public void givenInvalidRuleName_whenSave_thenReturnNull() {
         // GIVEN
         trade.setStatus("123456789 12");
+        trade.setCreationName("Creation name");
 
         // WHEN
         result = tradeService.saveTrade(trade);
@@ -110,6 +114,7 @@ public class TradeServiceTest {
     public void givenEmptyAccountEntry_whenSave_thenReturnNull() {
         // GIVEN
         trade.setAccount("");
+        trade.setCreationName("Creation name");
 
         // WHEN
         result = tradeService.saveTrade(trade);
@@ -125,6 +130,7 @@ public class TradeServiceTest {
     public void givenNullAccount_whenSave_thenReturnNull() {
         // GIVEN
         trade.setAccount(null);
+        trade.setCreationName("Creation name");
 
         // WHEN
         result = tradeService.saveTrade(trade);
@@ -140,6 +146,7 @@ public class TradeServiceTest {
     public void givenEmptyType_whenSave_thenReturnNull() {
         // GIVEN
         trade.setType("");
+        trade.setCreationName("Creation name");
 
         // WHEN
         result = tradeService.saveTrade(trade);
@@ -155,6 +162,7 @@ public class TradeServiceTest {
     public void givenNullType_whenSave_thenReturnNull() {
         // GIVEN
         trade.setType(null);
+        trade.setCreationName("Creation name");
 
         // WHEN
         result = tradeService.saveTrade(trade);
@@ -162,5 +170,75 @@ public class TradeServiceTest {
         // THEN
         assertThat(result).isNull();
         verify(tradeRepository, times(0)).save(trade);
+    }
+
+    @Test
+    @Tag("SAVE")
+    @DisplayName("Save RuleName - ERROR - Trade date after actual date")
+    public void givenInvalidTradeDate_whenSave_thenReturnNull() {
+        // GIVEN
+        trade.setTradeDate(LocalDateTime.now().plusMonths(1));
+        trade.setCreationName("Creation name");
+
+        // WHEN
+        result = tradeService.saveTrade(trade);
+
+        // THEN
+        assertThat(result).isNull();
+        verify(tradeRepository, times(0)).save(trade);
+    }
+
+    @Test
+    @Tag("SAVE")
+    @DisplayName("Save RuleName - ERROR - empty creation name")
+    public void givenEmptyCreationName_whenSave_thenReturnNull() {
+        // GIVEN
+        trade.setCreationName("");
+
+        // WHEN
+        result = tradeService.saveTrade(trade);
+
+        // THEN
+        assertThat(result).isNull();
+        verify(tradeRepository, times(0)).save(trade);
+    }
+
+    @Test
+    @Tag("FIND")
+    @DisplayName("Find all - OK - 2 trades")
+    public void givenTwoTrades_whenFindAll_thenReturnTwoSizeList() {
+        // GIVEN
+        when(tradeService.findAllTrade()).thenReturn(allTrades);
+
+        // WHEN
+        List<Trade> resultList = tradeService.findAllTrade();
+
+        // THEN
+        assertThat(resultList.size()).isNotNull();
+        assertThat(resultList.size()).isEqualTo(2);
+        assertThat(tradeRepository.findAll().size()).isEqualTo(2);
+        assertThat(tradeRepository.findAll().get(0).getTradeId()).isNotNull();
+        assertThat(tradeRepository.findAll().get(0).getAccount())
+                .isEqualTo("account");
+        assertThat(tradeRepository.findAll().get(1).getTradeId()).isNotNull();
+        assertThat(tradeRepository.findAll().get(1).getAccount())
+                .isEqualTo("account 2");
+    }
+
+    @Test
+    @Tag("FIND")
+    @DisplayName("Find all - Ok - Empty list / size = 0")
+    public void givenZeroTrade_whenFindAll_thenReturnEmptyList() {
+        // GIVEN
+        allTrades.clear();
+        when(tradeService.findAllTrade()).thenReturn(allTrades);
+
+        // WHEN
+        List<Trade> resultList = tradeService.findAllTrade();
+
+        // THEN
+        assertThat(resultList.size()).isNotNull();
+        assertThat(resultList.size()).isEqualTo(0);
+        assertThat(tradeRepository.findAll().size()).isEqualTo(0);
     }
 }

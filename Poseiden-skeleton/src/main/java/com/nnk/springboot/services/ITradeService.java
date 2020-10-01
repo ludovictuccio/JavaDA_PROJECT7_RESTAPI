@@ -1,5 +1,7 @@
 package com.nnk.springboot.services;
 
+import java.util.List;
+
 import com.nnk.springboot.domain.Trade;
 
 /**
@@ -10,5 +12,7 @@ import com.nnk.springboot.domain.Trade;
 public interface ITradeService {
 
     Trade saveTrade(Trade trade);
+
+    List<Trade> findAllTrade();
 
 }

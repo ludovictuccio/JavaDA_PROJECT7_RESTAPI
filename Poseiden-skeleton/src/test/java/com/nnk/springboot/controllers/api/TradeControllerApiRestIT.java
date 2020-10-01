@@ -139,4 +139,37 @@ public class TradeControllerApiRestIT {
                 .andExpect(status().isBadRequest()).andReturn();
     }
 
+    @Test
+    @Tag("GET")
+    @DisplayName("Get - OK - 2 trades in db")
+    public void givenTwoTradesInDb_whenGet_thenReturnListWithTwoTrades()
+            throws Exception {
+        tradeService.saveTrade(new Trade("account", "type", 10d, 10d, 10d, 10d,
+                LocalDateTime.now().minusMonths(2), "security", "status",
+                "trader", "benchmark", "book", "creationName", "", "dealName",
+                "dealType", "sourceListId", "side"));
+        tradeService.saveTrade(new Trade("account 2", "type2", 20d, 20d, 20d,
+                20d, LocalDateTime.now().minusMonths(2), "security2", "status",
+                "trader", "benchmark", "book2", "creationName2", "",
+                "dealName2", "dealType2", "sourceListId", "side2"));
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.get("/api/trade/get")
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk()).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk()).andReturn();
+    }
+
+    @Test
+    @Tag("GET")
+    @DisplayName("Get - OK - 0 trade in db")
+    public void givenZeroTradesInDb_whenGet_thenReturnEmptyList()
+            throws Exception {
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.get("/api/trade/get")
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk()).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk()).andReturn();
+    }
+
 }
