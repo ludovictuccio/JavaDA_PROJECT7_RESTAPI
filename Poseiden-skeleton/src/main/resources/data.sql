@@ -3,7 +3,7 @@ CREATE DATABASE poseidon_db CHARACTER SET utf8mb4;
 USE poseidon_db;
 
 CREATE TABLE bid_list (
-  bid_list_id tinyint(4) NOT NULL AUTO_INCREMENT,
+  bid_list_id int NOT NULL AUTO_INCREMENT,
   account VARCHAR(30) NOT NULL,
   type VARCHAR(30) NOT NULL,
   bid_quantity DOUBLE,
@@ -29,7 +29,7 @@ CREATE TABLE bid_list (
 ) ENGINE = INNODB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE trade (
-  trade_id tinyint(4) NOT NULL AUTO_INCREMENT,
+  trade_id int NOT NULL AUTO_INCREMENT,
   account VARCHAR(30) NOT NULL,
   type VARCHAR(30) NOT NULL,
   buy_quantity DOUBLE,
@@ -54,7 +54,7 @@ CREATE TABLE trade (
 ) ENGINE = INNODB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE curve_point (
-  id tinyint(4) NOT NULL AUTO_INCREMENT,
+  id int NOT NULL AUTO_INCREMENT,
   curve_id tinyint,
   as_of_date TIMESTAMP,
   term DOUBLE,
@@ -64,7 +64,7 @@ CREATE TABLE curve_point (
 ) ENGINE = INNODB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE rating (
-  id tinyint(4) NOT NULL AUTO_INCREMENT,
+  id int NOT NULL AUTO_INCREMENT,
   moodys_rating VARCHAR(125),
   sandp_rating VARCHAR(125),
   fitch_rating VARCHAR(125),
@@ -73,7 +73,7 @@ CREATE TABLE rating (
 ) ENGINE = INNODB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE rule_name (
-  id tinyint(4) NOT NULL AUTO_INCREMENT,
+  id int NOT NULL AUTO_INCREMENT,
   name VARCHAR(125),
   description VARCHAR(125),
   json VARCHAR(125),
@@ -84,7 +84,7 @@ CREATE TABLE rule_name (
 ) ENGINE = INNODB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE users (
-  id tinyint(4) NOT NULL AUTO_INCREMENT,
+  id int NOT NULL AUTO_INCREMENT,
   username VARCHAR(125),
   password VARCHAR(125),
   fullname VARCHAR(125),
