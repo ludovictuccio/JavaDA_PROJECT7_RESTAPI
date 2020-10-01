@@ -1,0 +1,14 @@
+package com.nnk.springboot.services;
+
+import com.nnk.springboot.domain.User;
+
+/**
+ * IUserService interface class.
+ *
+ * @author Ludovic Tuccio
+ */
+public interface IUserService {
+
+    User saveUser(User user);
+
+}

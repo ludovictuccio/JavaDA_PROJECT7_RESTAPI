@@ -18,7 +18,7 @@ import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.repositories.TradeRepository;
 
 /**
- * TradeService Service class.
+ * TradeService class.
  *
  * @author Ludovic Tuccio
  */
