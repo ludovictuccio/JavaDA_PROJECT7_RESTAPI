@@ -1,5 +1,6 @@
 package com.nnk.springboot.services;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -54,12 +55,17 @@ public class UserService implements IUserService {
             LOGGER.error(
                     "ERROR: this username is already used. Please change.");
             return null;
+        } else if (!user.getRole().equalsIgnoreCase("USER")
+                && !user.getRole().equalsIgnoreCase("ADMIN")) {
+            LOGGER.error("ERROR: the role must be 'admin' or 'user'");
+            return null;
         }
         return user;
     }
 
     /**
-     * Method service used to save a new user. Username is unique attribute.
+     * Method service used to save a new user. Username is unique attribute and
+     * role must be ADMIN or USER.
      *
      * @param user
      * @return user
@@ -67,9 +73,18 @@ public class UserService implements IUserService {
     public User saveUser(final User user) {
 
         if (checkValidUser(user) == null) {
+            LOGGER.error("Save user process exit.");
             return null;
         }
+        user.setRole(user.getRole().toUpperCase());
         userRepository.save(user);
         return user;
+    }
+
+    /**
+     * Method service used to find all User.
+     */
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
     }
 }

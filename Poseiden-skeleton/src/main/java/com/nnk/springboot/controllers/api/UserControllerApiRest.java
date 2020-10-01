@@ -1,11 +1,14 @@
 package com.nnk.springboot.controllers.api;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +40,16 @@ public class UserControllerApiRest {
             return new ResponseEntity<User>(HttpStatus.CREATED);
         }
         return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Method controller used to find all Users.
+     *
+     * @return all Users
+     */
+    @GetMapping("/get")
+    public List<User> getAllUsers() {
+        return userService.findAllUsers();
     }
 
 }

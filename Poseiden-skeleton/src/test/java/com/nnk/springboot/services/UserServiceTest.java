@@ -40,12 +40,11 @@ public class UserServiceTest {
     public void setUpPerTest() {
         allUsers = new ArrayList<>();
 
-        user = new User("username1", "validPassword1&", "fullname1", "role1");
+        user = new User("username1", "validPassword1&", "fullname1", "user");
         user.setId(1);
         allUsers.add(user);
 
-        userTwo = new User("username2", "validPassword2&", "fullname2",
-                "role2");
+        userTwo = new User("username2", "validPassword2&", "fullname2", "user");
         userTwo.setId(2);
         allUsers.add(userTwo);
     }
@@ -63,7 +62,7 @@ public class UserServiceTest {
         assertThat(result.getUsername()).isEqualTo("username1");
         assertThat(result.getPassword()).isEqualTo("validPassword1&");
         assertThat(result.getFullname()).isEqualTo("fullname1");
-        assertThat(result.getRole()).isEqualTo("role1");
+        assertThat(result.getRole()).isEqualTo("USER");
         verify(userRepository, times(1)).save(user);
     }
 
@@ -93,7 +92,7 @@ public class UserServiceTest {
                 .thenReturn(user);
 
         User alreadyExistingUsername = new User("username1", "validPassword1&",
-                "fullname1", "role1");
+                "fullname1", "user");
         alreadyExistingUsername.setId(80);
 
         // WHEN
@@ -238,5 +237,46 @@ public class UserServiceTest {
         // THEN
         assertThat(result).isNull();
         verify(userRepository, times(0)).save(user);
+    }
+
+    @Test
+    @Tag("FIND")
+    @DisplayName("Find all - OK - 2 users")
+    public void givenTwoUsers_whenFindAll_thenReturnTwoSizeList() {
+        // GIVEN
+        when(userService.findAllUsers()).thenReturn(allUsers);
+
+        // WHEN
+        List<User> resultList = userService.findAllUsers();
+
+        // THEN
+        verify(userRepository, times(1)).findAll();
+        assertThat(resultList.size()).isNotNull();
+        assertThat(resultList.size()).isEqualTo(2);
+        assertThat(userRepository.findAll().size()).isEqualTo(2);
+        assertThat(userRepository.findAll().get(0).getId()).isNotNull();
+        assertThat(userRepository.findAll().get(0).getUsername())
+                .isEqualTo("username1");
+        assertThat(userRepository.findAll().get(1).getId()).isNotNull();
+        assertThat(userRepository.findAll().get(1).getUsername())
+                .isEqualTo("username2");
+    }
+
+    @Test
+    @Tag("FIND")
+    @DisplayName("Find all - Ok - Empty list / size = 0")
+    public void givenZeroUser_whenFindAll_thenReturnEmptyList() {
+        // GIVEN
+        allUsers.clear();
+        when(userService.findAllUsers()).thenReturn(allUsers);
+
+        // WHEN
+        List<User> resultList = userService.findAllUsers();
+
+        // THEN
+        verify(userRepository, times(1)).findAll();
+        assertThat(resultList.size()).isNotNull();
+        assertThat(resultList.size()).isEqualTo(0);
+        assertThat(userRepository.findAll().size()).isEqualTo(0);
     }
 }

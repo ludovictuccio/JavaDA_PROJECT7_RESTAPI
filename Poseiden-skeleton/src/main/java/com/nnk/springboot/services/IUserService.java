@@ -1,5 +1,7 @@
 package com.nnk.springboot.services;
 
+import java.util.List;
+
 import com.nnk.springboot.domain.User;
 
 /**
@@ -10,5 +12,7 @@ import com.nnk.springboot.domain.User;
 public interface IUserService {
 
     User saveUser(User user);
+
+    List<User> findAllUsers();
 
 }
