@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -68,6 +69,23 @@ public class TradeControllerApiRest {
             @Valid @RequestBody final Trade trade) {
 
         boolean result = tradeService.updateTrade(id, trade);
+
+        if (result) {
+            return new ResponseEntity<Trade>(HttpStatus.OK);
+        }
+        return new ResponseEntity<Trade>(HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Method controller used to delete a trade.
+     *
+     * @param id the trade id
+     * @return ResponseEntity (ok or bad request)
+     */
+    @DeleteMapping("/delete")
+    public ResponseEntity<Trade> deleteTrade(
+            @Valid @RequestParam final Integer id) {
+        boolean result = tradeService.deleteTrade(id);
 
         if (result) {
             return new ResponseEntity<Trade>(HttpStatus.OK);

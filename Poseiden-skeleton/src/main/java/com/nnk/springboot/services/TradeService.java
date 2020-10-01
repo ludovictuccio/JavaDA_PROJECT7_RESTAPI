@@ -128,4 +128,24 @@ public class TradeService implements ITradeService {
         return isUpdated;
     }
 
+    /**
+     * Method service used to delete a trade with his id.
+     *
+     * @param tradeId the trade id
+     * @return isDeleted boolean
+     */
+    public boolean deleteTrade(final Integer tradeId) {
+        boolean isDeleted = false;
+
+        Trade existingTrade = tradeRepository.findById(tradeId).orElse(null);
+
+        if (existingTrade == null) {
+            LOGGER.error("Unknow trade id for number: {}", tradeId);
+            return isDeleted;
+        }
+        tradeRepository.delete(existingTrade);
+        isDeleted = true;
+        return isDeleted;
+    }
+
 }

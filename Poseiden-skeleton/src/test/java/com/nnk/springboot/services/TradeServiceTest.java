@@ -432,4 +432,40 @@ public class TradeServiceTest {
                 .isEqualTo("book 2");
     }
 
+    @Test
+    @Tag("DELETE")
+    @DisplayName("Delete - OK - Valid id")
+    public void givenTradeInDb_whenDeleteWithValidId_thenReturnTrue() {
+        // GIVEN
+        when(tradeRepository.save(trade)).thenReturn(trade);
+        when(tradeRepository.save(tradeTwo)).thenReturn(tradeTwo);
+        when(tradeRepository.findById(1)).thenReturn(Optional.of(trade));
+
+        // WHEN
+        // 1 = ruleName id
+        boolean isDeleted = tradeService.deleteTrade(1);
+
+        // THEN
+        assertThat(isDeleted).isTrue();
+        verify(tradeRepository, times(1)).delete(trade);
+    }
+
+    @Test
+    @Tag("DELETE")
+    @DisplayName("Delete - ERROR - Invalid id")
+    public void givenTradeInDb_whenDeleteWithInvalidId_thenReturnTrue() {
+        // GIVEN
+        when(tradeRepository.save(trade)).thenReturn(trade);
+        when(tradeRepository.save(tradeTwo)).thenReturn(tradeTwo);
+        when(tradeRepository.findById(1)).thenReturn(Optional.of(trade));
+
+        // WHEN
+        // 1 = ruleName id
+        boolean isDeleted = tradeService.deleteTrade(99);
+
+        // THEN
+        assertThat(isDeleted).isFalse();
+        verify(tradeRepository, times(0)).delete(trade);
+    }
+
 }

@@ -195,4 +195,15 @@ public class TradeControllerApiRestIT {
                 .andExpect(status().isBadRequest());
     }
 
+    @Test
+    @Tag("DELETE")
+    @DisplayName("Delete - ERROR - Unknow id")
+    public void givenZeroTrade_whenDeleteInvalidId_thenReturnBadRequest()
+            throws Exception {
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.delete("/api/trade/delete")
+                        .contentType(APPLICATION_JSON).param("id", "99"))
+                .andExpect(status().isBadRequest());
+    }
+
 }
