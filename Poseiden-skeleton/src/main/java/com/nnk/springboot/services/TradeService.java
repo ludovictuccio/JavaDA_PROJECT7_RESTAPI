@@ -94,11 +94,38 @@ public class TradeService implements ITradeService {
         return tradeRepository.findAll();
     }
 
-//    //for update
-//    else if (trade.getTradeDate().isAfter(LocalDateTime.now())
-//            || trade.getTradeDate().isAfter(trade.getCreationDate())) {
-//        LOGGER.error(
-//                "The trade date can not be after actual date. Please check the format: dd/MM/yyyy HH:mm");
-//        return null;
-//    }
+    /**
+     * Method service used to update a trade.
+     *
+     * @param tradeId   the trade id
+     * @param trade     a Trade object
+     * @param isUpdated boolean
+     */
+    public boolean updateTrade(final Integer tradeId, final Trade trade) {
+        boolean isUpdated = false;
+
+        if (checkValidTrade(trade) == null) {
+            return isUpdated;
+        }
+        Trade existingTrade = tradeRepository.findById(tradeId).orElse(null);
+
+        if (existingTrade == null) {
+            LOGGER.error("Unknow trade id for number: {}", tradeId);
+            return isUpdated;
+        } else if (trade.getRevisionName().isBlank()) {
+            LOGGER.error("The revision name can't be empty.");
+            return isUpdated;
+        } else if (!trade.getCreationName()
+                .equals(existingTrade.getCreationName())) {
+            LOGGER.error("The creation name can't be changed.");
+            return isUpdated;
+        }
+        trade.setRevisionDate(LocalDateTime.now());
+        trade.setCreationDate(existingTrade.getCreationDate());
+        tradeRepository.delete(existingTrade);
+        tradeRepository.save(trade);
+        isUpdated = true;
+        return isUpdated;
+    }
+
 }

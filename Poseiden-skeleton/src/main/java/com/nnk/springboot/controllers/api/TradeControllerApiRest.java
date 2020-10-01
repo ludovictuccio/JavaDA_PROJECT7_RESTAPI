@@ -10,8 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nnk.springboot.domain.Trade;
@@ -51,6 +53,26 @@ public class TradeControllerApiRest {
     @GetMapping("/get")
     public List<Trade> getAllTrade() {
         return tradeService.findAllTrade();
+    }
+
+    /**
+     * Method controller used to update a trade.
+     *
+     * @param id
+     * @param trade
+     * @return ResponseEntity (ok or bad request)
+     */
+    @PutMapping("/update")
+    public ResponseEntity<Trade> updateTrade(
+            @Valid @RequestParam final Integer id,
+            @Valid @RequestBody final Trade trade) {
+
+        boolean result = tradeService.updateTrade(id, trade);
+
+        if (result) {
+            return new ResponseEntity<Trade>(HttpStatus.OK);
+        }
+        return new ResponseEntity<Trade>(HttpStatus.BAD_REQUEST);
     }
 
 }

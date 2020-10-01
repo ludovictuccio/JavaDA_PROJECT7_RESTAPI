@@ -119,9 +119,9 @@ public class BidListService implements IBidListService {
                         "The trade date can not be after actual date or null. Please check the format: dd/MM/yyyy HH:mm");
                 return null;
             }
-            bidListRepository.delete(existingBid);
             bid.setRevisionDate(LocalDateTime.now());
             bid.setCreationDate(existingBid.getCreationDate());
+            bidListRepository.delete(existingBid);
         } catch (NullPointerException np) {
             LOGGER.error(
                     "Null pointer exception. Please check that bidlist date is entered.");

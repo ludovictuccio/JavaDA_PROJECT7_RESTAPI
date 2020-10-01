@@ -15,4 +15,6 @@ public interface ITradeService {
 
     List<Trade> findAllTrade();
 
+    boolean updateTrade(Integer tradeId, Trade trade);
+
 }

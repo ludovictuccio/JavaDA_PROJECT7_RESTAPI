@@ -172,4 +172,27 @@ public class TradeControllerApiRestIT {
                 .andExpect(status().isOk()).andReturn();
     }
 
+    @Test
+    @Tag("PUT")
+    @DisplayName("Put - ERROR - Invalid id")
+    public void givenTradeToUpdate_whenInvalidId_thenReturnBadRequest()
+            throws Exception {
+        tradeService.saveTrade(new Trade("account", "type", 10d, 10d, 10d, 10d,
+                LocalDateTime.now().minusMonths(2), "security", "status",
+                "trader", "benchmark", "book", "creationName", "", "dealName",
+                "dealType", "sourceListId", "side"));
+
+        Trade tradeToUpdate = new Trade("account 2", "type2", 20d, 20d, 20d,
+                20d, LocalDateTime.now().minusMonths(2), "security2", "status",
+                "trader", "benchmark", "book2", "creationName2", "",
+                "dealName2", "dealType2", "sourceListId", "side2");
+        String jsonContent = objectMapper.writeValueAsString(tradeToUpdate);
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.put("/api/trade/update")
+                        .contentType(APPLICATION_JSON).param("id", "99")
+                        .content(jsonContent))
+                .andExpect(status().isBadRequest());
+    }
+
 }
