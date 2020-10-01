@@ -1,5 +1,6 @@
 package com.nnk.springboot.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -72,6 +73,7 @@ public class BidListService implements IBidListService {
     public BidList saveBid(final String bidAccount, final String bidType,
             final Double bidQuantity) {
         BidList bid = new BidList();
+        bid.setCreationDate(LocalDateTime.now());
         bid.setAccount(bidAccount);
         bid.setType(bidType);
         bid.setBidQuantity(bidQuantity);
@@ -92,24 +94,41 @@ public class BidListService implements IBidListService {
      */
     public BidList updateBid(final BidList bid, final String bidAccount,
             final String bidType) {
+        try {
+            BidList existingBid = bidListRepository.findById(bid.getBidListId())
+                    .orElse(null);
 
-        BidList existingBid = bidListRepository.findById(bid.getBidListId())
-                .orElse(null);
-
-        if (existingBid == null) {
-            LOGGER.error("Unknow id bidList");
-            return null;
-        } else if (checkValidBid(bid) == null) {
-            LOGGER.error("Invalid bidlist. Please check the informations.");
-            return null;
-        } else if (!bidAccount.equals(existingBid.getAccount())
-                || !bidType.equals(existingBid.getType())) {
-            LOGGER.error(
-                    "Invalid account or type. Please check the informations: the account and type must be the same as the bid to update.");
-            return null;
-        } else
+            if (existingBid == null) {
+                LOGGER.error("Unknow id bidList");
+                return null;
+            } else if (checkValidBid(bid) == null) {
+                LOGGER.error("Invalid bidlist. Please check the informations.");
+                return null;
+            } else if (!bidAccount.equals(existingBid.getAccount())
+                    || !bidType.equals(existingBid.getType())) {
+                LOGGER.error(
+                        "Invalid account or type. Please check the informations: the account and type must be the same as the bid to update.");
+                return null;
+            } else if (bid.getRevisionName().isBlank()) {
+                LOGGER.error(
+                        "Failed to update bidList: the revision name can not be empty.");
+                return null;
+            } else if (bid.getBidListDate().isAfter(LocalDateTime.now())
+                    || bid.getBidListDate() == null) {
+                LOGGER.error(
+                        "The trade date can not be after actual date or null. Please check the format: dd/MM/yyyy HH:mm");
+                return null;
+            }
             bidListRepository.delete(existingBid);
+            bid.setRevisionDate(LocalDateTime.now());
+            bid.setCreationDate(existingBid.getCreationDate());
+        } catch (NullPointerException np) {
+            LOGGER.error(
+                    "Null pointer exception. Please check that bidlist date is entered.");
+            return null;
+        }
         return bidListRepository.save(bid);
+
     }
 
     /**

@@ -5,6 +5,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -67,6 +68,7 @@ public class BidListServiceTest {
 
         // THEN
         assertThat(result.getAccount()).isNotNull();
+        assertThat(result.getCreationDate()).isNotNull();
         assertThat(result.getAccount()).isEqualTo("Account Test");
         assertThat(result.getType()).isNotNull();
         assertThat(result.getType()).isEqualTo("Type Test");
@@ -86,6 +88,7 @@ public class BidListServiceTest {
 
         // THEN
         assertThat(result.getAccount()).isNotNull();
+        assertThat(result.getCreationDate()).isNotNull();
         assertThat(result.getAccount())
                 .isEqualTo("Type text with 30 size ACCOUNT");
         assertThat(result.getType()).isNotNull();
@@ -106,6 +109,7 @@ public class BidListServiceTest {
 
         // THEN
         assertThat(result.getAccount()).isNotNull();
+        assertThat(result.getCreationDate()).isNotNull();
         assertThat(result.getAccount()).isEqualTo("Account Test");
         assertThat(result.getType()).isNotNull();
         assertThat(result.getType())
@@ -336,6 +340,103 @@ public class BidListServiceTest {
         bidInfosToUpdate.setType("new type");
         bidInfosToUpdate.setBidQuantity(150.98d);
         bidInfosToUpdate.setBook("book");
+        bidInfosToUpdate.setRevisionName("revision");
+        bidInfosToUpdate.setBidListDate(LocalDateTime.now().minusMonths(1));
+
+        when(bidListRepository.save(bid)).thenReturn(bid);
+        when(bidListRepository.save(bidInfosToUpdate))
+                .thenReturn(bidInfosToUpdate);
+        when(bidListRepository.findById(10)).thenReturn(Optional.of(bid));
+
+        // WHEN
+        result = bidListService.updateBid(bidInfosToUpdate, "Account Test",
+                "Type Test");
+
+        // THEN
+        assertThat(result).isNotNull();
+        assertThat(result.getBidListDate()).isNotNull();
+        assertThat(result.getRevisionDate()).isNotNull();
+        assertThat(result.getRevisionName()).isEqualTo("revision");
+        assertThat(result.getBidListId()).isEqualTo(10);
+        assertThat(result.getAccount()).isEqualTo("new account");
+        assertThat(result.getType()).isEqualTo("new type");
+        assertThat(result.getBook()).isEqualTo("book");
+        assertThat(result.getBidQuantity()).isEqualTo(150.98d);
+        verify(bidListRepository, times(1)).delete(bid);
+        verify(bidListRepository, times(1)).save(result);
+    }
+
+    @Test
+    @Tag("UPDATE")
+    @DisplayName("Update - ERROR - Invalid bid list date (after actual date)")
+    public void givenInvalidBidListDate_whenUpdate_thenReturnSaved() {
+        // GIVEN
+        BidList bidInfosToUpdate = new BidList();
+        bidInfosToUpdate.setBidListId(10);
+        bidInfosToUpdate.setAccount("new account");
+        bidInfosToUpdate.setType("new type");
+        bidInfosToUpdate.setBidQuantity(150.98d);
+        bidInfosToUpdate.setBook("book");
+        bidInfosToUpdate.setRevisionName("revision");
+        bidInfosToUpdate.setBidListDate(LocalDateTime.now().plusMonths(1));
+
+        when(bidListRepository.save(bid)).thenReturn(bid);
+        when(bidListRepository.save(bidInfosToUpdate))
+                .thenReturn(bidInfosToUpdate);
+        when(bidListRepository.findById(10)).thenReturn(Optional.of(bid));
+
+        // WHEN
+        result = bidListService.updateBid(bidInfosToUpdate, "Account Test",
+                "Type Test");
+
+        // THEN
+        assertThat(result).isNull();
+        verify(bidListRepository, times(0)).delete(bid);
+        verify(bidListRepository, times(0)).save(result);
+    }
+
+    @Test
+    @Tag("UPDATE")
+    @DisplayName("Update - ERROR - Null bidlist date")
+    public void givenNullBidListDate_whenUpdate_thenReturnSaved() {
+        // GIVEN
+        BidList bidInfosToUpdate = new BidList();
+        bidInfosToUpdate.setBidListId(10);
+        bidInfosToUpdate.setAccount("new account");
+        bidInfosToUpdate.setType("new type");
+        bidInfosToUpdate.setBidQuantity(150.98d);
+        bidInfosToUpdate.setBook("book");
+        bidInfosToUpdate.setRevisionName("revision");
+        bidInfosToUpdate.setBidListDate(null);
+
+        when(bidListRepository.save(bid)).thenReturn(bid);
+        when(bidListRepository.save(bidInfosToUpdate))
+                .thenReturn(bidInfosToUpdate);
+        when(bidListRepository.findById(10)).thenReturn(Optional.of(bid));
+
+        // WHEN
+        result = bidListService.updateBid(bidInfosToUpdate, "Account Test",
+                "Type Test");
+
+        // THEN
+        assertThat(result).isNull();
+        verify(bidListRepository, times(0)).delete(bid);
+        verify(bidListRepository, times(0)).save(result);
+    }
+
+    @Test
+    @Tag("UPDATE")
+    @DisplayName("Update - ERROR - No revision name (empty)")
+    public void givenemptyRevisionName_whenUpdate_thenReturnSaved() {
+        // GIVEN
+        BidList bidInfosToUpdate = new BidList();
+        bidInfosToUpdate.setBidListId(10);
+        bidInfosToUpdate.setAccount("new account");
+        bidInfosToUpdate.setType("new type");
+        bidInfosToUpdate.setBidQuantity(150.98d);
+        bidInfosToUpdate.setBook("book");
+        bidInfosToUpdate.setRevisionName("");
+        bidInfosToUpdate.setBidListDate(LocalDateTime.now().minusMonths(1));
 
         when(bidListRepository.save(bid)).thenReturn(bid);
         when(bidListRepository.save(bidInfosToUpdate))
@@ -348,14 +449,69 @@ public class BidListServiceTest {
                 "Type Test");
 
         // THEN
-        assertThat(result).isNotNull();
-        assertThat(result.getBidListId()).isEqualTo(10);
-        assertThat(result.getAccount()).isEqualTo("new account");
-        assertThat(result.getType()).isEqualTo("new type");
-        assertThat(result.getBook()).isEqualTo("book");
-        assertThat(result.getBidQuantity()).isEqualTo(150.98d);
-        verify(bidListRepository, times(1)).delete(bid);
-        verify(bidListRepository, times(1)).save(result);
+        assertThat(result).isNull();
+        verify(bidListRepository, times(0)).delete(bid);
+        verify(bidListRepository, times(0)).save(result);
+    }
+
+    @Test
+    @Tag("UPDATE")
+    @DisplayName("Update - ERROR - Bad account")
+    public void givenBadAccountEntry_whenUpdate_thenReturnSaved() {
+        // GIVEN
+        BidList bidInfosToUpdate = new BidList();
+        bidInfosToUpdate.setBidListId(10);
+        bidInfosToUpdate.setAccount("new account");
+        bidInfosToUpdate.setType("new type");
+        bidInfosToUpdate.setBidQuantity(150.98d);
+        bidInfosToUpdate.setBook("book");
+        bidInfosToUpdate.setRevisionName("revision");
+        bidInfosToUpdate.setBidListDate(LocalDateTime.now().minusMonths(1));
+
+        when(bidListRepository.save(bid)).thenReturn(bid);
+        when(bidListRepository.save(bidInfosToUpdate))
+                .thenReturn(bidInfosToUpdate);
+        when(bidListRepository.findById(10)).thenReturn(Optional.of(bid));
+
+        // WHEN
+        // 10 = bid id
+        result = bidListService.updateBid(bidInfosToUpdate, "Bad Account",
+                "Type Test");
+
+        // THEN
+        assertThat(result).isNull();
+        verify(bidListRepository, times(0)).delete(bid);
+        verify(bidListRepository, times(0)).save(result);
+    }
+
+    @Test
+    @Tag("UPDATE")
+    @DisplayName("Update - ERROR - Bad type")
+    public void givenBadTypeEntry_whenUpdate_thenReturnSaved() {
+        // GIVEN
+        BidList bidInfosToUpdate = new BidList();
+        bidInfosToUpdate.setBidListId(10);
+        bidInfosToUpdate.setAccount("new account");
+        bidInfosToUpdate.setType("new type");
+        bidInfosToUpdate.setBidQuantity(150.98d);
+        bidInfosToUpdate.setBook("book");
+        bidInfosToUpdate.setRevisionName("revision");
+        bidInfosToUpdate.setBidListDate(LocalDateTime.now().minusMonths(1));
+
+        when(bidListRepository.save(bid)).thenReturn(bid);
+        when(bidListRepository.save(bidInfosToUpdate))
+                .thenReturn(bidInfosToUpdate);
+        when(bidListRepository.findById(10)).thenReturn(Optional.of(bid));
+
+        // WHEN
+        // 10 = bid id
+        result = bidListService.updateBid(bidInfosToUpdate, "Account Test",
+                "BAD TYPE Test");
+
+        // THEN
+        assertThat(result).isNull();
+        verify(bidListRepository, times(0)).delete(bid);
+        verify(bidListRepository, times(0)).save(result);
     }
 
     @Test

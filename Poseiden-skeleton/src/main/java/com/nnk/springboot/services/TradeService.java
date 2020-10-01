@@ -81,4 +81,12 @@ public class TradeService implements ITradeService {
         tradeRepository.save(trade);
         return trade;
     }
+
+//    //for update
+//    else if (trade.getTradeDate().isAfter(LocalDateTime.now())
+//            || trade.getTradeDate().isAfter(trade.getCreationDate())) {
+//        LOGGER.error(
+//                "The trade date can not be after actual date. Please check the format: dd/MM/yyyy HH:mm");
+//        return null;
+//    }
 }

@@ -3,6 +3,8 @@ package com.nnk.springboot.controllers.api;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.time.LocalDateTime;
+
 import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -160,10 +162,10 @@ public class BidListControllerApiRestIT {
         bidListRepository.save(bid);
 
         BidList bidToUpdate = new BidList(
-                bidListRepository.findAll().get(0).getBidListId(),
-                "NEW ACCOUNT", "NEW TYPE", 1500d, null, null, null, null, null,
-                "NEW BOOK", null, null, null, null, null, null, null, null,
-                null, null, null, null);
+                bidListRepository.findAll().get(0).getBidListId(), "Account",
+                "Type", 15d, null, null, null, null,
+                LocalDateTime.now().minusMonths(1), null, null, null, null,
+                "NEW BOOK", null, "revision name", null, null, null, null);
         String jsonContent = objectMapper.writeValueAsString(bidToUpdate);
 
         this.mockMvc.perform(MockMvcRequestBuilders.put("/api/bidList/update")
@@ -184,10 +186,10 @@ public class BidListControllerApiRestIT {
         bidListRepository.save(bid);
 
         BidList bidToUpdate = new BidList(
-                bidListRepository.findAll().get(0).getBidListId(),
-                "NEW ACCOUNT", "NEW TYPE", 1500d, null, null, null, null, null,
-                "NEW BOOK", null, null, null, null, null, null, null, null,
-                null, null, null, null);
+                bidListRepository.findAll().get(0).getBidListId(), "Account",
+                "Type", 15d, null, null, null, null,
+                LocalDateTime.now().minusMonths(1), null, null, null, null,
+                "NEW BOOK", null, "revision name", null, null, null, null);
         String jsonContent = objectMapper.writeValueAsString(bidToUpdate);
 
         this.mockMvc.perform(MockMvcRequestBuilders.put("/api/bidList/update")
@@ -208,10 +210,10 @@ public class BidListControllerApiRestIT {
         bidListRepository.save(bid);
 
         BidList bidToUpdate = new BidList(
-                bidListRepository.findAll().get(0).getBidListId(),
-                "NEW ACCOUNT", "NEW TYPE", 1500d, null, null, null, null, null,
-                "NEW BOOK", null, null, null, null, null, null, null, null,
-                null, null, null, null);
+                bidListRepository.findAll().get(0).getBidListId(), "Account",
+                "Type", 15d, null, null, null, null,
+                LocalDateTime.now().minusMonths(1), null, null, null, null,
+                "NEW BOOK", null, "revision name", null, null, null, null);
         String jsonContent = objectMapper.writeValueAsString(bidToUpdate);
 
         this.mockMvc.perform(MockMvcRequestBuilders.put("/api/bidList/update")
@@ -231,9 +233,33 @@ public class BidListControllerApiRestIT {
         bid.setBidQuantity(15d);
         bidListRepository.save(bid);
 
-        BidList bidToUpdate = new BidList(99999, "NEW ACCOUNT", "NEW TYPE",
-                1500d, null, null, null, null, null, "NEW BOOK", null, null,
-                null, null, null, null, null, null, null, null, null, null);
+        BidList bidToUpdate = new BidList(9999, "Account", "Type", 15d, null,
+                null, null, null, LocalDateTime.now().minusMonths(1), null,
+                null, null, null, "NEW BOOK", null, "revision name", null, null,
+                null, null);
+        String jsonContent = objectMapper.writeValueAsString(bidToUpdate);
+
+        this.mockMvc.perform(MockMvcRequestBuilders.put("/api/bidList/update")
+                .contentType(APPLICATION_JSON).param("bidAccount", "Account")
+                .param("bidType", "Type").content(jsonContent))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Tag("PUT")
+    @DisplayName("Put - ERROR - Bidlist date after actual date")
+    public void givenBidlistDateInvalid_whenBadIdInBidContent_thenReturnBadRequest()
+            throws Exception {
+        BidList bid = new BidList();
+        bid.setAccount("Account");
+        bid.setType("Type");
+        bid.setBidQuantity(15d);
+        bidListRepository.save(bid);
+
+        BidList bidToUpdate = new BidList(9999, "Account", "Type", 15d, null,
+                null, null, null, LocalDateTime.now().plusMonths(1), null, null,
+                null, null, "NEW BOOK", null, "revision name", null, null, null,
+                null);
         String jsonContent = objectMapper.writeValueAsString(bidToUpdate);
 
         this.mockMvc.perform(MockMvcRequestBuilders.put("/api/bidList/update")

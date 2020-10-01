@@ -39,7 +39,7 @@ public class CurvePoint {
     private Integer curveId;
 
     @Column(name = "as_of_date")
-    private LocalDateTime asOfDate; // use for update
+    private LocalDateTime asOfDate; // use while update process
 
     @Column(name = "term")
     private Double term;
@@ -48,6 +48,7 @@ public class CurvePoint {
     private Double value;
 
     @Column(name = "creation_date")
-    private LocalDateTime creationDate; // use for create a new curvepoint
+    private LocalDateTime creationDate; // use while create a new curvepoint
+                                        // process
 
 }

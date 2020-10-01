@@ -42,15 +42,15 @@ public class TradeServiceTest {
 
         trade = new Trade("account", "type", 10d, 10d, 10d, 10d,
                 LocalDateTime.of(1999, 11, 11, 11, 01), "security", "status",
-                "trader", "benchmark", "book", "creationName", null, "dealName",
+                "trader", "benchmark", "book", "creationName", "", "dealName",
                 "dealType", "sourceListId", "side");
         trade.setTradeId(1);
         allTrades.add(trade);
 
         tradeTwo = new Trade("account 2", "type 2", 20d, 20d, 20d, 20d,
-                LocalDateTime.of(1997, 02, 02, 02, 02), "security 2",
-                "status 2", null, null, null, null, null, null, null, null,
-                null);
+                LocalDateTime.of(2000, 01, 01, 12, 12), "security", "status",
+                "trader 2", "benchmark 2", "book 2", "creationName 2", "",
+                "dealName 2", "dealType 2", "sourceListId 2", "side 2");
         tradeTwo.setTradeId(2);
         allTrades.add(tradeTwo);
     }

@@ -15,6 +15,8 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -54,6 +56,7 @@ public class Trade {
     @Column(name = "sell_price")
     private Double sellPrice;
 
+    @JsonFormat(pattern = "dd/MM/yyyy' 'HH:mm")
     @DateTimeFormat(pattern = "dd/MM/yyyy' 'HH:mm")
     @Column(name = "trade_date")
     private LocalDateTime tradeDate; // a date before actual date
@@ -82,6 +85,7 @@ public class Trade {
     @Size(max = 125)
     private String creationName;
 
+    @JsonFormat(pattern = "dd/MM/yyyy' 'HH:mm")
     @DateTimeFormat(pattern = "dd/MM/yyyy' 'HH:mm")
     @Column(name = "creation_date")
     private LocalDateTime creationDate; // for add new trade
@@ -90,6 +94,7 @@ public class Trade {
     @Size(max = 125)
     private String revisionName; // for update
 
+    @JsonFormat(pattern = "dd/MM/yyyy' 'HH:mm")
     @DateTimeFormat(pattern = "dd/MM/yyyy' 'HH:mm")
     @Column(name = "revision_date")
     private LocalDateTime revisionDate; // for update
