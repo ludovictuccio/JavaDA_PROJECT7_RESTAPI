@@ -279,4 +279,187 @@ public class UserServiceTest {
         assertThat(resultList.size()).isEqualTo(0);
         assertThat(userRepository.findAll().size()).isEqualTo(0);
     }
+
+    @Test
+    @Tag("UPDATE")
+    @DisplayName("Update - OK - Existing username")
+    public void givenValidUsername_whenUpdate_thenReturnTrue() {
+        // GIVEN
+        when(userRepository.save(user)).thenReturn(user);
+        when(userRepository.save(userTwo)).thenReturn(userTwo);
+        when(userRepository.findUserByUsername("username1")).thenReturn(user);
+        when(userService.findAllUsers()).thenReturn(allUsers);
+
+        User existingUsernameForUpdate = new User("username1",
+                "validPassword1&updated", "fullnameUpdated", "user");
+        // user.setId(19);
+
+        // WHEN
+        boolean result = userService.updateUser(existingUsernameForUpdate);
+
+        // THEN
+        assertThat(result).isTrue();
+        verify(userRepository, times(1)).save(user);
+        assertThat(userRepository.findUserByUsername("username1").getPassword())
+                .isEqualTo("validPassword1&updated");
+        assertThat(userRepository.findUserByUsername("username1").getFullname())
+                .isEqualTo("fullnameUpdated");
+        assertThat(userRepository.findAll().size()).isEqualTo(2);
+    }
+
+    @Test
+    @Tag("UPDATE")
+    @DisplayName("Update - OK - Role changed")
+    public void givenValidUsername_whenUpdateRole_thenReturnTrue() {
+        // GIVEN
+        when(userRepository.save(user)).thenReturn(user);
+        when(userRepository.save(userTwo)).thenReturn(userTwo);
+        when(userRepository.findUserByUsername("username1")).thenReturn(user);
+        when(userService.findAllUsers()).thenReturn(allUsers);
+
+        User existingUsernameForUpdate = new User("username1",
+                "validPassword1&updated", "fullnameUpdated", "admin");
+
+        // WHEN
+        boolean result = userService.updateUser(existingUsernameForUpdate);
+
+        // THEN
+        assertThat(result).isTrue();
+        verify(userRepository, times(1)).save(user);
+        assertThat(userRepository.findUserByUsername("username1").getPassword())
+                .isEqualTo("validPassword1&updated");
+        assertThat(userRepository.findUserByUsername("username1").getFullname())
+                .isEqualTo("fullnameUpdated");
+        assertThat(userRepository.findAll().size()).isEqualTo(2);
+    }
+
+    @Test
+    @Tag("UPDATE")
+    @DisplayName("Update - ERROR - Invalid username")
+    public void givenInvalidUsername_whenUpdateRole_thenReturnFalse() {
+        // GIVEN
+        when(userRepository.save(user)).thenReturn(user);
+        when(userRepository.save(userTwo)).thenReturn(userTwo);
+        when(userRepository.findUserByUsername("username1")).thenReturn(user);
+        when(userService.findAllUsers()).thenReturn(allUsers);
+
+        User existingUsernameForUpdate = new User("usernameOther",
+                "validPassword1&updated", "fullnameUpdated", "admin");
+
+        // WHEN
+        boolean result = userService.updateUser(existingUsernameForUpdate);
+
+        // THEN
+        assertThat(result).isFalse();
+        verify(userRepository, times(0)).save(user);
+        assertThat(userRepository.findUserByUsername("username1").getPassword())
+                .isEqualTo("validPassword1&");
+        assertThat(userRepository.findUserByUsername("username1").getFullname())
+                .isEqualTo("fullname1");
+        assertThat(userRepository.findAll().size()).isEqualTo(2);
+    }
+
+    @Test
+    @Tag("UPDATE")
+    @DisplayName("Update - ERROR - Invalid password")
+    public void givenInvalidPassword_whenUpdateRole_thenReturnFalse() {
+        // GIVEN
+        when(userRepository.save(user)).thenReturn(user);
+        when(userRepository.save(userTwo)).thenReturn(userTwo);
+        when(userRepository.findUserByUsername("username1")).thenReturn(user);
+        when(userService.findAllUsers()).thenReturn(allUsers);
+
+        User existingUsernameForUpdate = new User("username1",
+                "invalidPassword", "fullnameUpdated", "user");
+
+        // WHEN
+        boolean result = userService.updateUser(existingUsernameForUpdate);
+
+        // THEN
+        assertThat(result).isFalse();
+        verify(userRepository, times(0)).save(user);
+        assertThat(userRepository.findUserByUsername("username1").getPassword())
+                .isEqualTo("validPassword1&");
+        assertThat(userRepository.findUserByUsername("username1").getFullname())
+                .isEqualTo("fullname1");
+        assertThat(userRepository.findAll().size()).isEqualTo(2);
+    }
+
+    @Test
+    @Tag("UPDATE")
+    @DisplayName("Update - ERROR - Invalid role")
+    public void givenInvalidRole_whenUpdateRole_thenReturnFalse() {
+        // GIVEN
+        when(userRepository.save(user)).thenReturn(user);
+        when(userRepository.save(userTwo)).thenReturn(userTwo);
+        when(userRepository.findUserByUsername("username1")).thenReturn(user);
+        when(userService.findAllUsers()).thenReturn(allUsers);
+
+        User existingUsernameForUpdate = new User("username1",
+                "validPassword1&", "fullnameUpdated", "other");
+
+        // WHEN
+        boolean result = userService.updateUser(existingUsernameForUpdate);
+
+        // THEN
+        assertThat(result).isFalse();
+        verify(userRepository, times(0)).save(user);
+        assertThat(userRepository.findUserByUsername("username1").getPassword())
+                .isEqualTo("validPassword1&");
+        assertThat(userRepository.findUserByUsername("username1").getFullname())
+                .isEqualTo("fullname1");
+        assertThat(userRepository.findAll().size()).isEqualTo(2);
+    }
+
+    @Test
+    @Tag("UPDATE")
+    @DisplayName("Update - ERROR - Empty username")
+    public void givenEmptyUsername_whenUpdateRole_thenReturnFalse() {
+        // GIVEN
+        when(userRepository.save(user)).thenReturn(user);
+        when(userRepository.save(userTwo)).thenReturn(userTwo);
+        when(userRepository.findUserByUsername("username1")).thenReturn(user);
+        when(userService.findAllUsers()).thenReturn(allUsers);
+
+        User existingUsernameForUpdate = new User("", "validPassword1&",
+                "fullnameUpdated", "other");
+
+        // WHEN
+        boolean result = userService.updateUser(existingUsernameForUpdate);
+
+        // THEN
+        assertThat(result).isFalse();
+        verify(userRepository, times(0)).save(user);
+        assertThat(userRepository.findUserByUsername("username1").getPassword())
+                .isEqualTo("validPassword1&");
+        assertThat(userRepository.findUserByUsername("username1").getFullname())
+                .isEqualTo("fullname1");
+        assertThat(userRepository.findAll().size()).isEqualTo(2);
+    }
+
+    @Test
+    @Tag("UPDATE")
+    @DisplayName("Update - ERROR - Empty password")
+    public void givenEmptyPassword_whenUpdateRole_thenReturnFalse() {
+        // GIVEN
+        when(userRepository.save(user)).thenReturn(user);
+        when(userRepository.save(userTwo)).thenReturn(userTwo);
+        when(userRepository.findUserByUsername("username1")).thenReturn(user);
+        when(userService.findAllUsers()).thenReturn(allUsers);
+
+        User existingUsernameForUpdate = new User("username1",
+                "validPassword1&", "", "other");
+
+        // WHEN
+        boolean result = userService.updateUser(existingUsernameForUpdate);
+
+        // THEN
+        assertThat(result).isFalse();
+        verify(userRepository, times(0)).save(user);
+        assertThat(userRepository.findUserByUsername("username1").getPassword())
+                .isEqualTo("validPassword1&");
+        assertThat(userRepository.findUserByUsername("username1").getFullname())
+                .isEqualTo("fullname1");
+        assertThat(userRepository.findAll().size()).isEqualTo(2);
+    }
 }

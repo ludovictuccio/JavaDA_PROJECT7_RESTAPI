@@ -164,4 +164,118 @@ public class UserControllerApiRestIT {
                 .andExpect(status().isOk()).andReturn();
     }
 
+    @Test
+    @Tag("PUT")
+    @DisplayName("Put - OK - Valid username")
+    public void givenUserToUpdate_whenValidUsernameAndValidInfos_thenReturnOk()
+            throws Exception {
+        userService.saveUser(
+                new User("username", "validPassword1&", "fullname", "user"));
+
+        User existingUsernameForUpdate = new User("username", "validPassword1&",
+                "fullnameUpdated", "user");
+        String jsonContent = objectMapper
+                .writeValueAsString(existingUsernameForUpdate);
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.put("/api/user/update")
+                        .contentType(APPLICATION_JSON).content(jsonContent))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @Tag("PUT")
+    @DisplayName("Put - ERROR - Invalid username")
+    public void givenUserToUpdate_whenInvalidUsername_thenReturnBadRequest()
+            throws Exception {
+        userService.saveUser(
+                new User("username", "validPassword1&", "fullname", "user"));
+
+        User existingUsernameForUpdate = new User("invalidUsername",
+                "validPassword1&", "fullnameUpdated", "user");
+        String jsonContent = objectMapper
+                .writeValueAsString(existingUsernameForUpdate);
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.put("/api/user/update")
+                        .contentType(APPLICATION_JSON).content(jsonContent))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Tag("PUT")
+    @DisplayName("Put - ERROR - Invalid password")
+    public void givenUserToUpdate_whenInvalidPassword_thenReturnBadRequest()
+            throws Exception {
+        userService.saveUser(
+                new User("username", "validPassword1&", "fullname", "user"));
+
+        User existingUsernameForUpdate = new User("username", "invalidpassword",
+                "fullnameUpdated", "user");
+        String jsonContent = objectMapper
+                .writeValueAsString(existingUsernameForUpdate);
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.put("/api/user/update")
+                        .contentType(APPLICATION_JSON).content(jsonContent))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Tag("PUT")
+    @DisplayName("Put - ERROR - Empty password")
+    public void givenUserToUpdate_whenEmptyPassword_thenReturnBadRequest()
+            throws Exception {
+        userService.saveUser(
+                new User("username", "validPassword1&", "fullname", "user"));
+
+        User existingUsernameForUpdate = new User("username", "",
+                "fullnameUpdated", "user");
+        String jsonContent = objectMapper
+                .writeValueAsString(existingUsernameForUpdate);
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.put("/api/user/update")
+                        .contentType(APPLICATION_JSON).content(jsonContent))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Tag("PUT")
+    @DisplayName("Put - ERROR - Invalid role")
+    public void givenUserToUpdate_whenInvalidRole_thenReturnBadRequest()
+            throws Exception {
+        userService.saveUser(
+                new User("username", "validPassword1&", "fullname", "user"));
+
+        User existingUsernameForUpdate = new User("username", "validPassword1&",
+                "fullnameUpdated", "");
+        String jsonContent = objectMapper
+                .writeValueAsString(existingUsernameForUpdate);
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.put("/api/user/update")
+                        .contentType(APPLICATION_JSON).content(jsonContent))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Tag("PUT")
+    @DisplayName("Put - ERROR - Invalid fullname")
+    public void givenUserToUpdate_whenInvalidFullname_thenReturnBadRequest()
+            throws Exception {
+        userService.saveUser(
+                new User("username", "validPassword1&", "fullname", "user"));
+
+        User existingUsernameForUpdate = new User("username", "validPassword1&",
+                " ", "user");
+        String jsonContent = objectMapper
+                .writeValueAsString(existingUsernameForUpdate);
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.put("/api/user/update")
+                        .contentType(APPLICATION_JSON).content(jsonContent))
+                .andExpect(status().isBadRequest());
+    }
+
 }
