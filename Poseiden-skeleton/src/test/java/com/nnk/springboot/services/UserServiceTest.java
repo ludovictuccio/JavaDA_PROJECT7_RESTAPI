@@ -462,4 +462,54 @@ public class UserServiceTest {
                 .isEqualTo("fullname1");
         assertThat(userRepository.findAll().size()).isEqualTo(2);
     }
+
+    @Test
+    @Tag("DELETE")
+    @DisplayName("Delete - OK - Valid username")
+    public void givenValidUsername_whenDelete_thenReturnTrue() {
+        // GIVEN
+        when(userRepository.save(user)).thenReturn(user);
+        when(userRepository.findUserByUsername("username1")).thenReturn(user);
+        when(userService.findAllUsers()).thenReturn(allUsers);
+
+        // WHEN
+        boolean isDeleted = userService.deleteUser("username1");
+
+        // THEN
+        assertThat(isDeleted).isTrue();
+        verify(userRepository, times(1)).delete(user);
+    }
+
+    @Test
+    @Tag("DELETE")
+    @DisplayName("Delete - ERROR - Invalid username")
+    public void givenInvalidUsername_whenDelete_thenReturnFalse() {
+        // GIVEN
+        when(userRepository.save(user)).thenReturn(user);
+        when(userRepository.findUserByUsername("unknow")).thenReturn(null);
+        when(userService.findAllUsers()).thenReturn(allUsers);
+
+        // WHEN
+        boolean isDeleted = userService.deleteUser("unknow");
+
+        // THEN
+        assertThat(isDeleted).isFalse();
+        verify(userRepository, times(0)).delete(user);
+    }
+
+    @Test
+    @Tag("DELETE")
+    @DisplayName("Delete - ERROR - Empty username")
+    public void givenEmptyUsername_whenDelete_thenReturnFalse() {
+        // GIVEN
+        when(userRepository.save(user)).thenReturn(user);
+
+        // WHEN
+        boolean isDeleted = userService.deleteUser("");
+
+        // THEN
+        assertThat(isDeleted).isFalse();
+        verify(userRepository, times(0)).delete(user);
+    }
+
 }

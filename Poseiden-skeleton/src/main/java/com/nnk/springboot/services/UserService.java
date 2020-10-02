@@ -104,7 +104,7 @@ public class UserService implements IUserService {
                 .findUserByUsername(user.getUsername());
 
         if (existingUser == null) {
-            LOGGER.error("Unknow username: {}", user.getUsername());
+            LOGGER.error("Unknow user for username: {}", user.getUsername());
             return isUpdated;
         }
         existingUser.setPassword(user.getPassword());
@@ -113,5 +113,25 @@ public class UserService implements IUserService {
         userRepository.save(existingUser);
         isUpdated = true;
         return isUpdated;
+    }
+
+    /**
+     * Method service used to delete an user with his username.
+     *
+     * @param username
+     * @return isDeleted boolean
+     */
+    public boolean deleteUser(final String username) {
+        boolean isDeleted = false;
+
+        User existingUser = userRepository.findUserByUsername(username);
+
+        if (existingUser == null) {
+            LOGGER.error("Unknow user for username: {}", username);
+            return isDeleted;
+        }
+        userRepository.delete(existingUser);
+        isDeleted = true;
+        return isDeleted;
     }
 }

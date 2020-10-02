@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nnk.springboot.domain.User;
@@ -64,6 +66,23 @@ public class UserControllerApiRest {
             @Valid @RequestBody final User user) {
 
         boolean result = userService.updateUser(user);
+
+        if (result) {
+            return new ResponseEntity<User>(HttpStatus.OK);
+        }
+        return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Method controller used to delete an user.
+     *
+     * @param username
+     * @return ResponseEntity (ok or bad request)
+     */
+    @DeleteMapping("/delete")
+    public ResponseEntity<User> deleteUser(
+            @Valid @RequestParam final String username) {
+        boolean result = userService.deleteUser(username);
 
         if (result) {
             return new ResponseEntity<User>(HttpStatus.OK);

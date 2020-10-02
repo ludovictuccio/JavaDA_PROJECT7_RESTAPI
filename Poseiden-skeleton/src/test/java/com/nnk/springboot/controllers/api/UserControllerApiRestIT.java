@@ -278,4 +278,58 @@ public class UserControllerApiRestIT {
                 .andExpect(status().isBadRequest());
     }
 
+    @Test
+    @Tag("DELETE")
+    @DisplayName("Delete - OK - Valid username")
+    public void givenAnUser_whenDeleteWithValidUsername_thenReturnOk()
+            throws Exception {
+        userService.saveUser(
+                new User("username1", "validPassword1&", "fullname", "user"));
+
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/user/delete")
+                .contentType(APPLICATION_JSON).param("username", "username1"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @Tag("DELETE")
+    @DisplayName("Delete - ERROR - Invalid username")
+    public void givenAnUser_whenDeleteWithInvalidUsername_thenReturnBadRequest()
+            throws Exception {
+        userService.saveUser(
+                new User("username1", "validPassword1&", "fullname", "user"));
+
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/user/delete")
+                .contentType(APPLICATION_JSON).param("username", "unknow"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Tag("DELETE")
+    @DisplayName("Delete - ERROR - Empty username")
+    public void givenAnUser_whenDeleteWithEmptyUsername_thenReturnBadRequest()
+            throws Exception {
+        userService.saveUser(
+                new User("username1", "validPassword1&", "fullname", "user"));
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.delete("/api/user/delete")
+                        .contentType(APPLICATION_JSON).param("username", ""))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Tag("DELETE")
+    @DisplayName("Delete - ERROR - Username with space")
+    public void givenAnUser_whenDeleteWithSpacesForUsername_thenReturnBadRequest()
+            throws Exception {
+        userService.saveUser(
+                new User("username1", "validPassword1&", "fullname", "user"));
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.delete("/api/user/delete")
+                        .contentType(APPLICATION_JSON).param("username", "  "))
+                .andExpect(status().isBadRequest());
+    }
+
 }

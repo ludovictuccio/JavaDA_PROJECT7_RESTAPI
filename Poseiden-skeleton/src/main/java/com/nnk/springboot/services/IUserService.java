@@ -15,6 +15,8 @@ public interface IUserService {
 
     List<User> findAllUsers();
 
-    boolean updateUser(final User user);
+    boolean updateUser(User user);
+
+    boolean deleteUser(String username);
 
 }
