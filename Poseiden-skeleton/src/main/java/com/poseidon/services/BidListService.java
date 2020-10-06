@@ -117,7 +117,7 @@ public class BidListService implements IBidListService {
         BidList existingBid = bidListRepository.findById(bidId).orElse(null);
 
         if (existingBid == null) {
-            LOGGER.error("Unknow id bidList");
+            LOGGER.error("Unknow id bidList for id: {}", bidId);
             return isDeleted;
         } else if (!bidAccount.equals(existingBid.getAccount())) {
             LOGGER.error(
@@ -128,6 +128,23 @@ public class BidListService implements IBidListService {
         }
         isDeleted = true;
         return isDeleted;
+    }
+
+    /**
+     * Method service used to find a bidList by his id.
+     *
+     * @param id
+     * @return bidList a bidList entity
+     */
+    public BidList getBidById(final Integer id) {
+
+        BidList existingBid = bidListRepository.findById(id).orElse(null);
+
+        if (existingBid == null) {
+            LOGGER.error("BidList not found for id: {}", id);
+            return null;
+        }
+        return existingBid;
     }
 
 }

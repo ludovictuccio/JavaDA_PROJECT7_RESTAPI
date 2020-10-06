@@ -20,7 +20,6 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import com.poseidon.domain.Rating;
 import com.poseidon.repositories.RatingRepository;
-import com.poseidon.services.IRatingService;
 
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
@@ -161,7 +160,7 @@ public class RatingServiceTest {
         List<Rating> resultList = ratingService.findAllRating();
 
         // THEN
-        assertThat(resultList.size()).isNotNull();
+        assertThat(resultList).isNotNull();
         assertThat(resultList.size()).isEqualTo(2);
         assertThat(ratingRepository.findAll().size()).isEqualTo(2);
         assertThat(ratingRepository.findAll().get(0).getId()).isNotNull();
@@ -184,7 +183,7 @@ public class RatingServiceTest {
         List<Rating> resultList = ratingService.findAllRating();
 
         // THEN
-        assertThat(resultList.size()).isNotNull();
+        assertThat(resultList).isNotNull();
         assertThat(resultList.size()).isEqualTo(0);
         assertThat(ratingRepository.findAll().size()).isEqualTo(0);
     }

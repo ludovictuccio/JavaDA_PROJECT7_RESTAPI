@@ -20,7 +20,6 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import com.poseidon.domain.RuleName;
 import com.poseidon.repositories.RuleNameRepository;
-import com.poseidon.services.IRuleNameService;
 
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
@@ -105,7 +104,7 @@ public class RuleNameServiceTest {
         List<RuleName> resultList = ruleNameService.findAllRuleNames();
 
         // THEN
-        assertThat(resultList.size()).isNotNull();
+        assertThat(resultList).isNotNull();
         assertThat(resultList.size()).isEqualTo(2);
         assertThat(ruleNameRepository.findAll().size()).isEqualTo(2);
         assertThat(ruleNameRepository.findAll().get(0).getId()).isNotNull();
@@ -128,7 +127,7 @@ public class RuleNameServiceTest {
         List<RuleName> resultList = ruleNameService.findAllRuleNames();
 
         // THEN
-        assertThat(resultList.size()).isNotNull();
+        assertThat(resultList).isNotNull();
         assertThat(resultList.size()).isEqualTo(0);
         assertThat(ruleNameRepository.findAll().size()).isEqualTo(0);
     }

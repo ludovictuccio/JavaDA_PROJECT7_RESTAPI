@@ -19,7 +19,6 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import com.poseidon.domain.User;
 import com.poseidon.repositories.UserRepository;
-import com.poseidon.services.IUserService;
 
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
@@ -252,7 +251,7 @@ public class UserServiceTest {
 
         // THEN
         verify(userRepository, times(1)).findAll();
-        assertThat(resultList.size()).isNotNull();
+        assertThat(resultList).isNotNull();
         assertThat(resultList.size()).isEqualTo(2);
         assertThat(userRepository.findAll().size()).isEqualTo(2);
         assertThat(userRepository.findAll().get(0).getId()).isNotNull();
@@ -276,7 +275,7 @@ public class UserServiceTest {
 
         // THEN
         verify(userRepository, times(1)).findAll();
-        assertThat(resultList.size()).isNotNull();
+        assertThat(resultList).isNotNull();
         assertThat(resultList.size()).isEqualTo(0);
         assertThat(userRepository.findAll().size()).isEqualTo(0);
     }

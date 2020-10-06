@@ -21,7 +21,6 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import com.poseidon.domain.Trade;
 import com.poseidon.repositories.TradeRepository;
-import com.poseidon.services.ITradeService;
 
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
@@ -216,7 +215,7 @@ public class TradeServiceTest {
         List<Trade> resultList = tradeService.findAllTrade();
 
         // THEN
-        assertThat(resultList.size()).isNotNull();
+        assertThat(resultList).isNotNull();
         assertThat(resultList.size()).isEqualTo(2);
         assertThat(tradeRepository.findAll().size()).isEqualTo(2);
         assertThat(tradeRepository.findAll().get(0).getTradeId()).isNotNull();
@@ -239,7 +238,7 @@ public class TradeServiceTest {
         List<Trade> resultList = tradeService.findAllTrade();
 
         // THEN
-        assertThat(resultList.size()).isNotNull();
+        assertThat(resultList).isNotNull();
         assertThat(resultList.size()).isEqualTo(0);
         assertThat(tradeRepository.findAll().size()).isEqualTo(0);
     }

@@ -21,7 +21,6 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import com.poseidon.domain.BidList;
 import com.poseidon.repositories.BidListRepository;
-import com.poseidon.services.IBidListService;
 
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
@@ -303,7 +302,7 @@ public class BidListServiceTest {
         List<BidList> resultList = bidListService.findAllBids();
 
         // THEN
-        assertThat(resultList.size()).isNotNull();
+        assertThat(resultList).isNotNull();
         assertThat(resultList.size()).isEqualTo(2);
         assertThat(bidListRepository.findAll().size()).isEqualTo(2);
         assertThat(bidListRepository.findAll().get(0).getBidQuantity())
@@ -325,7 +324,7 @@ public class BidListServiceTest {
         List<BidList> resultList = bidListService.findAllBids();
 
         // THEN
-        assertThat(resultList.size()).isNotNull();
+        assertThat(resultList).isNotNull();
         assertThat(resultList.size()).isEqualTo(0);
         assertThat(bidListRepository.findAll().size()).isEqualTo(0);
     }

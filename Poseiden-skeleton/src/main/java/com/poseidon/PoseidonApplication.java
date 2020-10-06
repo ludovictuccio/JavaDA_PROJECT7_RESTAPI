@@ -10,8 +10,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+
 @SpringBootApplication
-//@EnableEncryptableProperties
+@EnableEncryptableProperties
 public class PoseidonApplication {
 
     public PoseidonApplication() {
@@ -37,10 +39,5 @@ public class PoseidonApplication {
     public MethodValidationPostProcessor methodValidationPostProcessor() {
         return new MethodValidationPostProcessor();
     }
-
-//    @Bean
-//    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
 
 }

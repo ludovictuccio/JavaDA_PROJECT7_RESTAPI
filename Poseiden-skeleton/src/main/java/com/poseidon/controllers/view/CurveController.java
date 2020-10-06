@@ -2,21 +2,20 @@ package com.poseidon.controllers.view;
 
 import javax.validation.Valid;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.poseidon.domain.CurvePoint;
 
-@RestController
+@Controller
 public class CurveController {
     // TODO: Inject Curve Point service
 
-    @RequestMapping("/curvePoint/list")
+    @GetMapping("/curvePoint/list")
     public String home(Model model) {
         // TODO: find all Curve Point, add to model
         return "curvePoint/list";

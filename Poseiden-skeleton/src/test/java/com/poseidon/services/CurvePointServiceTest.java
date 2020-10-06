@@ -20,7 +20,6 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import com.poseidon.domain.CurvePoint;
 import com.poseidon.repositories.CurvePointRepository;
-import com.poseidon.services.ICurvePointService;
 
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
@@ -170,13 +169,9 @@ public class CurvePointServiceTest {
         List<CurvePoint> resultList = curvePointService.findAllCurvePoints();
 
         // THEN
-        assertThat(resultList.size()).isNotNull();
+        assertThat(resultList).isNotNull();
         assertThat(resultList.size()).isEqualTo(2);
         assertThat(curvePointRepository.findAll().size()).isEqualTo(2);
-//        assertThat(curvePointRepository.findAll().get(0).getCurveId())
-//                .isEqualTo(10);
-//        assertThat(curvePointRepository.findAll().get(1).getCurveId())
-//                .isEqualTo(20);
 
     }
 
@@ -192,7 +187,7 @@ public class CurvePointServiceTest {
         List<CurvePoint> resultList = curvePointService.findAllCurvePoints();
 
         // THEN
-        assertThat(resultList.size()).isNotNull();
+        assertThat(resultList).isNotNull();
         assertThat(resultList.size()).isEqualTo(0);
         assertThat(curvePointRepository.findAll().size()).isEqualTo(0);
     }
