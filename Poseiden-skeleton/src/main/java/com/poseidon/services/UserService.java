@@ -42,6 +42,16 @@ public class UserService implements IUserService {
                     "ERROR: this username is already used. Please change.");
             return null;
         }
+
+        // Set id with last id added in db +1
+        List<User> allUsers = userRepository.findAll();
+        if (allUsers.size() > 0) {
+            User lastUserAdded = allUsers.get(allUsers.size() - 1);
+            user.setId(lastUserAdded.getId() + 1);
+        } else {
+            user.setId(1l);
+        }
+
         user.setRole(user.getRole().toUpperCase());
         userRepository.save(user);
         return user;
@@ -84,7 +94,7 @@ public class UserService implements IUserService {
     }
 
     /**
-     * Method service used to delete an user with his username.
+     * Method service used to delete an user with his username (for api rest).
      *
      * @param username
      * @return isDeleted boolean

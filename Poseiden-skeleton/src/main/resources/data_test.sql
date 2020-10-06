@@ -84,7 +84,7 @@ CREATE TABLE rule_name (
 ) ENGINE = INNODB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE users (
-  id int NOT NULL AUTO_INCREMENT,
+  id int NOT NULL,
   username VARCHAR(125),
   password VARCHAR(125),
   fullname VARCHAR(125),

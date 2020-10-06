@@ -56,7 +56,7 @@ public class UserControllerApiRestIT {
 
         User userToCreate = new User("username", "Password1&", "fullname",
                 "user");
-        userToCreate.setId(1);
+        userToCreate.setId(1l);
         String jsonContent = objectMapper.writeValueAsString(userToCreate);
 
         this.mockMvc
@@ -75,7 +75,7 @@ public class UserControllerApiRestIT {
 
         User userToCreate = new User("username", "Password1&", "fullname",
                 "admin");
-        userToCreate.setId(1);
+        userToCreate.setId(1l);
         String jsonContent = objectMapper.writeValueAsString(userToCreate);
 
         this.mockMvc
@@ -93,11 +93,11 @@ public class UserControllerApiRestIT {
             throws Exception {
         userService.saveUser(
                 new User("username", "Password1&99", "fullname99", "user"));
-        userRepository.findAll().get(0).setId(9);
+        userRepository.findAll().get(0).setId(9l);
 
         User userToCreate = new User("username", "Password1&", "fullname",
                 "user");
-        userToCreate.setId(10);
+        userToCreate.setId(10l);
         String jsonContent = objectMapper.writeValueAsString(userToCreate);
 
         this.mockMvc
@@ -115,11 +115,11 @@ public class UserControllerApiRestIT {
             throws Exception {
         userService.saveUser(
                 new User("username", "Password1&99", "fullname99", "user"));
-        userRepository.findAll().get(0).setId(9);
+        userRepository.findAll().get(0).setId(9l);
 
         User userToCreate = new User("username", "Password1&", "fullname",
                 "other");
-        userToCreate.setId(10);
+        userToCreate.setId(10l);
         String jsonContent = objectMapper.writeValueAsString(userToCreate);
 
         this.mockMvc

@@ -41,11 +41,11 @@ public class UserServiceTest {
         allUsers = new ArrayList<>();
 
         user = new User("username1", "validPassword1&", "fullname1", "user");
-        user.setId(1);
+        user.setId(1l);
         allUsers.add(user);
 
         userTwo = new User("username2", "validPassword2&", "fullname2", "user");
-        userTwo.setId(2);
+        userTwo.setId(2l);
         allUsers.add(userTwo);
     }
 
@@ -93,7 +93,7 @@ public class UserServiceTest {
 
         User alreadyExistingUsername = new User("username1", "validPassword1&",
                 "fullname1", "user");
-        alreadyExistingUsername.setId(80);
+        alreadyExistingUsername.setId(80l);
 
         // WHEN
         result = userService.saveUser(alreadyExistingUsername);

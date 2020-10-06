@@ -8,7 +8,7 @@ import com.poseidon.domain.User;
 
 @Repository
 public interface UserRepository
-        extends JpaRepository<User, Integer>, JpaSpecificationExecutor<User> {
+        extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
 
     User findUserByUsername(String username);
 }

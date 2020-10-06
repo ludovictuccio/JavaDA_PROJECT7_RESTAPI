@@ -2,8 +2,6 @@ package com.poseidon.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -12,10 +10,12 @@ import javax.validation.constraints.Size;
 
 import com.poseidon.util.Constants;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -24,8 +24,9 @@ import lombok.Setter;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    // @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private Long id = System.nanoTime();
 
     @Size(max = Constants.SIZE_125)
     @Column(unique = true)
