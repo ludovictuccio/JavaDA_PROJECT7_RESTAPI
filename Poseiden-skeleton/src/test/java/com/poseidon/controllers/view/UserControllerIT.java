@@ -20,7 +20,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.poseidon.domain.User;
 import com.poseidon.repositories.UserRepository;
 import com.poseidon.services.UserService;
@@ -35,9 +34,6 @@ public class UserControllerIT {
 
     @Autowired
     private WebApplicationContext wac;
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @Autowired
     private UserService userService;

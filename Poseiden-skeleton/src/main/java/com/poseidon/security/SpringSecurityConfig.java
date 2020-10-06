@@ -18,9 +18,6 @@ import com.poseidon.services.MyUserDetailsService;
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    @Autowired
     private MyUserDetailsService myUserDetailsService;
 
     @Bean
@@ -31,13 +28,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * For manage authentification rules.
      */
-    // @Autowired
-    @Override
+    @Autowired
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
-        bCryptPasswordEncoder = new BCryptPasswordEncoder();
         auth.userDetailsService(myUserDetailsService)
-                .passwordEncoder(bCryptPasswordEncoder);
+                .passwordEncoder(bCryptPasswordEncoder());
     }
 
     /**
@@ -53,16 +48,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/registration").permitAll()
                 .antMatchers("/user/**").hasAnyAuthority("ADMIN", "USER")
                 .antMatchers("/user/**").permitAll().and().formLogin().and()
-                .logout()
-                // .invalidateHttpSession(true)
-                .logoutUrl("/logout").logoutSuccessUrl("/login").and()
-                .exceptionHandling().accessDeniedPage("/access-denied");
+                .logout().invalidateHttpSession(true).logoutUrl("/logout")
+                .logoutSuccessUrl("/login").and().exceptionHandling()
+                .accessDeniedPage("/access-denied");
     }
-
-//    @Override
-//    public void configure(WebSecurity web) throws Exception {
-//        web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**",
-//                "/js/**", "/images/**");
-//    }
 
 }
