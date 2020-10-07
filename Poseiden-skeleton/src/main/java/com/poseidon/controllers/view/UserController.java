@@ -28,23 +28,43 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * Get HTML page used to display all users list.
+     *
+     * @param model
+     * @return /user/list.html page
+     */
     @GetMapping("/user/list")
-    public String home(Model model) {
+    public String home(final Model model) {
         model.addAttribute("users", userService.findAllUsers());
         LOGGER.info("GET request SUCCESS for: /user/list");
         return "user/list";
     }
 
+    /**
+     * Get HTML page used to add a new user.
+     *
+     * @param model
+     * @return /user/add.html page
+     */
     @GetMapping("/user/add")
-    public String addUser(Model model) {
+    public String addUser(final Model model) {
         model.addAttribute("user", new User());
         LOGGER.info("GET request SUCCESS for: /user/add");
         return "user/add";
     }
 
+    /**
+     * Post HTML page used to validate a new user informations.
+     *
+     * @param user
+     * @param result
+     * @param model
+     * @return /user/list.html page if good request, or /user/add
+     */
     @PostMapping("/user/validate")
-    public String validate(@Valid User user, BindingResult result,
-            Model model) {
+    public String validate(@Valid final User user, final BindingResult result,
+            final Model model) {
 
         if (!result.hasErrors()) {
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -58,8 +78,16 @@ public class UserController {
         return "user/add";
     }
 
+    /**
+     * Get HTML page used to update an existing user.
+     *
+     * @param id
+     * @param model
+     * @return /user/list.html page if bad request, or /user/update
+     */
     @GetMapping("/user/update/{id}")
-    public String showUpdateForm(@PathVariable("id") Long id, Model model) {
+    public String showUpdateForm(@PathVariable("id") final Long id,
+            final Model model) {
 
         User user = userRepository.findById(id).orElse(null);
 
@@ -73,9 +101,19 @@ public class UserController {
         return "user/update";
     }
 
+    /**
+     * Post HTML page used to update an user.
+     *
+     * @param id
+     * @param user
+     * @param result
+     * @param model
+     * @return /user/list.html page if good request, or /user/update
+     */
     @PostMapping("/user/update/{id}")
-    public String updateUser(@PathVariable("id") Long id, @Valid User user,
-            BindingResult result, Model model) {
+    public String updateUser(@PathVariable("id") final Long id,
+            @Valid final User user, final BindingResult result,
+            final Model model) {
         if (result.hasErrors()) {
             LOGGER.info("POST request FAILED for: /user/update/{id}");
             return "user/update";
@@ -89,8 +127,16 @@ public class UserController {
         return "redirect:/user/list";
     }
 
+    /**
+     * Get HTML page used to delete an user.
+     *
+     * @param id
+     * @param model
+     * @return /user/list.html page
+     */
     @GetMapping("/user/delete/{id}")
-    public String deleteUser(@PathVariable("id") Long id, Model model) {
+    public String deleteUser(@PathVariable("id") final Long id,
+            final Model model) {
         try {
             userRepository.deleteById(id);
             model.addAttribute("users", userService.findAllUsers());

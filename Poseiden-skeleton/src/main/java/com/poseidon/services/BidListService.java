@@ -26,7 +26,7 @@ public class BidListService implements IBidListService {
     private BidListRepository bidListRepository;
 
     /**
-     * Method service used to save a valid bidList.
+     * Method service used to save a valid bidList (API).
      *
      * @param bidAccount
      * @param bidType
