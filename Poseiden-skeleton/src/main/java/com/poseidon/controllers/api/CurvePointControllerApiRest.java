@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,9 @@ import com.poseidon.services.ICurvePointService;
 @Validated
 @RequestMapping("/api/curvePoint")
 public class CurvePointControllerApiRest {
+
+    private static final Logger LOGGER = LogManager
+            .getLogger("CurvePointControllerApiRest");
 
     @Autowired
     private ICurvePointService curvePointService;
@@ -44,8 +49,10 @@ public class CurvePointControllerApiRest {
         CurvePoint result = curvePointService.saveCurvePoint(id, term, value);
 
         if (result != null) {
+            LOGGER.info("POST request SUCCESS for: /api/curvePoint/add");
             return new ResponseEntity<CurvePoint>(HttpStatus.CREATED);
         }
+        LOGGER.info("POST request FAILED for: /api/curvePoint/add");
         return new ResponseEntity<CurvePoint>(HttpStatus.BAD_REQUEST);
     }
 
@@ -56,6 +63,7 @@ public class CurvePointControllerApiRest {
      */
     @GetMapping("/get")
     public List<CurvePoint> getAllCurvePoints() {
+        LOGGER.info("GET request SUCCESS for: /api/curvePoint/get");
         return curvePointService.findAllCurvePoints();
     }
 
@@ -77,8 +85,10 @@ public class CurvePointControllerApiRest {
                 value);
 
         if (result != null) {
+            LOGGER.info("PUT request SUCCESS for: /api/curvePoint/update");
             return new ResponseEntity<CurvePoint>(HttpStatus.OK);
         }
+        LOGGER.info("PUT request FAILED for: /api/curvePoint/update");
         return new ResponseEntity<CurvePoint>(HttpStatus.BAD_REQUEST);
     }
 
@@ -95,8 +105,10 @@ public class CurvePointControllerApiRest {
         boolean result = curvePointService.deleteCurvePoint(curveId);
 
         if (result) {
+            LOGGER.info("DELETE request SUCCESS for: /api/curvePoint/delete");
             return new ResponseEntity<CurvePoint>(HttpStatus.OK);
         }
+        LOGGER.info("DELETE request FAILED for: /api/curvePoint/delete");
         return new ResponseEntity<CurvePoint>(HttpStatus.BAD_REQUEST);
     }
 

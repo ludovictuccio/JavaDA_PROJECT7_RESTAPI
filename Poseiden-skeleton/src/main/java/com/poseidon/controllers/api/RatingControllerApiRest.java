@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,9 @@ import com.poseidon.services.IRatingService;
 @RequestMapping("/api/rating")
 public class RatingControllerApiRest {
 
+    private static final Logger LOGGER = LogManager
+            .getLogger("RatingControllerApiRest");
+
     @Autowired
     private IRatingService ratingService;
 
@@ -41,8 +46,10 @@ public class RatingControllerApiRest {
         Rating result = ratingService.saveRating(rating);
 
         if (result != null) {
+            LOGGER.info("POST request SUCCESS for: /api/rating/add");
             return new ResponseEntity<Rating>(HttpStatus.CREATED);
         }
+        LOGGER.info("POST request FAILED for: /api/rating/add");
         return new ResponseEntity<Rating>(HttpStatus.BAD_REQUEST);
     }
 
@@ -53,6 +60,7 @@ public class RatingControllerApiRest {
      */
     @GetMapping("/get")
     public List<Rating> getAllRating() {
+        LOGGER.info("GET request SUCCESS for: /api/rating/get");
         return ratingService.findAllRating();
     }
 
@@ -71,8 +79,10 @@ public class RatingControllerApiRest {
         boolean result = ratingService.updateRating(id, rating);
 
         if (result) {
+            LOGGER.info("PUT request SUCCESS for: /api/rating/update");
             return new ResponseEntity<Rating>(HttpStatus.OK);
         }
+        LOGGER.info("PUT request FAILED for: /api/rating/update");
         return new ResponseEntity<Rating>(HttpStatus.BAD_REQUEST);
     }
 
@@ -88,8 +98,10 @@ public class RatingControllerApiRest {
         boolean result = ratingService.deleteRating(id);
 
         if (result) {
+            LOGGER.info("DELETE request SUCCESS for: /api/rating/delete");
             return new ResponseEntity<Rating>(HttpStatus.OK);
         }
+        LOGGER.info("DELETE request FAILED for: /api/rating/delete");
         return new ResponseEntity<Rating>(HttpStatus.BAD_REQUEST);
     }
 

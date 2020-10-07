@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,9 @@ import com.poseidon.services.IUserService;
 @RequestMapping("/api/user")
 public class UserControllerApiRest {
 
+    private static final Logger LOGGER = LogManager
+            .getLogger("UserControllerApiRest");
+
     @Autowired
     private IUserService userService;
 
@@ -40,8 +45,10 @@ public class UserControllerApiRest {
         User result = userService.saveUser(user);
 
         if (result != null) {
+            LOGGER.info("POST request SUCCESS for: /api/user/add");
             return new ResponseEntity<User>(HttpStatus.CREATED);
         }
+        LOGGER.info("POST request FAILED for: /api/user/add");
         return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
     }
 
@@ -52,6 +59,7 @@ public class UserControllerApiRest {
      */
     @GetMapping("/get")
     public List<User> getAllUsers() {
+        LOGGER.info("GET request SUCCESS for: /api/user/get");
         return userService.findAllUsers();
     }
 
@@ -68,8 +76,10 @@ public class UserControllerApiRest {
         boolean result = userService.updateUser(user);
 
         if (result) {
+            LOGGER.info("PUT request SUCCESS for: /api/user/update");
             return new ResponseEntity<User>(HttpStatus.OK);
         }
+        LOGGER.info("PUT request FAILED for: /api/user/update");
         return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
     }
 
@@ -85,8 +95,10 @@ public class UserControllerApiRest {
         boolean result = userService.deleteUser(username);
 
         if (result) {
+            LOGGER.info("DELETE request SUCCESS for: /api/user/delete");
             return new ResponseEntity<User>(HttpStatus.OK);
         }
+        LOGGER.info("DELETE request FAILED for: /api/user/delete");
         return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
     }
 }

@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,9 @@ import com.poseidon.services.ITradeService;
 @RequestMapping("/api/trade")
 public class TradeControllerApiRest {
 
+    private static final Logger LOGGER = LogManager
+            .getLogger("TradeControllerApiRest");
+
     @Autowired
     private ITradeService tradeService;
 
@@ -41,8 +46,10 @@ public class TradeControllerApiRest {
         Trade result = tradeService.saveTrade(trade);
 
         if (result != null) {
+            LOGGER.info("POST request SUCCESS for: /api/trade/add");
             return new ResponseEntity<Trade>(HttpStatus.CREATED);
         }
+        LOGGER.info("POST request FAILED for: /api/trade/add");
         return new ResponseEntity<Trade>(HttpStatus.BAD_REQUEST);
     }
 
@@ -53,6 +60,7 @@ public class TradeControllerApiRest {
      */
     @GetMapping("/get")
     public List<Trade> getAllTrade() {
+        LOGGER.info("GET request SUCCESS for: /api/trade/get");
         return tradeService.findAllTrade();
     }
 
@@ -71,8 +79,10 @@ public class TradeControllerApiRest {
         boolean result = tradeService.updateTrade(id, trade);
 
         if (result) {
+            LOGGER.info("PUT request SUCCESS for: /api/trade/update");
             return new ResponseEntity<Trade>(HttpStatus.OK);
         }
+        LOGGER.info("PUT request FAILED for: /api/trade/update");
         return new ResponseEntity<Trade>(HttpStatus.BAD_REQUEST);
     }
 
@@ -88,8 +98,10 @@ public class TradeControllerApiRest {
         boolean result = tradeService.deleteTrade(id);
 
         if (result) {
+            LOGGER.info("DELETE request SUCCESS for: /api/trade/delete");
             return new ResponseEntity<Trade>(HttpStatus.OK);
         }
+        LOGGER.info("DELETE request FAILED for: /api/trade/delete");
         return new ResponseEntity<Trade>(HttpStatus.BAD_REQUEST);
     }
 

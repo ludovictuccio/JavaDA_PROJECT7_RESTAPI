@@ -2,6 +2,8 @@ package com.poseidon.controllers.view;
 
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,14 +17,19 @@ import com.poseidon.domain.RuleName;
 public class RuleNameController {
     // TODO: Inject RuleName service
 
+    private static final Logger LOGGER = LogManager
+            .getLogger("RuleNameController");
+
     @GetMapping("/ruleName/list")
     public String home(Model model) {
         // TODO: find all RuleName, add to model
+        LOGGER.info("GET request SUCCESS for: /ruleName/list");
         return "ruleName/list";
     }
 
     @GetMapping("/ruleName/add")
     public String addRuleForm(RuleName bid) {
+        LOGGER.info("GET request SUCCESS for: /ruleName/add");
         return "ruleName/add";
     }
 
@@ -31,12 +38,14 @@ public class RuleNameController {
             Model model) {
         // TODO: check data valid and save to db, after saving return RuleName
         // list
+        LOGGER.info("POST request SUCCESS for: /ruleName/validate");
         return "ruleName/add";
     }
 
     @GetMapping("/ruleName/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         // TODO: get RuleName by Id and to model then show to the form
+        LOGGER.info("GET request SUCCESS for: /ruleName/update/{id}");
         return "ruleName/update";
     }
 
@@ -45,6 +54,7 @@ public class RuleNameController {
             @Valid RuleName ruleName, BindingResult result, Model model) {
         // TODO: check required fields, if valid call service to update RuleName
         // and return RuleName list
+        LOGGER.info("POST request SUCCESS for: /ruleName/update/{id}");
         return "redirect:/ruleName/list";
     }
 
@@ -52,6 +62,7 @@ public class RuleNameController {
     public String deleteRuleName(@PathVariable("id") Integer id, Model model) {
         // TODO: Find RuleName by Id and delete the RuleName, return to Rule
         // list
+        LOGGER.info("GET request SUCCESS for: /ruleName/delete/{id}");
         return "redirect:/ruleName/list";
     }
 }

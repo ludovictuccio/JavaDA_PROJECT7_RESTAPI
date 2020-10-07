@@ -31,12 +31,14 @@ public class UserController {
     @GetMapping("/user/list")
     public String home(Model model) {
         model.addAttribute("users", userService.findAllUsers());
+        LOGGER.info("GET request SUCCESS for: /user/list");
         return "user/list";
     }
 
     @GetMapping("/user/add")
     public String addUser(Model model) {
         model.addAttribute("user", new User());
+        LOGGER.info("GET request SUCCESS for: /user/add");
         return "user/add";
     }
 
@@ -49,8 +51,10 @@ public class UserController {
             user.setPassword(encoder.encode(user.getPassword()));
             User userToSave = userService.saveUser(user);
             model.addAttribute("user", userToSave);
+            LOGGER.info("POST request SUCCESS for: /user/validate");
             return "redirect:/user/list";
         }
+        LOGGER.info("POST request FAILED for: /user/validate");
         return "user/add";
     }
 
@@ -61,9 +65,11 @@ public class UserController {
 
         if (user == null) {
             LOGGER.error("Invalid user Id: {}", id);
+            LOGGER.info("GET request FAILED for: /user/update/{id}");
             return "redirect:/user/list";
         }
         model.addAttribute("user", user);
+        LOGGER.info("GET request SUCCESS for: /user/update/{id}");
         return "user/update";
     }
 
@@ -71,6 +77,7 @@ public class UserController {
     public String updateUser(@PathVariable("id") Long id, @Valid User user,
             BindingResult result, Model model) {
         if (result.hasErrors()) {
+            LOGGER.info("POST request FAILED for: /user/update/{id}");
             return "user/update";
         }
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -78,6 +85,7 @@ public class UserController {
         user.setId(id);
         userService.updateUser(user);
         model.addAttribute("user", user);
+        LOGGER.info("POST request SUCCESS for: /user/update/{id}");
         return "redirect:/user/list";
     }
 
@@ -88,7 +96,9 @@ public class UserController {
             model.addAttribute("users", userService.findAllUsers());
         } catch (IllegalArgumentException ex) {
             LOGGER.error("Invalid user Id: {}", id);
+            LOGGER.info("GET request FAILED for: /user/delete/{id}");
         }
+        LOGGER.info("GET request SUCCESS for: /user/delete/{id}");
         return "redirect:/user/list";
     }
 

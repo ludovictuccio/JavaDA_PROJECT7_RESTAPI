@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,9 @@ import com.poseidon.services.IBidListService;
 @Validated
 @RequestMapping("/api/bidList")
 public class BidListControllerApiRest {
+
+    private static final Logger LOGGER = LogManager
+            .getLogger("BidListControllerApiRest");
 
     @Autowired
     private IBidListService bidListService;
@@ -46,8 +51,10 @@ public class BidListControllerApiRest {
                 bidQuantity);
 
         if (result != null) {
+            LOGGER.info("POST request SUCCESS for: /api/bidList/add");
             return new ResponseEntity<BidList>(HttpStatus.CREATED);
         }
+        LOGGER.info("POST request FAILED for: /api/bidList/add");
         return new ResponseEntity<BidList>(HttpStatus.BAD_REQUEST);
     }
 
@@ -58,6 +65,7 @@ public class BidListControllerApiRest {
      */
     @GetMapping("/get")
     public List<BidList> getBidList() {
+        LOGGER.info("GET request SUCCESS for: /api/bidList/get");
         return bidListService.findAllBids();
     }
 
@@ -78,8 +86,10 @@ public class BidListControllerApiRest {
         BidList result = bidListService.updateBid(bid, bidAccount, bidType);
 
         if (result != null) {
+            LOGGER.info("PUT request SUCCESS for: /api/bidList/update");
             return new ResponseEntity<BidList>(HttpStatus.OK);
         }
+        LOGGER.info("PUT request FAILED for: /api/bidList/update");
         return new ResponseEntity<BidList>(HttpStatus.BAD_REQUEST);
     }
 
@@ -98,8 +108,10 @@ public class BidListControllerApiRest {
         boolean result = bidListService.deleteBid(bidId, bidAccount);
 
         if (result) {
+            LOGGER.info("DELETE request SUCCESS for: /api/bidList/delete");
             return new ResponseEntity<BidList>(HttpStatus.OK);
         }
+        LOGGER.info("DELETE request FAILED for: /api/bidList/delete");
         return new ResponseEntity<BidList>(HttpStatus.BAD_REQUEST);
     }
 

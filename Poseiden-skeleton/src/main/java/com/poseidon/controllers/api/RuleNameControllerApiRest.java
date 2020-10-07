@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,9 @@ import com.poseidon.services.IRuleNameService;
 @RequestMapping("/api/rulename")
 public class RuleNameControllerApiRest {
 
+    private static final Logger LOGGER = LogManager
+            .getLogger("RuleNameControllerApiRest");
+
     @Autowired
     private IRuleNameService ruleNameService;
 
@@ -41,8 +46,10 @@ public class RuleNameControllerApiRest {
         RuleName result = ruleNameService.saveRuleName(ruleName);
 
         if (result != null) {
+            LOGGER.info("POST request SUCCESS for: /api/rulename/add");
             return new ResponseEntity<RuleName>(HttpStatus.CREATED);
         }
+        LOGGER.info("POST request FAILED for: /api/rulename/add");
         return new ResponseEntity<RuleName>(HttpStatus.BAD_REQUEST);
     }
 
@@ -53,6 +60,7 @@ public class RuleNameControllerApiRest {
      */
     @GetMapping("/get")
     public List<RuleName> getAllRuleName() {
+        LOGGER.info("GET request SUCCESS for: /api/rulename/get");
         return ruleNameService.findAllRuleNames();
     }
 
@@ -71,8 +79,10 @@ public class RuleNameControllerApiRest {
         boolean result = ruleNameService.updateRuleName(id, ruleName);
 
         if (result) {
+            LOGGER.info("PUT request SUCCESS for: /api/rulename/update");
             return new ResponseEntity<RuleName>(HttpStatus.OK);
         }
+        LOGGER.info("PUT request FAILED for: /api/rulename/update");
         return new ResponseEntity<RuleName>(HttpStatus.BAD_REQUEST);
     }
 
@@ -88,8 +98,10 @@ public class RuleNameControllerApiRest {
         boolean result = ruleNameService.deleteRuleName(id);
 
         if (result) {
+            LOGGER.info("DELETE request SUCCESS for: /api/rulename/delete");
             return new ResponseEntity<RuleName>(HttpStatus.OK);
         }
+        LOGGER.info("DELETE request FAILED for: /api/rulename/delete");
         return new ResponseEntity<RuleName>(HttpStatus.BAD_REQUEST);
     }
 }
