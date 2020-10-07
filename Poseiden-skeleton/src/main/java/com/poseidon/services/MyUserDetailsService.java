@@ -2,8 +2,6 @@ package com.poseidon.services;
 
 import java.util.Arrays;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,9 +16,6 @@ import com.poseidon.repositories.UserRepository;
 
 @Service
 public class MyUserDetailsService implements UserDetailsService {
-
-    private static final Logger LOGGER = LogManager
-            .getLogger("MyUserDetailsService");
 
     @Autowired
     private UserRepository userRepository;
@@ -37,8 +32,6 @@ public class MyUserDetailsService implements UserDetailsService {
         UserDetails userDetails = (UserDetails) new org.springframework.security.core.userdetails.User(
                 user.getUsername(), user.getPassword(),
                 Arrays.asList(authority));
-
-        LOGGER.info("User: {} connected with role: {}", username, authority);
 
         return userDetails;
     }
