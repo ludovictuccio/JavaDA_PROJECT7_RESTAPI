@@ -21,4 +21,8 @@ public class Constants {
 
     public static final int SIZE_512 = 512;
 
+    public static final String DATE_PATTERN = "dd/MM/yyyy' 'HH:mm";
+
+    public static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=*-])(?=\\S+$).{8,}$";
+
 }

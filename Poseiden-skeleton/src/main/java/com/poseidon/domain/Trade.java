@@ -53,8 +53,8 @@ public class Trade {
     @Column(name = "sell_price")
     private Double sellPrice;
 
-    @JsonFormat(pattern = "dd/MM/yyyy' 'HH:mm")
-    @DateTimeFormat(pattern = "dd/MM/yyyy' 'HH:mm")
+    @JsonFormat(pattern = Constants.DATE_PATTERN)
+    @DateTimeFormat(pattern = Constants.DATE_PATTERN)
     @Column(name = "trade_date")
     private LocalDateTime tradeDate; // a date before actual date
 
@@ -82,8 +82,8 @@ public class Trade {
     @Size(max = Constants.SIZE_125)
     private String creationName;
 
-    @JsonFormat(pattern = "dd/MM/yyyy' 'HH:mm")
-    @DateTimeFormat(pattern = "dd/MM/yyyy' 'HH:mm")
+    @JsonFormat(pattern = Constants.DATE_PATTERN)
+    @DateTimeFormat(pattern = Constants.DATE_PATTERN)
     @Column(name = "creation_date")
     private LocalDateTime creationDate; // for add new trade
 
@@ -91,8 +91,8 @@ public class Trade {
     @Size(max = Constants.SIZE_125)
     private String revisionName; // for update
 
-    @JsonFormat(pattern = "dd/MM/yyyy' 'HH:mm")
-    @DateTimeFormat(pattern = "dd/MM/yyyy' 'HH:mm")
+    @JsonFormat(pattern = Constants.DATE_PATTERN)
+    @DateTimeFormat(pattern = Constants.DATE_PATTERN)
     @Column(name = "revision_date")
     private LocalDateTime revisionDate; // for update
 

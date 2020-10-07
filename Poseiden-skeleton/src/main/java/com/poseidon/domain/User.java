@@ -33,7 +33,7 @@ public class User {
     @NotBlank(message = "Username is mandatory")
     private String username;
 
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=*-])(?=\\S+$).{8,}$", message = "The password must include a digit, an uppercase and lowercase letter and a special character, without space.")
+    @Pattern(regexp = Constants.PASSWORD_PATTERN, message = "The password must include a digit, an uppercase and lowercase letter and a special character, without space.")
     @Size(max = Constants.SIZE_125)
     @Column(name = "password")
     @NotBlank(message = "Password is mandatory")

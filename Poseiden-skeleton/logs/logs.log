@@ -771,3 +771,7 @@
 [DEBUG] 07 oct. 2020 10:20:46 [main] PoseidonApplication - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
 [INFO ] 07 oct. 2020 10:20:46 [main] PoseidonApplication - The following profiles are active: dev
 [INFO ] 07 oct. 2020 10:20:57 [main] PoseidonApplication - Started PoseidonApplication in 11.48 seconds (JVM running for 12.547)
+[INFO ] 07 oct. 2020 10:52:35 [main] PoseidonApplication - Starting PoseidonApplication on PC-LUDO-2020 with PID 54484 (C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton\target\classes started by Ludo in C:\Users\Ludo\Documents\Eclipse\workspace\JavaDA_PROJECT7_RESTAPI\Poseiden-skeleton)
+[DEBUG] 07 oct. 2020 10:52:35 [main] PoseidonApplication - Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+[INFO ] 07 oct. 2020 10:52:35 [main] PoseidonApplication - The following profiles are active: dev
+[INFO ] 07 oct. 2020 10:52:46 [main] PoseidonApplication - Started PoseidonApplication in 11.334 seconds (JVM running for 12.466)

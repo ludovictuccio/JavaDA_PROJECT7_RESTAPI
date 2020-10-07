@@ -66,8 +66,8 @@ public class BidList {
     @Size(max = Constants.SIZE_125)
     private String benchmark;
 
-    @JsonFormat(pattern = "dd/MM/yyyy' 'HH:mm")
-    @DateTimeFormat(pattern = "dd/MM/yyyy' 'HH:mm")
+    @JsonFormat(pattern = Constants.DATE_PATTERN)
+    @DateTimeFormat(pattern = Constants.DATE_PATTERN)
     @Column(name = "bid_list_date")
     private LocalDateTime bidListDate; // a date before actual date
 
@@ -89,16 +89,16 @@ public class BidList {
     @Size(max = Constants.SIZE_125)
     private String creationName; // for create only
 
-    @JsonFormat(pattern = "dd/MM/yyyy' 'HH:mm")
-    @DateTimeFormat(pattern = "dd/MM/yyyy' 'HH:mm")
+    @JsonFormat(pattern = Constants.DATE_PATTERN)
+    @DateTimeFormat(pattern = Constants.DATE_PATTERN)
     @Column(name = "creation_date")
     private LocalDateTime creationDate; // generate while create success
 
     @Size(max = Constants.SIZE_125)
     private String revisionName; // for update only
 
-    @JsonFormat(pattern = "dd/MM/yyyy' 'HH:mm")
-    @DateTimeFormat(pattern = "dd/MM/yyyy' 'HH:mm")
+    @JsonFormat(pattern = Constants.DATE_PATTERN)
+    @DateTimeFormat(pattern = Constants.DATE_PATTERN)
     @Column(name = "revision_date")
     private LocalDateTime revisionDate; // generate while update success
 

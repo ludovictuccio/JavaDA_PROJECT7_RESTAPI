@@ -14,6 +14,7 @@ import javax.validation.constraints.PositiveOrZero;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.poseidon.util.Constants;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -40,8 +41,8 @@ public class CurvePoint {
     @Column(name = "curve_id")
     private Integer curveId;
 
-    @JsonFormat(pattern = "dd/MM/yyyy' 'HH:mm")
-    @DateTimeFormat(pattern = "dd/MM/yyyy' 'HH:mm")
+    @JsonFormat(pattern = Constants.DATE_PATTERN)
+    @DateTimeFormat(pattern = Constants.DATE_PATTERN)
     @Column(name = "as_of_date")
     private LocalDateTime asOfDate; // use while update process
 
@@ -51,8 +52,8 @@ public class CurvePoint {
     @Column(name = "value")
     private Double value;
 
-    @JsonFormat(pattern = "dd/MM/yyyy' 'HH:mm")
-    @DateTimeFormat(pattern = "dd/MM/yyyy' 'HH:mm")
+    @JsonFormat(pattern = Constants.DATE_PATTERN)
+    @DateTimeFormat(pattern = Constants.DATE_PATTERN)
     @Column(name = "creation_date")
     private LocalDateTime creationDate; // use while create a new curvepoint
                                         // process
