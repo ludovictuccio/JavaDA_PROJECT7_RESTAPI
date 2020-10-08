@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,18 +36,19 @@ public class CurvePointControllerApiRest {
     /**
      * Method controller used to add a new curve point.
      *
-     * @param id
+     * @param curveId
      * @param term
      * @param value
      * @return ResponseEntity (created or bad request)
      */
     @PostMapping("/add")
     public ResponseEntity<CurvePoint> addBidList(
-            @Valid @RequestParam final Integer id,
+            @Valid @RequestParam final Integer curveId,
             @Valid @RequestParam final Double term,
             @Valid @RequestParam final Double value) {
 
-        CurvePoint result = curvePointService.saveCurvePoint(id, term, value);
+        CurvePoint result = curvePointService.saveCurvePoint(curveId, term,
+                value);
 
         if (result != null) {
             LOGGER.info("POST request SUCCESS for: /api/curvePoint/add");
@@ -70,21 +72,17 @@ public class CurvePointControllerApiRest {
     /**
      * Method controller used to update a curve point.
      *
-     * @param curveId
-     * @param term
-     * @param value
+     * @param curvePoint
      * @return ResponseEntity (ok or bad request)
      */
     @PutMapping("/update")
     public ResponseEntity<CurvePoint> updateCurvePoint(
-            @Valid @RequestParam final Integer curveId,
-            @Valid @RequestParam final Double term,
-            @Valid @RequestParam final Double value) {
+            @Valid @RequestBody final CurvePoint curvePoint) {
 
-        CurvePoint result = curvePointService.updateCurvePoint(curveId, term,
-                value);
+        CurvePoint existingCurvePoint = curvePointService
+                .updateCurvePoint(curvePoint);
 
-        if (result != null) {
+        if (existingCurvePoint != null) {
             LOGGER.info("PUT request SUCCESS for: /api/curvePoint/update");
             return new ResponseEntity<CurvePoint>(HttpStatus.OK);
         }
@@ -95,14 +93,14 @@ public class CurvePointControllerApiRest {
     /**
      * Method controller used to delete a curve point.
      *
-     * @param curveId
+     * @param id
      * @return ResponseEntity (ok or bad request)
      */
     @DeleteMapping("/delete")
     public ResponseEntity<CurvePoint> deleteBidList(
-            @Valid @RequestParam final Integer curveId) {
+            @Valid @RequestParam final Integer id) {
 
-        boolean result = curvePointService.deleteCurvePoint(curveId);
+        boolean result = curvePointService.deleteCurvePoint(id);
 
         if (result) {
             LOGGER.info("DELETE request SUCCESS for: /api/curvePoint/delete");

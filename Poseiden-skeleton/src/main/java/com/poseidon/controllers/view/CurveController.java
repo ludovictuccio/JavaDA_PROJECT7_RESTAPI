@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,55 +13,135 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.poseidon.domain.CurvePoint;
+import com.poseidon.repositories.CurvePointRepository;
+import com.poseidon.services.CurvePointService;
 
 @Controller
 public class CurveController {
-    // TODO: Inject Curve Point service
 
     private static final Logger LOGGER = LogManager
             .getLogger("CurveController");
 
+    @Autowired
+    private CurvePointService curvePointService;
+
+    @Autowired
+    private CurvePointRepository curvePointRepository;
+
+    /**
+     * Get HTML page used to display all curvePoint list.
+     *
+     * @param model
+     * @return /curvePoint/list.html page
+     */
     @GetMapping("/curvePoint/list")
-    public String home(Model model) {
-        // TODO: find all Curve Point, add to model
+    public String home(final Model model) {
+        model.addAttribute("curvePoint",
+                curvePointService.findAllCurvePoints());
         LOGGER.info("GET request SUCCESS for: /curvePoint/list");
         return "curvePoint/list";
     }
 
+    /**
+     * Get HTML page used to add a new curvePoint.
+     *
+     * @param model
+     * @return /curvePoint/add.html page
+     */
     @GetMapping("/curvePoint/add")
-    public String addBidForm(CurvePoint bid) {
+    public String addBidForm(final Model model) {
+        model.addAttribute("curvePoint", new CurvePoint());
         LOGGER.info("GET request SUCCESS for: /curvePoint/add");
         return "curvePoint/add";
     }
 
+    /**
+     * Post HTML page used to validate a new curvePoint.
+     *
+     * @param curvePoint
+     * @param result
+     * @param model
+     * @return /curvePoint/add.html page if bad request or else /curvePoint/list
+     */
     @PostMapping("/curvePoint/validate")
-    public String validate(@Valid CurvePoint curvePoint, BindingResult result,
-            Model model) {
-        // TODO: check data valid and save to db, after saving return Curve list
-        LOGGER.info("POST request SUCCESS for: /curvePoint/validate");
+    public String validate(@Valid final CurvePoint curvePoint,
+            final BindingResult result, final Model model) {
+
+        if (!result.hasErrors()) {
+            CurvePoint curve = curvePointService.saveCurvePoint(
+                    curvePoint.getCurveId(), curvePoint.getTerm(),
+                    curvePoint.getValue());
+            if (curve != null) {
+                model.addAttribute("curvePoint", curve);
+                LOGGER.info("POST request SUCCESS for: /curvePoint/validate");
+                return "redirect:/curvePoint/list";
+            }
+        }
+        LOGGER.info("POST request FAILED for: /curvePoint/validate");
         return "curvePoint/add";
     }
 
+    /**
+     * Get HTML page used to update a curve point.
+     *
+     * @param id
+     * @param model
+     * @return /curvePoint/update.html page
+     */
     @GetMapping("/curvePoint/update/{id}")
-    public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        // TODO: get CurvePoint by Id and to model then show to the form
+    public String showUpdateForm(@PathVariable("id") final Integer id,
+            final Model model) {
+        CurvePoint curvePoint = curvePointService.getCurvePointById(id);
+        model.addAttribute("curvePoint", curvePoint);
         LOGGER.info("GET request SUCCESS for: /curvePoint/update/{id}");
         return "curvePoint/update";
     }
 
+    /**
+     * Post HTML page used to update a curvePoint.
+     *
+     * @param id
+     * @param curvePoint
+     * @param result
+     * @param model
+     * @return /curvePoint/update.html page if bad request or else
+     *         /curvePoint/list
+     */
     @PostMapping("/curvePoint/update/{id}")
-    public String updateBid(@PathVariable("id") Integer id,
-            @Valid CurvePoint curvePoint, BindingResult result, Model model) {
-        // TODO: check required fields, if valid call service to update Curve
-        // and return Curve list
+    public String updateBid(@PathVariable("id") final Integer id,
+            @Valid final CurvePoint curvePoint, final BindingResult result,
+            final Model model) {
+
+        if (result.hasErrors()) {
+            LOGGER.info("POST request FAILED for: /curvePoint/update/{id}");
+            return "curvePoint/update/" + id;
+        }
+        curvePoint.setId(id);
+        curvePointRepository.save(curvePoint);
+        model.addAttribute("curvePoint",
+                curvePointService.findAllCurvePoints());
         LOGGER.info("POST request SUCCESS for: /curvePoint/update/{id}");
         return "redirect:/curvePoint/list";
     }
 
+    /**
+     * Get HTML page used to delete a curvePoint.
+     *
+     * @param id
+     * @param model
+     * @return /curvePoint/list.html page
+     */
     @GetMapping("/curvePoint/delete/{id}")
-    public String deleteBid(@PathVariable("id") Integer id, Model model) {
-        // TODO: Find Curve by Id and delete the Curve, return to Curve list
-        LOGGER.info("GET request SUCCESS for: /curvePoint/delete/{id}");
+    public String deleteBid(@PathVariable("id") final Integer id,
+            final Model model) {
+        boolean isDeleted = curvePointService.deleteCurvePoint(id);
+        if (isDeleted) {
+            model.addAttribute("curvePoint",
+                    curvePointService.findAllCurvePoints());
+            LOGGER.info("GET request SUCCESS for: /curvePoint/delete/{id}");
+        } else {
+            LOGGER.info("GET request FAILED for: /curvePoint/delete/{id}");
+        }
         return "redirect:/curvePoint/list";
     }
 }

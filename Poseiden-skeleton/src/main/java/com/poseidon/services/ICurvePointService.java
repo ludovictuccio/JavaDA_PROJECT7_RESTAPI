@@ -15,8 +15,10 @@ public interface ICurvePointService {
 
     List<CurvePoint> findAllCurvePoints();
 
-    CurvePoint updateCurvePoint(Integer curveId, Double term, Double value);
+    CurvePoint updateCurvePoint(CurvePoint curvePoint);
 
     boolean deleteCurvePoint(Integer curveId);
+
+    CurvePoint getCurvePointById(Integer id);
 
 }

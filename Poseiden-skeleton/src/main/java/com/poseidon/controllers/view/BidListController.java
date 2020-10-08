@@ -64,7 +64,7 @@ public class BidListController {
      */
     @PostMapping("/bidList/validate")
     public String validate(@Valid final BidList bid, final BindingResult result,
-            Model model) {
+            final Model model) {
 
         if (!result.hasErrors()) {
             BidList bidList = bidListService.saveBid(bid.getAccount(),
@@ -105,7 +105,8 @@ public class BidListController {
      */
     @PostMapping("/bidList/update/{id}")
     public String updateBid(@PathVariable("id") final Integer id,
-            @Valid BidList bidList, BindingResult result, Model model) {
+            @Valid final BidList bidList, final BindingResult result,
+            final Model model) {
 
         if (result.hasErrors()) {
             LOGGER.info("POST request FAILED for: /bidList/update/{id}");

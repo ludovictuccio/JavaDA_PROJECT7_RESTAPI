@@ -43,15 +43,15 @@ public class CurvePointService implements ICurvePointService {
         curvepoint.setTerm(term);
         curvepoint.setValue(value);
 
-        // check that the curve id is not already existing
-        for (CurvePoint existingCurvePoint : curvePointRepository.findAll()) {
-            if (existingCurvePoint.getCurveId().equals(curveId)) {
-                LOGGER.error(
-                        "Failed to create a new curve point: the id {} already exists.",
-                        curveId);
-                return null;
-            }
-        }
+//        // check that the curve id is not already existing
+//        for (CurvePoint existingCurvePoint : curvePointRepository.findAll()) {
+//            if (existingCurvePoint.getCurveId().equals(curveId)) {
+//                LOGGER.error(
+//                        "Failed to create a new curve point: the id {} already exists.",
+//                        curveId);
+//                return null;
+//            }
+//        }
 
         if (ConstraintsValidation.checkValidCurvePoint(curvepoint) == null) {
             return null;
@@ -70,48 +70,64 @@ public class CurvePointService implements ICurvePointService {
     }
 
     /**
-     * Method service used to update a curve point by his curve id.
+     * Method service used to update a curve point by his id.
      *
-     * @param curveId
-     * @param term
-     * @param value
+     * @param curvePoint
      * @return curve point saved
      */
-    public CurvePoint updateCurvePoint(final Integer curveId, final Double term,
-            final Double value) {
+    public CurvePoint updateCurvePoint(final CurvePoint curvePoint) {
 
         CurvePoint existingCurvePoint = curvePointRepository
-                .findByCurveId(curveId);
+                .findById(curvePoint.getId()).orElse(null);
 
         if (existingCurvePoint == null) {
-            LOGGER.error("Unknow id curve point for: {}", curveId);
+            LOGGER.error("Unknow id curve point for: {}", curvePoint.getId());
             return null;
         }
         existingCurvePoint.setAsOfDate(LocalDateTime.now());
-        existingCurvePoint.setTerm(term);
-        existingCurvePoint.setValue(value);
+        existingCurvePoint.setCurveId(curvePoint.getCurveId());
+        existingCurvePoint.setTerm(curvePoint.getTerm());
+        existingCurvePoint.setValue(curvePoint.getValue());
         return curvePointRepository.save(existingCurvePoint);
     }
 
     /**
-     * Method service used to delete a curve point by his curve id.
+     * Method service used to delete a curve point by his id.
      *
-     * @param curveId
+     * @param id
      * @return isDeleted boolean
      */
-    public boolean deleteCurvePoint(final Integer curveId) {
+    public boolean deleteCurvePoint(final Integer id) {
         boolean isDeleted = false;
 
-        CurvePoint existingCurvePoint = curvePointRepository
-                .findByCurveId(curveId);
+        CurvePoint existingCurvePoint = curvePointRepository.findById(id)
+                .orElse(null);
 
         if (existingCurvePoint == null) {
-            LOGGER.error("Unknow curve id for number: {}", curveId);
+            LOGGER.error("Unknow id for number: {}", id);
             return isDeleted;
         }
         curvePointRepository.delete(existingCurvePoint);
         isDeleted = true;
         return isDeleted;
+    }
+
+    /**
+     * Method service used to find a CurvePoint by his id.
+     *
+     * @param id
+     * @return existingCurvePoint a CurvePoint entity
+     */
+    public CurvePoint getCurvePointById(final Integer id) {
+
+        CurvePoint existingCurvePoint = curvePointRepository.findById(id)
+                .orElse(null);
+
+        if (existingCurvePoint == null) {
+            LOGGER.error("CurvePoint not found for id: {}", id);
+            return null;
+        }
+        return existingCurvePoint;
     }
 
 }

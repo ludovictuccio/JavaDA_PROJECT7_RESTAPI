@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -36,7 +35,6 @@ public class CurvePoint {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotNull
     @PositiveOrZero
     @Column(name = "curve_id")
     private Integer curveId;
@@ -57,5 +55,20 @@ public class CurvePoint {
     @Column(name = "creation_date")
     private LocalDateTime creationDate; // use while create a new curvepoint
                                         // process
+
+//    /**
+//     * @param id
+//     * @param curveId
+//     * @param term
+//     * @param value
+//     */
+//    public CurvePoint(Integer id, @PositiveOrZero Integer curveId, Double term,
+//            Double value) {
+//        super();
+//        this.id = id;
+//        this.curveId = curveId;
+//        this.term = term;
+//        this.value = value;
+//    }
 
 }

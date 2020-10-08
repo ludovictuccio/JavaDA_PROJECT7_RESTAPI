@@ -9,6 +9,4 @@ import com.poseidon.domain.CurvePoint;
 public interface CurvePointRepository
         extends JpaRepository<CurvePoint, Integer> {
 
-    CurvePoint findByCurveId(Integer curveId);
-
 }

@@ -121,7 +121,7 @@ public class UserControllerIT {
     @Test
     @Tag("/user/update")
     @DisplayName("Get - Update - OK")
-    public void aaaafa() throws Exception {
+    public void givenOneUser_whenUpdate_thenReturnUpdated() throws Exception {
 
         User user = new User(1l, "username", "Password1&", "fullname", "USER");
         userService.saveUser(user);
@@ -137,7 +137,7 @@ public class UserControllerIT {
     @Test
     @Tag("/user/update")
     @DisplayName("Post - Update - OK")
-    public void aaaaa() throws Exception {
+    public void givenOneUser_whenUpdate_thenReturnUpdate() throws Exception {
 
         User user = new User(1l, "username", "Password1&", "fullname", "USER");
         userService.saveUser(user);
@@ -158,7 +158,7 @@ public class UserControllerIT {
     @Test
     @Tag("/user/update")
     @DisplayName("Post - Update - ERROR - Bad id")
-    public void aaaapa() throws Exception {
+    public void givenBadId_whenUpdate_thenReturnErrors() throws Exception {
 
         User user = new User(1l, "username", "Password1&", "fullname", "USER");
         userService.saveUser(user);
@@ -172,7 +172,7 @@ public class UserControllerIT {
     @Test
     @Tag("/user/delete")
     @DisplayName("Delete - OK")
-    public void aaajaa() throws Exception {
+    public void givenUser_whenDelete_thenReturnDeleted() throws Exception {
 
         User user = new User(1l, "username", "Password1&", "fullname", "USER");
         userService.saveUser(user);
