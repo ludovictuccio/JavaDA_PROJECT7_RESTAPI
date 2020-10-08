@@ -2,6 +2,8 @@ package com.poseidon.services;
 
 import java.util.Arrays;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,12 +19,15 @@ import com.poseidon.repositories.UserRepository;
 @Service
 public class MyUserDetailsService implements UserDetailsService {
 
+    private static final Logger LOGGER = LogManager
+            .getLogger("MyUserDetailsService");
+
     @Autowired
     private UserRepository userRepository;
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String username)
+    public UserDetails loadUserByUsername(final String username)
             throws UsernameNotFoundException {
 
         User user = userRepository.findUserByUsername(username);
@@ -32,6 +37,11 @@ public class MyUserDetailsService implements UserDetailsService {
         UserDetails userDetails = (UserDetails) new org.springframework.security.core.userdetails.User(
                 user.getUsername(), user.getPassword(),
                 Arrays.asList(authority));
+
+        if (!user.getUsername().isEmpty()) {
+            LOGGER.info("User with username: {} and role: {} connected !",
+                    user.getUsername(), user.getRole());
+        }
 
         return userDetails;
     }

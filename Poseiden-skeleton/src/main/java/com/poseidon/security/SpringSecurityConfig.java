@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,7 +27,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * For manage authentification rules.
+     * For manage authentication rules.
      */
     @Autowired
     protected void configure(AuthenticationManagerBuilder auth)
@@ -36,21 +37,28 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * For push http requests throw security filters.
+     * For disable security and authentication using API REST.
+     */
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/api/bidList/**", "/api/curvePoint/**",
+                "/api/rating/**", "/api/ruleName/**", "/api/trade/**",
+                "/api/user**");
+    }
+
+    /**
+     * For push http requests throw security filters (views).
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http.authorizeRequests()
                 .antMatchers("/bidList/**", "/curvePoint/**", "/rating/**",
                         "/ruleName/**", "/trade/**")
-                .permitAll().antMatchers("/login").permitAll()
-                .antMatchers("/registration").permitAll()
-                .antMatchers("/user/**").hasAnyAuthority("ADMIN", "USER")
-                .antMatchers("/user/**").permitAll().and().formLogin().and()
-                .logout().invalidateHttpSession(true).logoutUrl("/logout")
-                .logoutSuccessUrl("/login").and().exceptionHandling()
-                .accessDeniedPage("/access-denied");
+                .hasAnyAuthority("ADMIN", "USER").antMatchers("/user/**")
+                .authenticated().and().csrf().disable().httpBasic().and()
+                .formLogin().defaultSuccessUrl("/bidList/list").and().logout()
+                .logoutUrl("/app-logout").logoutSuccessUrl("/").and()
+                .exceptionHandling().accessDeniedPage("/access-denied");
     }
 
 }

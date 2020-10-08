@@ -12,12 +12,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.poseidon.domain.User;
 import com.poseidon.repositories.UserRepository;
 import com.poseidon.services.UserService;
 
 @Controller
+@RequestMapping("/user")
 public class UserController {
 
     private static final Logger LOGGER = LogManager.getLogger("UserController");
@@ -34,7 +36,7 @@ public class UserController {
      * @param model
      * @return /user/list.html page
      */
-    @GetMapping("/user/list")
+    @GetMapping("/list")
     public String home(final Model model) {
         model.addAttribute("users", userService.findAllUsers());
         LOGGER.info("GET request SUCCESS for: /user/list");
@@ -47,7 +49,7 @@ public class UserController {
      * @param model
      * @return /user/add.html page
      */
-    @GetMapping("/user/add")
+    @GetMapping("/add")
     public String addUser(final Model model) {
         model.addAttribute("user", new User());
         LOGGER.info("GET request SUCCESS for: /user/add");
@@ -62,7 +64,7 @@ public class UserController {
      * @param model
      * @return /user/list.html page if good request, or /user/add
      */
-    @PostMapping("/user/validate")
+    @PostMapping("/validate")
     public String validate(@Valid final User user, final BindingResult result,
             final Model model) {
 
@@ -85,7 +87,7 @@ public class UserController {
      * @param model
      * @return /user/list.html page if bad request, or /user/update
      */
-    @GetMapping("/user/update/{id}")
+    @GetMapping("/update/{id}")
     public String showUpdateForm(@PathVariable("id") final Long id,
             final Model model) {
 
@@ -110,7 +112,7 @@ public class UserController {
      * @param model
      * @return /user/list.html page if good request, or /user/update
      */
-    @PostMapping("/user/update/{id}")
+    @PostMapping("/update/{id}")
     public String updateUser(@PathVariable("id") final Long id,
             @Valid final User user, final BindingResult result,
             final Model model) {
@@ -134,7 +136,7 @@ public class UserController {
      * @param model
      * @return /user/list.html page
      */
-    @GetMapping("/user/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable("id") final Long id,
             final Model model) {
         try {
