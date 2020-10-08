@@ -56,19 +56,13 @@ public class CurvePoint {
     private LocalDateTime creationDate; // use while create a new curvepoint
                                         // process
 
-//    /**
-//     * @param id
-//     * @param curveId
-//     * @param term
-//     * @param value
-//     */
-//    public CurvePoint(Integer id, @PositiveOrZero Integer curveId, Double term,
-//            Double value) {
-//        super();
-//        this.id = id;
-//        this.curveId = curveId;
-//        this.term = term;
-//        this.value = value;
-//    }
+    public CurvePoint(final Integer id, @PositiveOrZero final Integer curveId,
+            final Double term, final Double value) {
+        super();
+        this.id = id;
+        this.curveId = curveId;
+        this.term = term;
+        this.value = value;
+    }
 
 }

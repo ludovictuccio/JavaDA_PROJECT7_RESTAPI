@@ -11,12 +11,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.poseidon.domain.CurvePoint;
 import com.poseidon.repositories.CurvePointRepository;
 import com.poseidon.services.CurvePointService;
 
 @Controller
+@RequestMapping("/curvePoint")
 public class CurveController {
 
     private static final Logger LOGGER = LogManager
@@ -34,7 +36,7 @@ public class CurveController {
      * @param model
      * @return /curvePoint/list.html page
      */
-    @GetMapping("/curvePoint/list")
+    @GetMapping("/list")
     public String home(final Model model) {
         model.addAttribute("curvePoint",
                 curvePointService.findAllCurvePoints());
@@ -48,7 +50,7 @@ public class CurveController {
      * @param model
      * @return /curvePoint/add.html page
      */
-    @GetMapping("/curvePoint/add")
+    @GetMapping("/add")
     public String addBidForm(final Model model) {
         model.addAttribute("curvePoint", new CurvePoint());
         LOGGER.info("GET request SUCCESS for: /curvePoint/add");
@@ -63,7 +65,7 @@ public class CurveController {
      * @param model
      * @return /curvePoint/add.html page if bad request or else /curvePoint/list
      */
-    @PostMapping("/curvePoint/validate")
+    @PostMapping("/validate")
     public String validate(@Valid final CurvePoint curvePoint,
             final BindingResult result, final Model model) {
 
@@ -88,7 +90,7 @@ public class CurveController {
      * @param model
      * @return /curvePoint/update.html page
      */
-    @GetMapping("/curvePoint/update/{id}")
+    @GetMapping("/update/{id}")
     public String showUpdateForm(@PathVariable("id") final Integer id,
             final Model model) {
         CurvePoint curvePoint = curvePointService.getCurvePointById(id);
@@ -107,7 +109,7 @@ public class CurveController {
      * @return /curvePoint/update.html page if bad request or else
      *         /curvePoint/list
      */
-    @PostMapping("/curvePoint/update/{id}")
+    @PostMapping("/update/{id}")
     public String updateBid(@PathVariable("id") final Integer id,
             @Valid final CurvePoint curvePoint, final BindingResult result,
             final Model model) {
@@ -131,7 +133,7 @@ public class CurveController {
      * @param model
      * @return /curvePoint/list.html page
      */
-    @GetMapping("/curvePoint/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteBid(@PathVariable("id") final Integer id,
             final Model model) {
         boolean isDeleted = curvePointService.deleteCurvePoint(id);

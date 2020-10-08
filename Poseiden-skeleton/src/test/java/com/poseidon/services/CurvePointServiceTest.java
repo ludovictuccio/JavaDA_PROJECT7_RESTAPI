@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -48,6 +49,7 @@ public class CurvePointServiceTest {
         allCurvepoints = new ArrayList<>();
 
         curvepoint = new CurvePoint();
+        curvepoint.setId(1);
         curvepoint.setCreationDate(creationDateCurve1);
         curvepoint.setCurveId(10);
         curvepoint.setTerm(10d);
@@ -55,6 +57,7 @@ public class CurvePointServiceTest {
         allCurvepoints.add(curvepoint);
 
         curvepointTwo = new CurvePoint();
+        curvepointTwo.setId(2);
         curvepointTwo.setCreationDate(creationDateCurve2);
         curvepointTwo.setCurveId(20);
         curvepointTwo.setTerm(20d);
@@ -64,7 +67,7 @@ public class CurvePointServiceTest {
 
     @Test
     @Tag("SAVE")
-    @DisplayName("Save Curvepoint - OK - Positive id")
+    @DisplayName("Save Curvepoint - OK - Positive curve id")
     public void givenOneCurvePoint_whenSave_thenReturnSaved() {
         // GIVEN
 
@@ -81,7 +84,7 @@ public class CurvePointServiceTest {
 
     @Test
     @Tag("SAVE")
-    @DisplayName("Save Curvepoint - OK - Positive id 0")
+    @DisplayName("Save Curvepoint - OK - curve id 0")
     public void givenOneCurvePoint_whenSaveWithIdZero_thenReturnSaved() {
         // GIVEN
 
@@ -132,7 +135,7 @@ public class CurvePointServiceTest {
 
     @Test
     @Tag("SAVE")
-    @DisplayName("Save Curvepoint - ERROR - Empty Curve id ")
+    @DisplayName("Save Curvepoint - Ok - Empty Curve id ")
     public void givenOneCurvePoint_whenSaveWithEmptyCurveId_thenReturnNotSaved() {
         // GIVEN
 
@@ -140,8 +143,11 @@ public class CurvePointServiceTest {
         result = curvePointService.saveCurvePoint(null, 15d, 150d);
 
         // THEN
-        assertThat(result).isNull();
-        verify(curvePointRepository, times(0)).save(result);
+        assertThat(result.getCreationDate()).isNotNull();
+        assertThat(result.getCurveId()).isEqualTo(null);
+        assertThat(result.getTerm()).isEqualTo(15d);
+        assertThat(result.getValue()).isEqualTo(150d);
+        verify(curvePointRepository, times(1)).save(result);
     }
 
     @Test
@@ -194,34 +200,42 @@ public class CurvePointServiceTest {
 
     @Test
     @Tag("UPDATE")
-    @DisplayName("Update - OK - Existing curve id")
+    @DisplayName("Update - OK - Existing id")
     public void givenOneCurvePoints_whenUpdate_thenReturnUpdated() {
         // GIVEN
         when(curvePointRepository.save(curvepoint)).thenReturn(curvepoint);
-        when(curvePointRepository.findByCurveId(10)).thenReturn(curvepoint);
+
+        // 1= curvepoint id
+        CurvePoint curvePoint = new CurvePoint(1, 99, 99d, 999d);
+
+        when(curvePointRepository.findById(1))
+                .thenReturn(Optional.of(curvepoint));
 
         // WHEN
-        result = curvePointService.updateCurvePoint(10, 500d, 666d);
+        result = curvePointService.updateCurvePoint(curvePoint);
 
         // THEN
         assertThat(result).isNotNull();
         assertThat(result.getAsOfDate()).isNotNull();// date for curve update
         assertThat(result.getCreationDate()).isEqualTo(creationDateCurve1);
-        assertThat(result.getCurveId()).isEqualTo(10);
-        assertThat(result.getTerm()).isEqualTo(500d);
-        assertThat(result.getValue()).isEqualTo(666d);
+        assertThat(result.getCurveId()).isEqualTo(99);
+        assertThat(result.getTerm()).isEqualTo(99d);
+        assertThat(result.getValue()).isEqualTo(999d);
         verify(curvePointRepository, times(1)).save(result);
     }
 
     @Test
     @Tag("UPDATE")
-    @DisplayName("Update - ERROR - Unknow curve id")
-    public void givenOneCurvePoints_whenUpdateWithUnknowCurveId_thenReturnNull() {
+    @DisplayName("Update - ERROR - Unknow id")
+    public void givenOneCurvePoints_whenUpdateWithUnknowId_thenReturnNull() {
         // GIVEN
         when(curvePointRepository.save(curvepoint)).thenReturn(curvepoint);
 
+        // 1 or 2 are valid
+        CurvePoint curvePoint = new CurvePoint(999, 99, 99d, 999d);
+
         // WHEN
-        result = curvePointService.updateCurvePoint(1, 500d, 666d);
+        result = curvePointService.updateCurvePoint(curvePoint);
 
         // THEN
         assertThat(result).isNull();
@@ -234,12 +248,12 @@ public class CurvePointServiceTest {
     public void givenCurveInDb_whenDeleteWithCorrectCurveId_thenReturnTrue() {
         // GIVEN
         when(curvePointRepository.save(curvepoint)).thenReturn(curvepoint);
-        when(curvePointRepository.findByCurveId(curvepoint.getCurveId()))
-                .thenReturn(curvepoint);
+        when(curvePointRepository.findById(1))
+                .thenReturn(Optional.of(curvepoint));
 
         // WHEN
-        // 10 = curvepoint curve id
-        boolean isDeleted = curvePointService.deleteCurvePoint(10);
+        // 1 = valid
+        boolean isDeleted = curvePointService.deleteCurvePoint(1);
 
         // THEN
         assertThat(isDeleted).isTrue();
@@ -248,20 +262,37 @@ public class CurvePointServiceTest {
 
     @Test
     @Tag("DELETE")
-    @DisplayName("Delete - Error - Unknow curve id")
+    @DisplayName("Delete - Error - Unknow id")
     public void givenCurveInDb_whenDeleteWithIncorrectCurveId_thenReturnFalse() {
         // GIVEN
         when(curvePointRepository.save(curvepoint)).thenReturn(curvepoint);
-        when(curvePointRepository.findByCurveId(curvepoint.getCurveId()))
-                .thenReturn(curvepoint);
 
         // WHEN
-        // 10 or 20 are valid
+        // 1 = valid
         boolean isDeleted = curvePointService.deleteCurvePoint(99);
 
         // THEN
         assertThat(isDeleted).isFalse();
         verify(curvePointRepository, times(0)).delete(curvepoint);
+    }
+
+    @Test
+    @Tag("GET_by_ID")
+    @DisplayName("Get by id - Ok")
+    public void givenOneCurvePoints_whenGetById_thenReturnOk() {
+        // GIVEN
+        CurvePoint curve = new CurvePoint(1, 10, 10d, 100d);
+        when(curvePointRepository.findById(1)).thenReturn(Optional.of(curve));
+
+        // WHEN
+        result = curvePointService.getCurvePointById(1);
+
+        // THEN
+        assertThat(result).isNotNull();
+        assertThat(result.getId()).isEqualTo(1);
+        assertThat(result.getCurveId()).isEqualTo(10);
+        assertThat(result.getTerm()).isEqualTo(10d);
+        assertThat(result.getValue()).isEqualTo(100d);
     }
 
 }

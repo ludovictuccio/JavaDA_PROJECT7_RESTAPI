@@ -27,8 +27,7 @@ public class CurvePointService implements ICurvePointService {
     private CurvePointRepository curvePointRepository;
 
     /**
-     * Method service used to save a new curvepoint. Curve id must not be empty
-     * or null.
+     * Method service used to save a new curvepoint.
      *
      * @param curveId
      * @param term
@@ -42,16 +41,6 @@ public class CurvePointService implements ICurvePointService {
         curvepoint.setCurveId(curveId);
         curvepoint.setTerm(term);
         curvepoint.setValue(value);
-
-//        // check that the curve id is not already existing
-//        for (CurvePoint existingCurvePoint : curvePointRepository.findAll()) {
-//            if (existingCurvePoint.getCurveId().equals(curveId)) {
-//                LOGGER.error(
-//                        "Failed to create a new curve point: the id {} already exists.",
-//                        curveId);
-//                return null;
-//            }
-//        }
 
         if (ConstraintsValidation.checkValidCurvePoint(curvepoint) == null) {
             return null;
