@@ -334,4 +334,23 @@ public class RatingServiceTest {
         verify(ratingRepository, times(0)).delete(rating);
     }
 
+    @Test
+    @Tag("GET_by_ID")
+    @DisplayName("Get by id - Ok")
+    public void givenOneRating_whenGetById_thenReturnOk() {
+        // GIVEN
+        Rating rating = new Rating("moodys", "sandprating", "fitch", 1);
+        when(ratingRepository.findById(1)).thenReturn(Optional.of(rating));
+
+        // WHEN
+        result = ratingService.getRatingById(1);
+
+        // THEN
+        assertThat(result).isNotNull();
+        assertThat(result.getMoodysRating()).isEqualTo("moodys");
+        assertThat(result.getSandPRating()).isEqualTo("sandprating");
+        assertThat(result.getFitchRating()).isEqualTo("fitch");
+        assertThat(result.getOrderNumber()).isEqualTo(1);
+    }
+
 }

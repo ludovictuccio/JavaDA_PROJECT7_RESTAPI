@@ -106,4 +106,21 @@ public class RatingService implements IRatingService {
         isDeleted = true;
         return isDeleted;
     }
+
+    /**
+     * Method service used to find a Rating by his id.
+     *
+     * @param id
+     * @return existingRating a Rating entity
+     */
+    public Rating getRatingById(final Integer id) {
+
+        Rating existingRating = ratingRepository.findById(id).orElse(null);
+
+        if (existingRating == null) {
+            LOGGER.error("Rating not found for id: {}", id);
+            return null;
+        }
+        return existingRating;
+    }
 }

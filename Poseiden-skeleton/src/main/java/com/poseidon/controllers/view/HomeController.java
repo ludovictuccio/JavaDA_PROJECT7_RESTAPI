@@ -13,7 +13,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model) {
-        LOGGER.info("User disconnected !");
+        LOGGER.info("User disconnected");
         return "home";
     }
 

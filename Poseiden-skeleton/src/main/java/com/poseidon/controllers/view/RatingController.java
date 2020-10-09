@@ -4,64 +4,136 @@ import javax.validation.Valid;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.poseidon.domain.Rating;
+import com.poseidon.services.RatingService;
 
 @Controller
+@RequestMapping("/rating")
 public class RatingController {
-    // TODO: Inject Rating service
 
     private static final Logger LOGGER = LogManager
             .getLogger("RatingController");
 
-    @GetMapping("/rating/list")
-    public String home(Model model) {
-        // TODO: find all Rating, add to model
+    @Autowired
+    private RatingService ratingService;
+
+    /**
+     * Get HTML page used to display all ratings list.
+     *
+     * @param model
+     * @return /rating/list.html page
+     */
+    @GetMapping("/list")
+    public String home(final Model model) {
+        model.addAttribute("rating", ratingService.findAllRating());
         LOGGER.info("GET request SUCCESS for: /rating/list");
         return "rating/list";
     }
 
-    @GetMapping("/rating/add")
-    public String addRatingForm(Rating rating) {
+    /**
+     * Get HTML page used to add a new rating.
+     *
+     * @param model
+     * @return /rating/add.html page
+     */
+    @GetMapping("/add")
+    public String addRatingForm(final Model model) {
+        model.addAttribute("rating", new Rating());
         LOGGER.info("GET request SUCCESS for: /rating/add");
         return "rating/add";
     }
 
-    @PostMapping("/rating/validate")
-    public String validate(@Valid Rating rating, BindingResult result,
-            Model model) {
-        // TODO: check data valid and save to db, after saving return Rating
-        // list
-        LOGGER.info("POST request SUCCESS for: /rating/validate");
+    /**
+     * Post HTML page used to validate a new rating.
+     *
+     * @param rating
+     * @param result
+     * @param model
+     * @return /rating/add.html page if bad request or else /rating/list
+     */
+    @PostMapping("/validate")
+    public String validate(@Valid final Rating rating,
+            final BindingResult result, final Model model) {
+
+        if (!result.hasErrors()) {
+            Rating ratingResult = ratingService.saveRating(rating);
+            if (ratingResult != null) {
+                model.addAttribute("rating", ratingResult);
+                LOGGER.info("POST request SUCCESS for: /rating/validate");
+                return "redirect:/rating/list";
+            }
+        }
+        LOGGER.info("POST request FAILED for: /rating/validate");
         return "rating/add";
     }
 
-    @GetMapping("/rating/update/{id}")
-    public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        // TODO: get Rating by Id and to model then show to the form
+    /**
+     * Get HTML page used to update a rating.
+     *
+     * @param id
+     * @param model
+     * @return /rating/update.html page
+     */
+    @GetMapping("/update/{id}")
+    public String showUpdateForm(@PathVariable("id") final Integer id,
+            final Model model) {
+        Rating rating = ratingService.getRatingById(id);
+        model.addAttribute("rating", rating);
         LOGGER.info("GET request SUCCESS for: /rating/update/{id}");
         return "rating/update";
     }
 
-    @PostMapping("/rating/update/{id}")
-    public String updateRating(@PathVariable("id") Integer id,
-            @Valid Rating rating, BindingResult result, Model model) {
-        // TODO: check required fields, if valid call service to update Rating
-        // and return Rating list
+    /**
+     * Post HTML page used to update a rating.
+     *
+     * @param id
+     * @param rating
+     * @param result
+     * @param model
+     * @return /rating/update.html page if bad request or else /rating/list
+     */
+    @PostMapping("/update/{id}")
+    public String updateRating(@PathVariable("id") final Integer id,
+            @Valid final Rating rating, final BindingResult result,
+            final Model model) {
+
+        if (result.hasErrors()) {
+            LOGGER.info("POST request FAILED for: /rating/update/{id}");
+            return "rating/update/" + id;
+        }
+        rating.setId(id);
+        ratingService.saveRating(rating);
+        model.addAttribute("rating", ratingService.findAllRating());
         LOGGER.info("POST request SUCCESS for: /rating/update/{id}");
         return "redirect:/rating/list";
     }
 
-    @GetMapping("/rating/delete/{id}")
-    public String deleteRating(@PathVariable("id") Integer id, Model model) {
-        // TODO: Find Rating by Id and delete the Rating, return to Rating list
-        LOGGER.info("GET request SUCCESS for: /rating/delete/{id}");
+    /**
+     * Get HTML page used to delete a rating.
+     *
+     * @param id
+     * @param model
+     * @return /rating/list.html page
+     */
+    @GetMapping("/delete/{id}")
+    public String deleteRating(@PathVariable("id") final Integer id,
+            final Model model) {
+        boolean isDeleted = ratingService.deleteRating(id);
+        if (isDeleted) {
+            model.addAttribute("rating", ratingService.findAllRating());
+            LOGGER.info("GET request SUCCESS for: /rating/delete/{id}");
+        } else {
+            LOGGER.info("GET request FAILED for: /rating/delete/{id}");
+        }
         return "redirect:/rating/list";
     }
 }
