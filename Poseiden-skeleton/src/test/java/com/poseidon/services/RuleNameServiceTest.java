@@ -250,4 +250,25 @@ public class RuleNameServiceTest {
         assertThat(isDeleted).isFalse();
         verify(ruleNameRepository, times(0)).delete(ruleName);
     }
+
+    @Test
+    @Tag("GET_by_ID")
+    @DisplayName("Get by id - Ok")
+    public void givenOneRulenamewhenGetById_thenReturnOk() {
+        // GIVEN
+        when(ruleNameRepository.save(ruleName)).thenReturn(ruleName);
+        when(ruleNameRepository.findById(1)).thenReturn(Optional.of(ruleName));
+
+        // WHEN
+        result = ruleNameService.getRuleNameById(1);
+
+        // THEN
+        assertThat(result).isNotNull();
+        assertThat(result.getName()).isEqualTo("name 1");
+        assertThat(result.getDescription()).isEqualTo("description 1");
+        assertThat(result.getJson()).isEqualTo("json 1");
+        assertThat(result.getTemplate()).isEqualTo("template 1");
+        assertThat(result.getSqlStr()).isEqualTo("sql str 1");
+        assertThat(result.getSqlPart()).isEqualTo("sql part 1");
+    }
 }

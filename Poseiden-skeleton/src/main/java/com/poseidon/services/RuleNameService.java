@@ -102,4 +102,22 @@ public class RuleNameService implements IRuleNameService {
         return isDeleted;
     }
 
+    /**
+     * Method service used to find a RuleName by his id.
+     *
+     * @param id
+     * @return existingRuleName a RuleName entity
+     */
+    public RuleName getRuleNameById(final Integer id) {
+
+        RuleName existingRuleName = ruleNameRepository.findById(id)
+                .orElse(null);
+
+        if (existingRuleName == null) {
+            LOGGER.error("RuleName not found for id: {}", id);
+            return null;
+        }
+        return existingRuleName;
+    }
+
 }
