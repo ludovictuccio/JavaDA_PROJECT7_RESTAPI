@@ -468,4 +468,21 @@ public class TradeServiceTest {
         verify(tradeRepository, times(0)).delete(trade);
     }
 
+    @Test
+    @Tag("GET_by_ID")
+    @DisplayName("Get by id - Ok")
+    public void givenOneTrade_whenGetById_thenReturnOk() {
+        // GIVEN
+        when(tradeRepository.save(trade)).thenReturn(trade);
+        when(tradeRepository.findById(1)).thenReturn(Optional.of(trade));
+
+        // WHEN
+        result = tradeService.getTradeById(1);
+
+        // THEN
+        assertThat(result).isNotNull();
+        assertThat(result.getAccount()).isEqualTo("account");
+        assertThat(result.getType()).isEqualTo("type");
+    }
+
 }

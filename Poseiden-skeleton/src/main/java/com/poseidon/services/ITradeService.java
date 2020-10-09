@@ -19,4 +19,6 @@ public interface ITradeService {
 
     boolean deleteTrade(Integer tradeId);
 
+    Trade getTradeById(Integer id);
+
 }

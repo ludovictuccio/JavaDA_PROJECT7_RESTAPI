@@ -3,6 +3,8 @@ package com.poseidon.controllers.view;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -20,13 +22,14 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.poseidon.domain.RuleName;
-import com.poseidon.repositories.RuleNameRepository;
+import com.poseidon.domain.Trade;
+import com.poseidon.repositories.TradeRepository;
+import com.poseidon.services.TradeService;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class RuleNameControllerIT {
+public class TradeControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
@@ -38,20 +41,23 @@ public class RuleNameControllerIT {
     private ObjectMapper objectMapper;
 
     @Autowired
-    private RuleNameRepository ruleNameRepository;
+    private TradeService tradeService;
+
+    @Autowired
+    private TradeRepository tradeRepository;
 
     @BeforeEach
     public void setUpPerTest() {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
-        ruleNameRepository.deleteAll();
+        tradeRepository.deleteAll();
     }
 
     @Test
-    @Tag("/ruleName/list")
+    @Tag("/trade/list")
     @DisplayName("Get - list")
-    public void givenZeroRulename_whenGetList_thenreturnOk() throws Exception {
+    public void givenZeroTrade_whenGetList_thenreturnOk() throws Exception {
         this.mockMvc
-                .perform(MockMvcRequestBuilders.get("/ruleName/list")
+                .perform(MockMvcRequestBuilders.get("/trade/list")
                         .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk()).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
@@ -60,75 +66,56 @@ public class RuleNameControllerIT {
     }
 
     @Test
-    @Tag("/ruleName/add")
+    @Tag("/trade/add")
     @DisplayName("Get - add")
-    public void givenRulename_whenGetAdd_thenReturnOk() throws Exception {
+    public void givenTrade_whenGetAdd_thenReturnOk() throws Exception {
         this.mockMvc
-                .perform(MockMvcRequestBuilders.get("/ruleName/add")
+                .perform(MockMvcRequestBuilders.get("/trade/add")
                         .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk()).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.model().hasNoErrors())
-                .andExpect(MockMvcResultMatchers.model()
-                        .attributeExists("ruleName"))
-                .andReturn();
-    }
-
-    @Test
-    @Tag("/ruleName/validate")
-    @DisplayName("Post - validate - OK")
-    public void givenValidRuleName_whenValidate_thenReturnSaved()
-            throws Exception {
-
-        RuleName rulename = new RuleName("name", "description", "json",
-                "template", "sql str", "sql part");
-        String jsonContent = objectMapper.writeValueAsString(rulename);
-        this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/ruleName/validate")
-                        .contentType(APPLICATION_JSON).content(jsonContent))
-                .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.model().hasNoErrors())
                 .andExpect(
-                        MockMvcResultMatchers.redirectedUrl("/ruleName/list"))
+                        MockMvcResultMatchers.model().attributeExists("trade"))
                 .andReturn();
     }
 
     @Test
-    @Tag("/ruleName/update/{id}")
-    @DisplayName("Post - update")
-    public void givenOneRuleName_whenUpdate_thenReturnUpdated()
+    @Tag("/trade/validate")
+    @DisplayName("Post - validate - ERROR - Blank creation name")
+    public void givenBlankCreationName_whenValidate_thenReturnSaved()
             throws Exception {
 
-        RuleName rulename = new RuleName("name", "description", "json",
-                "template", "sql str", "sql part");
-        ruleNameRepository.save(rulename);
-        String jsonContent = objectMapper.writeValueAsString(rulename);
+        Trade trade = new Trade("account", "type", 100d, 10d, null, null,
+                LocalDateTime.now().minusMonths(10), null, null, null, null,
+                null, "", null, null, null, null, null);
+
+        String jsonContent = objectMapper.writeValueAsString(trade);
         this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/ruleName/update/1")
+                .perform(MockMvcRequestBuilders.post("/trade/validate")
                         .contentType(MediaType.ALL).content(jsonContent))
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.model().hasNoErrors())
-                .andExpect(
-                        MockMvcResultMatchers.redirectedUrl("/ruleName/list"))
+                .andExpect(MockMvcResultMatchers.model().hasErrors())
+                .andExpect(MockMvcResultMatchers.view().name("trade/add"))
                 .andReturn();
     }
 
     @Test
-    @Tag("/ruleName/delete")
+    @Tag("/trade/delete")
     @DisplayName("Delete - OK")
-    public void givenRuleName_whenDelete_thenReturnDeleted() throws Exception {
+    public void givenTrade_whenDelete_thenReturnDeleted() throws Exception {
 
-        RuleName rulename = new RuleName("name", "description", "json",
-                "template", "sql str", "sql part");
-        ruleNameRepository.save(rulename);
+        Trade trade = new Trade("account", "type", 100d, 10d, null, null,
+                LocalDateTime.now().minusMonths(10), null, null, null, null,
+                null, "", null, null, null, null, null);
+        tradeRepository.save(trade);
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.get("/ruleName/delete/1")
+                .perform(MockMvcRequestBuilders.get("/trade/delete/1")
                         .contentType(MediaType.ALL))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.model().hasNoErrors())
-                .andExpect(
-                        MockMvcResultMatchers.redirectedUrl("/ruleName/list"))
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/trade/list"))
                 .andReturn();
     }
 

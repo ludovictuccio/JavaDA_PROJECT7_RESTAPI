@@ -116,4 +116,21 @@ public class TradeService implements ITradeService {
         return isDeleted;
     }
 
+    /**
+     * Method service used to find a Trade by his id.
+     *
+     * @param id
+     * @return existingTrade a Trade entity
+     */
+    public Trade getTradeById(final Integer id) {
+
+        Trade existingTrade = tradeRepository.findById(id).orElse(null);
+
+        if (existingTrade == null) {
+            LOGGER.error("Trade not found for id: {}", id);
+            return null;
+        }
+        return existingTrade;
+    }
+
 }
