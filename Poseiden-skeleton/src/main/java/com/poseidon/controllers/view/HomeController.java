@@ -12,13 +12,13 @@ public class HomeController {
     private static final Logger LOGGER = LogManager.getLogger("HomeController");
 
     @GetMapping("/")
-    public String home(Model model) {
+    public String home(final Model model) {
         LOGGER.info("User disconnected");
         return "home";
     }
 
     @GetMapping("/admin/home")
-    public String adminHome(Model model) {
+    public String adminHome(final Model model) {
         LOGGER.info("GET request SUCCESS for: /admin/home");
         return "redirect:/bidList/list";
     }
