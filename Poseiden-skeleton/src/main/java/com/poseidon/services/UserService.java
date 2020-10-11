@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.poseidon.domain.User;
@@ -23,6 +24,9 @@ public class UserService implements IUserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     /**
      * Method service used to save a new user. Username is unique attribute and
@@ -53,6 +57,7 @@ public class UserService implements IUserService {
         }
 
         user.setRole(user.getRole().toUpperCase());
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return user;
     }
@@ -85,7 +90,8 @@ public class UserService implements IUserService {
             LOGGER.error("Unknow user for username: {}", user.getUsername());
             return isUpdated;
         }
-        existingUser.setPassword(user.getPassword());
+        existingUser
+                .setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         existingUser.setFullname(user.getFullname());
         existingUser.setRole(user.getRole().toUpperCase());
         userRepository.save(existingUser);

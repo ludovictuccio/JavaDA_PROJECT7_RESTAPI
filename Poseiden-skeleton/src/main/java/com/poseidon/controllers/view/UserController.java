@@ -5,7 +5,6 @@ import javax.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -69,8 +68,6 @@ public class UserController {
             final Model model) {
 
         if (!result.hasErrors()) {
-            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-            user.setPassword(encoder.encode(user.getPassword()));
             User userToSave = userService.saveUser(user);
             model.addAttribute("user", userToSave);
             LOGGER.info("POST request SUCCESS for: /user/validate");
@@ -120,8 +117,6 @@ public class UserController {
             LOGGER.info("POST request FAILED for: /user/update/{id}");
             return "user/update";
         }
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        user.setPassword(encoder.encode(user.getPassword()));
         user.setId(id);
         userService.updateUser(user);
         model.addAttribute("user", user);

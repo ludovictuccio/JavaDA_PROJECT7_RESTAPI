@@ -124,12 +124,9 @@ public class TradeService implements ITradeService {
      */
     public Trade getTradeById(final Integer id) {
 
-        Trade existingTrade = tradeRepository.findById(id).orElse(null);
+        Trade existingTrade = tradeRepository.findById(id).orElseThrow(
+                () -> new NullPointerException("Trade not found for this id."));
 
-        if (existingTrade == null) {
-            LOGGER.error("Trade not found for id: {}", id);
-            return null;
-        }
         return existingTrade;
     }
 

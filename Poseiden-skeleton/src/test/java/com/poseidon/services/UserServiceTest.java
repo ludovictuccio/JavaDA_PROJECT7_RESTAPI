@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.annotation.DirtiesContext;
 
 import com.poseidon.domain.User;
@@ -29,6 +30,11 @@ public class UserServiceTest {
 
     @MockBean
     private UserRepository userRepository;
+
+    @MockBean
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    private static String encryptedPassword = "encrypted_password";
 
     private User user;
     private User userTwo;
@@ -54,13 +60,15 @@ public class UserServiceTest {
     @DisplayName("Save User - OK")
     public void givenValidUser_whenSave_thenReturnSaved() {
         // GIVEN
+        when(bCryptPasswordEncoder.encode(user.getPassword()))
+                .thenReturn(encryptedPassword);
 
         // WHEN
         result = userService.saveUser(user);
 
         // THEN
         assertThat(result.getUsername()).isEqualTo("username1");
-        assertThat(result.getPassword()).isEqualTo("validPassword1&");
+        assertThat(result.getPassword()).isEqualTo(encryptedPassword);
         assertThat(result.getFullname()).isEqualTo("fullname1");
         assertThat(result.getRole()).isEqualTo("USER");
         verify(userRepository, times(1)).save(user);
@@ -292,7 +300,10 @@ public class UserServiceTest {
 
         User existingUsernameForUpdate = new User("username1",
                 "validPassword1&updated", "fullnameUpdated", "user");
-        // user.setId(19);
+
+        when(bCryptPasswordEncoder
+                .encode(existingUsernameForUpdate.getPassword()))
+                        .thenReturn(encryptedPassword);
 
         // WHEN
         boolean result = userService.updateUser(existingUsernameForUpdate);
@@ -301,7 +312,7 @@ public class UserServiceTest {
         assertThat(result).isTrue();
         verify(userRepository, times(1)).save(user);
         assertThat(userRepository.findUserByUsername("username1").getPassword())
-                .isEqualTo("validPassword1&updated");
+                .isEqualTo(encryptedPassword);
         assertThat(userRepository.findUserByUsername("username1").getFullname())
                 .isEqualTo("fullnameUpdated");
         assertThat(userRepository.findAll().size()).isEqualTo(2);
@@ -320,6 +331,10 @@ public class UserServiceTest {
         User existingUsernameForUpdate = new User("username1",
                 "validPassword1&updated", "fullnameUpdated", "admin");
 
+        when(bCryptPasswordEncoder
+                .encode(existingUsernameForUpdate.getPassword()))
+                        .thenReturn(encryptedPassword);
+
         // WHEN
         boolean result = userService.updateUser(existingUsernameForUpdate);
 
@@ -327,7 +342,7 @@ public class UserServiceTest {
         assertThat(result).isTrue();
         verify(userRepository, times(1)).save(user);
         assertThat(userRepository.findUserByUsername("username1").getPassword())
-                .isEqualTo("validPassword1&updated");
+                .isEqualTo(encryptedPassword);
         assertThat(userRepository.findUserByUsername("username1").getFullname())
                 .isEqualTo("fullnameUpdated");
         assertThat(userRepository.findAll().size()).isEqualTo(2);

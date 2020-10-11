@@ -32,16 +32,18 @@ public class MyUserDetailsService implements UserDetailsService {
 
         User user = userRepository.findUserByUsername(username);
 
+        if (user == null) {
+            throw new UsernameNotFoundException("Could not find user");
+        }
+
         GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole());
 
         UserDetails userDetails = (UserDetails) new org.springframework.security.core.userdetails.User(
                 user.getUsername(), user.getPassword(),
                 Arrays.asList(authority));
 
-        if (!user.getUsername().isEmpty()) {
-            LOGGER.info("User with username: {} and role: {} connected !",
-                    user.getUsername(), user.getRole());
-        }
+        LOGGER.info("User with username: {} and role: {} connected !",
+                user.getUsername(), user.getRole());
 
         return userDetails;
     }
