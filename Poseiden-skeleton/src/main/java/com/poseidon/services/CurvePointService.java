@@ -110,12 +110,9 @@ public class CurvePointService implements ICurvePointService {
     public CurvePoint getCurvePointById(final Integer id) {
 
         CurvePoint existingCurvePoint = curvePointRepository.findById(id)
-                .orElse(null);
+                .orElseThrow(() -> new NullPointerException(
+                        "Curve Point not found for this id."));
 
-        if (existingCurvePoint == null) {
-            LOGGER.error("CurvePoint not found for id: {}", id);
-            return null;
-        }
         return existingCurvePoint;
     }
 

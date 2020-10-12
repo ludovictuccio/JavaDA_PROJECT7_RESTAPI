@@ -1,6 +1,7 @@
 package com.poseidon.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -636,6 +637,35 @@ public class BidListServiceTest {
         // THEN
         assertThat(isDeleted).isFalse();
         verify(bidListRepository, times(0)).delete(bidToDelete);
+    }
+
+    @Test
+    @Tag("GET_by_ID")
+    @DisplayName("Get by id - Ok")
+    public void givenOneBid_whenGetById_thenReturnOk() {
+        // GIVEN
+        when(bidListRepository.save(bid)).thenReturn(bid);
+        when(bidListRepository.findById(1)).thenReturn(Optional.of(bid));
+
+        // WHEN
+        result = bidListService.getBidById(1);
+
+        // THEN
+        assertThat(result).isNotNull();
+        assertThat(result.getAccount()).isEqualTo("Account Test");
+        assertThat(result.getType()).isEqualTo("Type Test");
+    }
+
+    @Test
+    @Tag("GET_by_ID")
+    @DisplayName("Get by id - Error - Bad id")
+    public void givenBadBid_whenGetById_thenReturnNull() {
+
+        when(bidListRepository.save(bid)).thenReturn(bid);
+
+        assertThatNullPointerException().isThrownBy(() -> {
+            bidListService.getBidById(99);
+        });
     }
 
 }

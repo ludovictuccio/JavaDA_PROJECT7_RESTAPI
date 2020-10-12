@@ -20,4 +20,6 @@ public interface IBidListService {
 
     boolean deleteBid(Integer bidId, String bidAccount);
 
+    BidList getBidById(Integer id);
+
 }

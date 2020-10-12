@@ -138,12 +138,10 @@ public class BidListService implements IBidListService {
      */
     public BidList getBidById(final Integer id) {
 
-        BidList existingBid = bidListRepository.findById(id).orElse(null);
+        BidList existingBid = bidListRepository.findById(id)
+                .orElseThrow(() -> new NullPointerException(
+                        "BidList not found for this id."));
 
-        if (existingBid == null) {
-            LOGGER.error("BidList not found for id: {}", id);
-            return null;
-        }
         return existingBid;
     }
 

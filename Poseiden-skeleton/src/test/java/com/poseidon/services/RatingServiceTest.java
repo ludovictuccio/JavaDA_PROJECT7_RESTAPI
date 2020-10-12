@@ -1,6 +1,7 @@
 package com.poseidon.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -351,6 +352,18 @@ public class RatingServiceTest {
         assertThat(result.getSandPRating()).isEqualTo("sandprating");
         assertThat(result.getFitchRating()).isEqualTo("fitch");
         assertThat(result.getOrderNumber()).isEqualTo(1);
+    }
+
+    @Test
+    @Tag("GET_by_ID")
+    @DisplayName("Get by id - Error - Bad id")
+    public void givenBadRating_whenGetById_thenReturnNull() {
+
+        when(ratingRepository.save(rating)).thenReturn(rating);
+
+        assertThatNullPointerException().isThrownBy(() -> {
+            ratingService.getRatingById(99);
+        });
     }
 
 }

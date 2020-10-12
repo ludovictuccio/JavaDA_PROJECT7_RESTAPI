@@ -1,6 +1,7 @@
 package com.poseidon.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -293,6 +294,18 @@ public class CurvePointServiceTest {
         assertThat(result.getCurveId()).isEqualTo(10);
         assertThat(result.getTerm()).isEqualTo(10d);
         assertThat(result.getValue()).isEqualTo(100d);
+    }
+
+    @Test
+    @Tag("GET_by_ID")
+    @DisplayName("Get by id - Error - Bad id")
+    public void givenBadCurvePoint_whenGetById_thenReturnNull() {
+
+        when(curvePointRepository.save(curvepoint)).thenReturn(curvepoint);
+
+        assertThatNullPointerException().isThrownBy(() -> {
+            curvePointService.getCurvePointById(99);
+        });
     }
 
 }

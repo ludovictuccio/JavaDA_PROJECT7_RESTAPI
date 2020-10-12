@@ -115,12 +115,10 @@ public class RatingService implements IRatingService {
      */
     public Rating getRatingById(final Integer id) {
 
-        Rating existingRating = ratingRepository.findById(id).orElse(null);
+        Rating existingRating = ratingRepository.findById(id)
+                .orElseThrow(() -> new NullPointerException(
+                        "Rating not found for this id."));
 
-        if (existingRating == null) {
-            LOGGER.error("Rating not found for id: {}", id);
-            return null;
-        }
         return existingRating;
     }
 }

@@ -1,6 +1,7 @@
 package com.poseidon.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -270,5 +271,17 @@ public class RuleNameServiceTest {
         assertThat(result.getTemplate()).isEqualTo("template 1");
         assertThat(result.getSqlStr()).isEqualTo("sql str 1");
         assertThat(result.getSqlPart()).isEqualTo("sql part 1");
+    }
+
+    @Test
+    @Tag("GET_by_ID")
+    @DisplayName("Get by id - Error - Bad id")
+    public void givenBadRulename_whenGetById_thenReturnNull() {
+
+        when(ruleNameRepository.save(ruleName)).thenReturn(ruleName);
+
+        assertThatNullPointerException().isThrownBy(() -> {
+            ruleNameService.getRuleNameById(99);
+        });
     }
 }

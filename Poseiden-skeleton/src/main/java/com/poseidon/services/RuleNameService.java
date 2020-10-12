@@ -111,12 +111,9 @@ public class RuleNameService implements IRuleNameService {
     public RuleName getRuleNameById(final Integer id) {
 
         RuleName existingRuleName = ruleNameRepository.findById(id)
-                .orElse(null);
+                .orElseThrow(() -> new NullPointerException(
+                        "RuleName not found for this id."));
 
-        if (existingRuleName == null) {
-            LOGGER.error("RuleName not found for id: {}", id);
-            return null;
-        }
         return existingRuleName;
     }
 
