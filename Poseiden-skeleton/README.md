@@ -1,6 +1,6 @@
 # Poseidon
 
-<p>The java application "Poseidon" is run with Maven and Spring Boot.</p>
+<p>The java application "Poseidon" is run with Maven and Spring Boot on server port 9090.</p>
 
 ## Informations / Technical
 
@@ -14,6 +14,7 @@
 - **Bootstrap** v4.3.1
 - **Log4j2** 
 - **Actuators** in service: health, info, httptrace & metrics (port 8080)
+- **API documentation:** http://localhost:9090/swagger-ui.html
 
 ## Installing
 
@@ -55,3 +56,4 @@ https://dev.mysql.com/downloads/installer/
 		OR
 <li>Use port 9090 http://localhost:9090/{}</li> 
 </ol>
+

@@ -17,6 +17,8 @@ import com.poseidon.domain.CurvePoint;
 import com.poseidon.repositories.CurvePointRepository;
 import com.poseidon.services.CurvePointService;
 
+import io.swagger.annotations.ApiOperation;
+
 @Controller
 @RequestMapping("/curvePoint")
 public class CurveController {
@@ -36,6 +38,7 @@ public class CurveController {
      * @param model
      * @return /curvePoint/list.html page
      */
+    @ApiOperation(value = "CurvePoints LIST (get)", notes = "VIEW - Return all CurvePoints list.")
     @GetMapping("/list")
     public String home(final Model model) {
         model.addAttribute("curvePoint",
@@ -50,6 +53,7 @@ public class CurveController {
      * @param model
      * @return /curvePoint/add.html page
      */
+    @ApiOperation(value = "ADD Curve Point (get)", notes = "VIEW - Add new Curve Point")
     @GetMapping("/add")
     public String addBidForm(final Model model) {
         model.addAttribute("curvePoint", new CurvePoint());
@@ -65,6 +69,7 @@ public class CurveController {
      * @param model
      * @return /curvePoint/add.html page if bad request or else /curvePoint/list
      */
+    @ApiOperation(value = "VALIDATE Curve Point (post)", notes = "VIEW - Validate / save the new Curve Point")
     @PostMapping("/validate")
     public String validate(@Valid final CurvePoint curvePoint,
             final BindingResult result, final Model model) {
@@ -90,6 +95,7 @@ public class CurveController {
      * @param model
      * @return /curvePoint/update.html page
      */
+    @ApiOperation(value = "UPDATE Curve Point (get)", notes = "VIEW - Get a Curve Point by id and retrieve to update it.")
     @GetMapping("/update/{id}")
     public String showUpdateForm(@PathVariable("id") final Integer id,
             final Model model) {
@@ -109,6 +115,7 @@ public class CurveController {
      * @return /curvePoint/update.html page if bad request or else
      *         /curvePoint/list
      */
+    @ApiOperation(value = "UPDATE Curve Point (post)", notes = "VIEW - Update the Curve Point.")
     @PostMapping("/update/{id}")
     public String updateBid(@PathVariable("id") final Integer id,
             @Valid final CurvePoint curvePoint, final BindingResult result,
@@ -133,6 +140,7 @@ public class CurveController {
      * @param model
      * @return /curvePoint/list.html page
      */
+    @ApiOperation(value = "DELETE Curve Point (get)", notes = "VIEW - Get Curve Point with his id, and delete it.")
     @GetMapping("/delete/{id}")
     public String deleteBid(@PathVariable("id") final Integer id,
             final Model model) {

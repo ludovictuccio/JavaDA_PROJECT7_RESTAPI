@@ -24,7 +24,6 @@ import lombok.Setter;
 public class User {
 
     @Id
-    // @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id = System.nanoTime();
 

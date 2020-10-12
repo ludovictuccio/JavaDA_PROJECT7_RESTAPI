@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.poseidon.domain.RuleName;
 import com.poseidon.services.RuleNameService;
 
+import io.swagger.annotations.ApiOperation;
+
 @Controller
 @RequestMapping("/ruleName")
 public class RuleNameController {
@@ -32,6 +34,7 @@ public class RuleNameController {
      * @param model
      * @return /ruleName/list.html page
      */
+    @ApiOperation(value = "RuleNames LIST (get)", notes = "VIEW - Return all RuleNames list.")
     @GetMapping("/list")
     public String home(final Model model) {
         model.addAttribute("ruleName", ruleNameService.findAllRuleNames());
@@ -45,6 +48,7 @@ public class RuleNameController {
      * @param model
      * @return /ruleName/add.html page
      */
+    @ApiOperation(value = "ADD RuleName (get)", notes = "VIEW - Add new RuleName")
     @GetMapping("/add")
     public String addRuleForm(final Model model) {
         model.addAttribute("ruleName", new RuleName());
@@ -60,6 +64,7 @@ public class RuleNameController {
      * @param model
      * @return /ruleName/add.html page if bad request or else /ruleName/list
      */
+    @ApiOperation(value = "VALIDATE RuleName (post)", notes = "VIEW - Validate / save the new RuleName")
     @PostMapping("/validate")
     public String validate(@Valid final RuleName ruleName,
             final BindingResult result, final Model model) {
@@ -83,6 +88,7 @@ public class RuleNameController {
      * @param model
      * @return /ruleName/update.html page
      */
+    @ApiOperation(value = "UPDATE RuleName (get)", notes = "VIEW - Get a RuleName by id and retrieve to update it.")
     @GetMapping("/update/{id}")
     public String showUpdateForm(@PathVariable("id") final Integer id,
             final Model model) {
@@ -101,6 +107,7 @@ public class RuleNameController {
      * @param model
      * @return /ruleName/update.html page if bad request or else /ruleName/list
      */
+    @ApiOperation(value = "UPDATE RuleName (post)", notes = "VIEW - Update the RuleName.")
     @PostMapping("/update/{id}")
     public String updateRuleName(@PathVariable("id") final Integer id,
             @Valid final RuleName ruleName, final BindingResult result,
@@ -124,6 +131,7 @@ public class RuleNameController {
      * @param model
      * @return /ruleName/list.html page
      */
+    @ApiOperation(value = "DELETE RuleName (get)", notes = "VIEW - Get RuleName with his id, and delete it.")
     @GetMapping("/delete/{id}")
     public String deleteRuleName(@PathVariable("id") final Integer id,
             final Model model) {

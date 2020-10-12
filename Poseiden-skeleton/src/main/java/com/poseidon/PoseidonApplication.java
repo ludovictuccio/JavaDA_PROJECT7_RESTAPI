@@ -12,19 +12,23 @@ import org.springframework.validation.beanvalidation.MethodValidationPostProcess
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
 @SpringBootApplication
 @EnableEncryptableProperties
+@EnableSwagger2
 public class PoseidonApplication {
 
     public PoseidonApplication() {
-
     }
 
     public static void main(final String[] args) {
         SpringApplication.run(PoseidonApplication.class, args);
     }
 
-    // Method used to configure httptrace endpoint with actuator.
+    /**
+     * Method used to configure httptrace endpoint with actuator.
+     */
     @Bean
     public HttpTraceRepository htttpTraceRepository() {
         return new InMemoryHttpTraceRepository();

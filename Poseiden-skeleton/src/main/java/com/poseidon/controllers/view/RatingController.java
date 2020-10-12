@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.poseidon.domain.Rating;
 import com.poseidon.services.RatingService;
 
+import io.swagger.annotations.ApiOperation;
+
 @Controller
 @RequestMapping("/rating")
 public class RatingController {
@@ -32,6 +34,7 @@ public class RatingController {
      * @param model
      * @return /rating/list.html page
      */
+    @ApiOperation(value = "Ratings LIST (get)", notes = "VIEW - Return all Ratings list.")
     @GetMapping("/list")
     public String home(final Model model) {
         model.addAttribute("rating", ratingService.findAllRating());
@@ -45,6 +48,7 @@ public class RatingController {
      * @param model
      * @return /rating/add.html page
      */
+    @ApiOperation(value = "ADD Rating (get)", notes = "VIEW - Add new Rating")
     @GetMapping("/add")
     public String addRatingForm(final Model model) {
         model.addAttribute("rating", new Rating());
@@ -60,6 +64,7 @@ public class RatingController {
      * @param model
      * @return /rating/add.html page if bad request or else /rating/list
      */
+    @ApiOperation(value = "VALIDATE Rating (post)", notes = "VIEW - Validate / save the new Rating")
     @PostMapping("/validate")
     public String validate(@Valid final Rating rating,
             final BindingResult result, final Model model) {
@@ -83,6 +88,7 @@ public class RatingController {
      * @param model
      * @return /rating/update.html page
      */
+    @ApiOperation(value = "UPDATE Rating (get)", notes = "VIEW - Get a Rating by id and retrieve to update it.")
     @GetMapping("/update/{id}")
     public String showUpdateForm(@PathVariable("id") final Integer id,
             final Model model) {
@@ -101,6 +107,7 @@ public class RatingController {
      * @param model
      * @return /rating/update.html page if bad request or else /rating/list
      */
+    @ApiOperation(value = "UPDATE Rating (post)", notes = "VIEW - Update the Rating.")
     @PostMapping("/update/{id}")
     public String updateRating(@PathVariable("id") final Integer id,
             @Valid final Rating rating, final BindingResult result,
@@ -124,6 +131,7 @@ public class RatingController {
      * @param model
      * @return /rating/list.html page
      */
+    @ApiOperation(value = "DELETE Rating (get)", notes = "VIEW - Get Rating with his id, and delete it.")
     @GetMapping("/delete/{id}")
     public String deleteRating(@PathVariable("id") final Integer id,
             final Model model) {

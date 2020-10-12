@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.poseidon.domain.User;
 import com.poseidon.services.IUserService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @Validated
 @RequestMapping("/api/user")
@@ -39,6 +41,7 @@ public class UserControllerApiRest {
      * @param user
      * @return ResponseEntity (created or bad request)
      */
+    @ApiOperation(value = "ADD User", notes = "API REST - Need User entity - Return ResponseEntity 201 created or 400 bad request.")
     @PostMapping("/add")
     public ResponseEntity<User> addUser(@Valid @RequestBody final User user) {
 
@@ -57,6 +60,7 @@ public class UserControllerApiRest {
      *
      * @return all Users
      */
+    @ApiOperation(value = "GET User", notes = "API REST - Return all users list.")
     @GetMapping("/get")
     public List<User> getAllUsers() {
         LOGGER.info("GET request SUCCESS for: /api/user/get");
@@ -69,6 +73,7 @@ public class UserControllerApiRest {
      * @param user
      * @return ResponseEntity (ok or bad request)
      */
+    @ApiOperation(value = "UPDATE User", notes = "API REST - Need User entity - Return ResponseEntity 200 OK or 400 bad request.")
     @PutMapping("/update")
     public ResponseEntity<User> updateUser(
             @Valid @RequestBody final User user) {
@@ -89,6 +94,7 @@ public class UserControllerApiRest {
      * @param username
      * @return ResponseEntity (ok or bad request)
      */
+    @ApiOperation(value = "DELETE User", notes = "API REST - Need param username - Return ResponseEntity 200 OK or 400 bad request.")
     @DeleteMapping("/delete")
     public ResponseEntity<User> deleteUser(
             @Valid @RequestParam final String username) {

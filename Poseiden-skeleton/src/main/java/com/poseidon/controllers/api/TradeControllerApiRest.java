@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.poseidon.domain.Trade;
 import com.poseidon.services.ITradeService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @Validated
 @RequestMapping("/api/trade")
@@ -39,6 +41,7 @@ public class TradeControllerApiRest {
      * @param trade
      * @return ResponseEntity (created or bad request)
      */
+    @ApiOperation(value = "ADD Trade", notes = "API REST - Need Trade entity - Return ResponseEntity 201 created or 400 bad request.")
     @PostMapping("/add")
     public ResponseEntity<Trade> addTrade(
             @Valid @RequestBody final Trade trade) {
@@ -58,6 +61,7 @@ public class TradeControllerApiRest {
      *
      * @return all trades
      */
+    @ApiOperation(value = "GET Trade", notes = "API REST - Return all trades list.")
     @GetMapping("/get")
     public List<Trade> getAllTrade() {
         LOGGER.info("GET request SUCCESS for: /api/trade/get");
@@ -71,6 +75,7 @@ public class TradeControllerApiRest {
      * @param trade
      * @return ResponseEntity (ok or bad request)
      */
+    @ApiOperation(value = "UPDATE Trade", notes = "API REST - Need Trade entity and param trade id - Return ResponseEntity 200 OK or 400 bad request.")
     @PutMapping("/update")
     public ResponseEntity<Trade> updateTrade(
             @Valid @RequestParam final Integer id,
@@ -92,6 +97,7 @@ public class TradeControllerApiRest {
      * @param id the trade id
      * @return ResponseEntity (ok or bad request)
      */
+    @ApiOperation(value = "DELETE Trade", notes = "API REST - Need param trade id - Return ResponseEntity 200 OK or 400 bad request.")
     @DeleteMapping("/delete")
     public ResponseEntity<Trade> deleteTrade(
             @Valid @RequestParam final Integer id) {

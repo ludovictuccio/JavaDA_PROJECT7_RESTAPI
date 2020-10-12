@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.poseidon.domain.CurvePoint;
 import com.poseidon.services.ICurvePointService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @Validated
 @RequestMapping("/api/curvePoint")
@@ -41,8 +43,9 @@ public class CurvePointControllerApiRest {
      * @param value
      * @return ResponseEntity (created or bad request)
      */
+    @ApiOperation(value = "ADD Curve Point", notes = "API REST - Need Curve Point entity - Return ResponseEntity 201 created or 400 bad request.")
     @PostMapping("/add")
-    public ResponseEntity<CurvePoint> addBidList(
+    public ResponseEntity<CurvePoint> addCurvePoint(
             @Valid @RequestParam final Integer curveId,
             @Valid @RequestParam final Double term,
             @Valid @RequestParam final Double value) {
@@ -63,6 +66,7 @@ public class CurvePointControllerApiRest {
      *
      * @return all curve points
      */
+    @ApiOperation(value = "GET Curve Point", notes = "API REST - Returnall curve points list")
     @GetMapping("/get")
     public List<CurvePoint> getAllCurvePoints() {
         LOGGER.info("GET request SUCCESS for: /api/curvePoint/get");
@@ -75,6 +79,7 @@ public class CurvePointControllerApiRest {
      * @param curvePoint
      * @return ResponseEntity (ok or bad request)
      */
+    @ApiOperation(value = "UPDATE Curve Point", notes = "API REST - Need Curve Point entity - Return ResponseEntity 200 OK or 400 bad request.")
     @PutMapping("/update")
     public ResponseEntity<CurvePoint> updateCurvePoint(
             @Valid @RequestBody final CurvePoint curvePoint) {
@@ -96,6 +101,7 @@ public class CurvePointControllerApiRest {
      * @param id
      * @return ResponseEntity (ok or bad request)
      */
+    @ApiOperation(value = "DELETE Curve Point", notes = "API REST - Need Curve Point id - Return ResponseEntity 200 OK or 400 bad request.")
     @DeleteMapping("/delete")
     public ResponseEntity<CurvePoint> deleteBidList(
             @Valid @RequestParam final Integer id) {

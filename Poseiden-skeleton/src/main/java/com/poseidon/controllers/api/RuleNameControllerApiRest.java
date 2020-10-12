@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.poseidon.domain.RuleName;
 import com.poseidon.services.IRuleNameService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @Validated
 @RequestMapping("/api/rulename")
@@ -39,6 +41,7 @@ public class RuleNameControllerApiRest {
      * @param ruleName
      * @return ResponseEntity (created or bad request)
      */
+    @ApiOperation(value = "ADD Rule Name", notes = "API REST - Need RuleName entity - Return ResponseEntity 201 created or 400 bad request.")
     @PostMapping("/add")
     public ResponseEntity<RuleName> addRuleName(
             @Valid @RequestBody final RuleName ruleName) {
@@ -58,6 +61,7 @@ public class RuleNameControllerApiRest {
      *
      * @return all rulename
      */
+    @ApiOperation(value = "GET Rule Name", notes = "API REST - Return all rule name list.")
     @GetMapping("/get")
     public List<RuleName> getAllRuleName() {
         LOGGER.info("GET request SUCCESS for: /api/rulename/get");
@@ -71,6 +75,7 @@ public class RuleNameControllerApiRest {
      * @param ruleName
      * @return ResponseEntity (ok or bad request)
      */
+    @ApiOperation(value = "UPDATE Rule Name", notes = "API REST - Need RuleName entity and param rulename id - Return ResponseEntity 200 OK or 400 bad request.")
     @PutMapping("/update")
     public ResponseEntity<RuleName> updateRuleName(
             @Valid @RequestParam final Integer id,
@@ -92,6 +97,7 @@ public class RuleNameControllerApiRest {
      * @param id the rulename id
      * @return ResponseEntity (ok or bad request)
      */
+    @ApiOperation(value = "DELETE Rule Name", notes = "API REST - Need param rulename id - Return ResponseEntity 200 OK or 400 bad request.")
     @DeleteMapping("/delete")
     public ResponseEntity<RuleName> deleteRuleName(
             @Valid @RequestParam final Integer id) {

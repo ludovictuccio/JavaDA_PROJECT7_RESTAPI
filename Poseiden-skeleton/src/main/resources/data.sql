@@ -95,4 +95,5 @@ CREATE TABLE users (
 INSERT INTO users(id, fullname, username, password, role) VALUES
 (1, "Administrator", "admin", "$2a$10$pBV8ILO/s/nao4wVnGLrh.sa/rnr5pDpbeC4E.KNzQWoy8obFZdaa", "ADMIN"),
 (2, "User", "user", "$2a$10$pBV8ILO/s/nao4wVnGLrh.sa/rnr5pDpbeC4E.KNzQWoy8obFZdaa", "USER"),
-(3, "Ludovic", "ludo45", "$2y$12$8a7S5dh26g2G9W0Vc3HPZORJbNumNPT6RRYCcQ5BKAuRXORJ31pja", "ADMIN");
+(3, "Test", "ludoAdmin", "$2y$12$8a7S5dh26g2G9W0Vc3HPZORJbNumNPT6RRYCcQ5BKAuRXORJ31pja", "ADMIN"),
+(4, "Test", "ludoUser", "$2y$12$8a7S5dh26g2G9W0Vc3HPZORJbNumNPT6RRYCcQ5BKAuRXORJ31pja", "USER");

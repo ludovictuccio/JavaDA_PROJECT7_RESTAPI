@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.poseidon.domain.Trade;
 import com.poseidon.services.TradeService;
 
+import io.swagger.annotations.ApiOperation;
+
 @Controller
 @RequestMapping("/trade")
 public class TradeController {
@@ -32,6 +34,7 @@ public class TradeController {
      * @param model
      * @return /trade/list.html page
      */
+    @ApiOperation(value = "Trades LIST (get)", notes = "VIEW - Return all Trades list.")
     @GetMapping("/list")
     public String home(final Model model) {
         model.addAttribute("trade", tradeService.findAllTrade());
@@ -45,6 +48,7 @@ public class TradeController {
      * @param model
      * @return /trade/add.html page
      */
+    @ApiOperation(value = "ADD Trade (get)", notes = "VIEW - Add new Trade")
     @GetMapping("/add")
     public String addUser(final Model model) {
         model.addAttribute("trade", new Trade());
@@ -60,6 +64,7 @@ public class TradeController {
      * @param model
      * @return /trade/add.html page if bad request or else /trade/list
      */
+    @ApiOperation(value = "VALIDATE Trade (post)", notes = "VIEW - Validate / save the new Trade")
     @PostMapping("/validate")
     public String validate(@Valid final Trade trade, final BindingResult result,
             final Model model) {
@@ -83,6 +88,7 @@ public class TradeController {
      * @param model
      * @return /trade/update.html page
      */
+    @ApiOperation(value = "UPDATE Trade (get)", notes = "VIEW - Get a Trade by id and retrieve to update it.")
     @GetMapping("/update/{id}")
     public String showUpdateForm(@PathVariable("id") final Integer id,
             final Model model) {
@@ -101,6 +107,7 @@ public class TradeController {
      * @param model
      * @return /trade/update.html page if bad request or else /trade/list
      */
+    @ApiOperation(value = "UPDATE Trade (post)", notes = "VIEW - Update the Trade.")
     @PostMapping("/update/{id}")
     public String updateTrade(@PathVariable("id") final Integer tradeId,
             @Valid final Trade trade, final BindingResult result,
@@ -128,6 +135,7 @@ public class TradeController {
      * @param model
      * @return /trade/list.html page
      */
+    @ApiOperation(value = "DELETE Trade (get)", notes = "VIEW - Get Trade with his id, and delete it.")
     @GetMapping("/delete/{id}")
     public String deleteTrade(@PathVariable("id") final Integer tradeId,
             final Model model) {

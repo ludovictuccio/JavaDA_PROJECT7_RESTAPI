@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.poseidon.domain.Rating;
 import com.poseidon.services.IRatingService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @Validated
 @RequestMapping("/api/rating")
@@ -39,6 +41,7 @@ public class RatingControllerApiRest {
      * @param rating
      * @return ResponseEntity (created or bad request)
      */
+    @ApiOperation(value = "ADD Rating", notes = "API REST - Need Rating entity - Return ResponseEntity 201 created or 400 bad request.")
     @PostMapping("/add")
     public ResponseEntity<Rating> addRating(
             @Valid @RequestBody final Rating rating) {
@@ -58,6 +61,7 @@ public class RatingControllerApiRest {
      *
      * @return all rating
      */
+    @ApiOperation(value = "GET Rating", notes = "API REST - Return all rating list.")
     @GetMapping("/get")
     public List<Rating> getAllRating() {
         LOGGER.info("GET request SUCCESS for: /api/rating/get");
@@ -71,6 +75,7 @@ public class RatingControllerApiRest {
      * @param rating
      * @return ResponseEntity (ok or bad request)
      */
+    @ApiOperation(value = "UPDATE Rating", notes = "API REST - Need Rating entity and param rating id - Return ResponseEntity 200 OK or 400 bad request.")
     @PutMapping("/update")
     public ResponseEntity<Rating> updateRating(
             @Valid @RequestParam final Integer id,
@@ -92,6 +97,7 @@ public class RatingControllerApiRest {
      * @param id the rating id
      * @return ResponseEntity (ok or bad request)
      */
+    @ApiOperation(value = "DELETE Rating", notes = "API REST - Need param rating id - Return ResponseEntity 200 OK or 400 bad request.")
     @DeleteMapping("/delete")
     public ResponseEntity<Rating> deleteBidList(
             @Valid @RequestParam final Integer id) {

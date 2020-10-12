@@ -17,6 +17,8 @@ import com.poseidon.domain.User;
 import com.poseidon.repositories.UserRepository;
 import com.poseidon.services.UserService;
 
+import io.swagger.annotations.ApiOperation;
+
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -35,6 +37,7 @@ public class UserController {
      * @param model
      * @return /user/list.html page
      */
+    @ApiOperation(value = "Users LIST (get)", notes = "VIEW - Return all Users list.")
     @GetMapping("/list")
     public String home(final Model model) {
         model.addAttribute("users", userService.findAllUsers());
@@ -48,6 +51,7 @@ public class UserController {
      * @param model
      * @return /user/add.html page
      */
+    @ApiOperation(value = "ADD User (get)", notes = "VIEW - Add new User")
     @GetMapping("/add")
     public String addUser(final Model model) {
         model.addAttribute("user", new User());
@@ -63,6 +67,7 @@ public class UserController {
      * @param model
      * @return /user/list.html page if good request, or /user/add
      */
+    @ApiOperation(value = "VALIDATE User (post)", notes = "VIEW - Validate / save the new User")
     @PostMapping("/validate")
     public String validate(@Valid final User user, final BindingResult result,
             final Model model) {
@@ -84,6 +89,7 @@ public class UserController {
      * @param model
      * @return /user/list.html page if bad request, or /user/update
      */
+    @ApiOperation(value = "UPDATE User (get)", notes = "VIEW - Get a User by id and retrieve to update it.")
     @GetMapping("/update/{id}")
     public String showUpdateForm(@PathVariable("id") final Long id,
             final Model model) {
@@ -109,6 +115,7 @@ public class UserController {
      * @param model
      * @return /user/list.html page if good request, or /user/update
      */
+    @ApiOperation(value = "UPDATE User (post)", notes = "VIEW - Update the User.")
     @PostMapping("/update/{id}")
     public String updateUser(@PathVariable("id") final Long id,
             @Valid final User user, final BindingResult result,
@@ -131,6 +138,7 @@ public class UserController {
      * @param model
      * @return /user/list.html page
      */
+    @ApiOperation(value = "DELETE User (get)", notes = "VIEW - Get User with his id, and delete it.")
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable("id") final Long id,
             final Model model) {
