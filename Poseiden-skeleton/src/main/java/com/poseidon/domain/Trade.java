@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -33,12 +34,12 @@ public class Trade {
 
     @NotNull
     @Column(name = "account")
-    @Size(min = Constants.SIZE_1, max = Constants.SIZE_30)
+    @Size(min = Constants.SIZE_1, max = Constants.SIZE_30, message = "Account can't be empty. Size must be between 1 & 30.")
     private String account;
 
     @NotNull
     @Column(name = "type")
-    @Size(min = Constants.SIZE_1, max = Constants.SIZE_30)
+    @Size(min = Constants.SIZE_1, max = Constants.SIZE_30, message = "Account can't be empty. Size must be between 1 & 30.")
     private String type;
 
     @Column(name = "buy_quantity")
@@ -78,6 +79,7 @@ public class Trade {
     @Size(max = Constants.SIZE_125)
     private String book;
 
+    @NotBlank(message = "The creation name can't be empty.")
     @Column(name = "creation_name")
     @Size(max = Constants.SIZE_125)
     private String creationName;

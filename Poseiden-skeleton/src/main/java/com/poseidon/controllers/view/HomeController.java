@@ -16,7 +16,7 @@ public class HomeController {
     @ApiOperation(value = "App home page (used to login)", notes = "VIEW - Get request - Home page")
     @GetMapping("/")
     public String home(final Model model) {
-        LOGGER.info("User disconnected");
+        LOGGER.info("GET request SUCCESS for: Home page");
         return "home";
     }
 

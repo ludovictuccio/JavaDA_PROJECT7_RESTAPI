@@ -30,7 +30,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
      * For manage authentication rules.
      */
     @Autowired
-    protected void configure(AuthenticationManagerBuilder auth)
+    protected void configure(final AuthenticationManagerBuilder auth)
             throws Exception {
         auth.userDetailsService(myUserDetailsService)
                 .passwordEncoder(bCryptPasswordEncoder());
@@ -40,7 +40,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
      * For disable security and authentication using API REST.
      */
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(final WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/api/bidList/**", "/api/curvePoint/**",
                 "/api/rating/**", "/api/ruleName/**", "/api/trade/**",
                 "/api/user**");
@@ -50,7 +50,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
      * For push http requests throw security filters (views).
      */
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(final HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/bidList/**", "/curvePoint/**", "/rating/**",
                         "/ruleName/**", "/trade/**")

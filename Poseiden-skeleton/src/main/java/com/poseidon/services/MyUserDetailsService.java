@@ -33,7 +33,8 @@ public class MyUserDetailsService implements UserDetailsService {
         User user = userRepository.findUserByUsername(username);
 
         if (user == null) {
-            throw new UsernameNotFoundException("Could not find user");
+            throw new UsernameNotFoundException(
+                    "User not found with this username.");
         }
 
         GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole());
