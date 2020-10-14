@@ -24,7 +24,6 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.poseidon.domain.Trade;
 import com.poseidon.repositories.TradeRepository;
-import com.poseidon.services.TradeService;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -39,9 +38,6 @@ public class TradeControllerIT {
 
     @Autowired
     private ObjectMapper objectMapper;
-
-    @Autowired
-    private TradeService tradeService;
 
     @Autowired
     private TradeRepository tradeRepository;
@@ -107,7 +103,7 @@ public class TradeControllerIT {
 
         Trade trade = new Trade("account", "type", 100d, 10d, null, null,
                 LocalDateTime.now().minusMonths(10), null, null, null, null,
-                null, "", null, null, null, null, null);
+                null, "creation name", null, null, null, null, null);
         tradeRepository.save(trade);
 
         this.mockMvc

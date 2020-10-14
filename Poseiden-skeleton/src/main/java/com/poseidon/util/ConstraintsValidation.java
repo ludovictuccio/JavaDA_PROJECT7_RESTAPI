@@ -63,6 +63,11 @@ public class ConstraintsValidation {
                         + contraintes.getMessage());
             }
             return null;
+        } else if (bid.getBidListDate() != null
+                && bid.getBidListDate().isAfter(LocalDateTime.now())) {
+            LOGGER.error(
+                    "The trade date can not be after actual date. Please check the format: dd/MM/yyyy HH:mm");
+            return null;
         }
         return bid;
     }

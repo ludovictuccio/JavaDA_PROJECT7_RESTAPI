@@ -60,8 +60,8 @@ public class TradeServiceTest {
 
     @Test
     @Tag("SAVE")
-    @DisplayName("Save RuleName - OK")
-    public void givenValidRuleName_whenSave_thenReturnSaved() {
+    @DisplayName("Save Trade - OK")
+    public void givenValidTrade_whenSave_thenReturnSaved() {
         // GIVEN
         trade.setCreationName("Creation name");
 
@@ -80,7 +80,52 @@ public class TradeServiceTest {
 
     @Test
     @Tag("SAVE")
-    @DisplayName("Save RuleName - ERROR - Trade date after actual date")
+    @DisplayName("Save Trade - ERROR - Empty creation name type")
+    public void givenEmptyCreationName_whenSave_thenReturnNull() {
+        // GIVEN
+        trade.setCreationName("");
+
+        // WHEN
+        result = tradeService.saveTrade(trade);
+
+        // THEN
+        assertThat(result).isNull();
+        verify(tradeRepository, times(0)).save(trade);
+    }
+
+    @Test
+    @Tag("SAVE")
+    @DisplayName("Save Trade - ERROR - Null creation name type")
+    public void givenNullCreatyioName_whenSave_thenReturnNull() {
+        // GIVEN
+        trade.setCreationName(null);
+
+        // WHEN
+        result = tradeService.saveTrade(trade);
+
+        // THEN
+        assertThat(result).isNull();
+        verify(tradeRepository, times(0)).save(trade);
+    }
+
+    @Test
+    @Tag("SAVE")
+    @DisplayName("Save Trade - ERROR - Blank creation name type")
+    public void givenBlankCreationName_whenSave_thenReturnNull() {
+        // GIVEN
+        trade.setCreationName(" ");
+
+        // WHEN
+        result = tradeService.saveTrade(trade);
+
+        // THEN
+        assertThat(result).isNull();
+        verify(tradeRepository, times(0)).save(trade);
+    }
+
+    @Test
+    @Tag("SAVE")
+    @DisplayName("Save Trade - ERROR - Trade date after actual date")
     public void givenTradeDateAfterActualDate_whenSave_thenReturnNull() {
         // GIVEN
         trade.setTradeDate(LocalDateTime.now().plusHours(1));
@@ -96,7 +141,7 @@ public class TradeServiceTest {
 
     @Test
     @Tag("SAVE")
-    @DisplayName("Save RuleName - ERROR - Attribute size > max allowed")
+    @DisplayName("Save Trade - ERROR - Attribute size > max allowed")
     public void givenInvalidRuleName_whenSave_thenReturnNull() {
         // GIVEN
         trade.setStatus("123456789 12");
@@ -112,7 +157,7 @@ public class TradeServiceTest {
 
     @Test
     @Tag("SAVE")
-    @DisplayName("Save RuleName - ERROR - Empty account")
+    @DisplayName("Save Trade - ERROR - Empty account")
     public void givenEmptyAccountEntry_whenSave_thenReturnNull() {
         // GIVEN
         trade.setAccount("");
@@ -128,7 +173,7 @@ public class TradeServiceTest {
 
     @Test
     @Tag("SAVE")
-    @DisplayName("Save RuleName - ERROR - Null account")
+    @DisplayName("Save Trade - ERROR - Null account")
     public void givenNullAccount_whenSave_thenReturnNull() {
         // GIVEN
         trade.setAccount(null);
@@ -144,7 +189,7 @@ public class TradeServiceTest {
 
     @Test
     @Tag("SAVE")
-    @DisplayName("Save RuleName - ERROR - Empty type")
+    @DisplayName("Save Trade - ERROR - Empty type")
     public void givenEmptyType_whenSave_thenReturnNull() {
         // GIVEN
         trade.setType("");
@@ -160,7 +205,7 @@ public class TradeServiceTest {
 
     @Test
     @Tag("SAVE")
-    @DisplayName("Save RuleName - ERROR - Null type")
+    @DisplayName("Save Trade - ERROR - Null type")
     public void givenNullType_whenSave_thenReturnNull() {
         // GIVEN
         trade.setType(null);
@@ -176,26 +221,11 @@ public class TradeServiceTest {
 
     @Test
     @Tag("SAVE")
-    @DisplayName("Save RuleName - ERROR - Trade date after actual date")
+    @DisplayName("Save Trade - ERROR - Trade date after actual date")
     public void givenInvalidTradeDate_whenSave_thenReturnNull() {
         // GIVEN
         trade.setTradeDate(LocalDateTime.now().plusMonths(1));
         trade.setCreationName("Creation name");
-
-        // WHEN
-        result = tradeService.saveTrade(trade);
-
-        // THEN
-        assertThat(result).isNull();
-        verify(tradeRepository, times(0)).save(trade);
-    }
-
-    @Test
-    @Tag("SAVE")
-    @DisplayName("Save RuleName - ERROR - empty creation name")
-    public void givenEmptyCreationName_whenSave_thenReturnNull() {
-        // GIVEN
-        trade.setCreationName("");
 
         // WHEN
         result = tradeService.saveTrade(trade);

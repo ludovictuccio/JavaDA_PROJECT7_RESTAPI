@@ -247,12 +247,13 @@ public class RatingServiceTest {
 
     @Test
     @Tag("UPDATE")
-    @DisplayName("Update - ERROR - Oder changed ")
+    @DisplayName("Update - ERROR - Order changed ")
     public void givenOrderChanged_whenUpdate_thenReturnFalse() {
         // GIVEN
         when(ratingRepository.save(rating)).thenReturn(rating);
         when(ratingRepository.save(ratingTwo)).thenReturn(ratingTwo);
         when(ratingService.findAllRating()).thenReturn(allRatings);
+        when(ratingRepository.findById(10)).thenReturn(Optional.of(rating));
 
         Rating ratingForUpdate = new Rating("other moodys", "other sandp",
                 "other fitch", 999);

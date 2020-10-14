@@ -38,20 +38,20 @@ public class BidList {
     @Column(name = "bid_list_id")
     private Integer bidListId;
 
-    @NotBlank
-    @Size(min = Constants.SIZE_2, max = Constants.SIZE_30)
+    @NotBlank(message = "Account can't be empty.")
+    @Size(min = Constants.SIZE_2, max = Constants.SIZE_30, message = "Size must be between 2 & 30.")
     private String account;
 
-    @NotBlank
-    @Size(min = Constants.SIZE_2, max = Constants.SIZE_30)
+    @NotBlank(message = "Type can't be empty.")
+    @Size(min = Constants.SIZE_2, max = Constants.SIZE_30, message = "Size must be between 2 & 30.")
     private String type;
 
     /**
      * For value = 12, the number must be < 1 000 000 000 000.
      */
-    @NotNull
-    @PositiveOrZero
-    @Digits(fraction = Constants.SIZE_2, integer = Constants.SIZE_12, message = "Must be a number < 1 000 000 000 000  with 2 fractional digits max")
+    @NotNull(message = "Bid quantity can't be empty.")
+    @PositiveOrZero(message = "Bid quantity must be a positive number between 0 < 1 000 000 000 000,  with 2 fractional digits max.")
+    @Digits(fraction = Constants.SIZE_2, integer = Constants.SIZE_12, message = "Must be a number < 1 000 000 000 000  with 2 fractional digits max.")
     private Double bidQuantity;
 
     @Column(name = "ask_quantity")
@@ -63,7 +63,7 @@ public class BidList {
     @Column(name = "ask")
     private Double ask;
 
-    @Size(max = Constants.SIZE_125)
+    @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125)
     private String benchmark;
 
     @JsonFormat(pattern = Constants.DATE_PATTERN)
@@ -71,22 +71,22 @@ public class BidList {
     @Column(name = "bid_list_date")
     private LocalDateTime bidListDate; // a date before actual date
 
-    @Size(max = Constants.SIZE_125)
+    @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125)
     private String commentary;
 
-    @Size(max = Constants.SIZE_125)
+    @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125)
     private String security;
 
-    @Size(max = Constants.SIZE_10)
+    @Size(max = Constants.SIZE_10, message = "Status size must be equal or less than 10")
     private String status;
 
-    @Size(max = Constants.SIZE_125)
+    @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125)
     private String trader;
 
-    @Size(max = Constants.SIZE_125)
+    @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125)
     private String book;
 
-    @Size(max = Constants.SIZE_125)
+    @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125)
     private String creationName; // for create only
 
     @JsonFormat(pattern = Constants.DATE_PATTERN)
@@ -94,7 +94,7 @@ public class BidList {
     @Column(name = "creation_date")
     private LocalDateTime creationDate; // generate while create success
 
-    @Size(max = Constants.SIZE_125)
+    @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125)
     private String revisionName; // for update only
 
     @JsonFormat(pattern = Constants.DATE_PATTERN)
@@ -102,16 +102,16 @@ public class BidList {
     @Column(name = "revision_date")
     private LocalDateTime revisionDate; // generate while update success
 
-    @Size(max = Constants.SIZE_125)
+    @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125)
     private String dealName;
 
-    @Size(max = Constants.SIZE_125)
+    @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125)
     private String dealType;
 
-    @Size(max = Constants.SIZE_125)
+    @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125)
     private String sourceListId;
 
-    @Size(max = Constants.SIZE_125)
+    @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125)
     private String side;
 
     public BidList(Integer id,
@@ -120,19 +120,19 @@ public class BidList {
             @NotNull @PositiveOrZero @Digits(fraction = Constants.SIZE_2, integer = Constants.SIZE_12, message = "Must be a number < 1 000 000 000 000  with 2 fractional digits max") final Double bidQuantityBid,
             final Double askQuantityBid, final Double bidDouble,
             final Double askBid,
-            @Size(max = Constants.SIZE_125) final String benchmarkBid,
+            @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125) final String benchmarkBid,
             final LocalDateTime bidListDateBid,
-            @Size(max = Constants.SIZE_125) final String commentaryBid,
-            @Size(max = Constants.SIZE_125) final String securityBid,
+            @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125) final String commentaryBid,
+            @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125) final String securityBid,
             @Size(max = Constants.SIZE_10) final String statusBid,
-            @Size(max = Constants.SIZE_125) final String traderBid,
-            @Size(max = Constants.SIZE_125) final String bookBid,
-            @Size(max = Constants.SIZE_125) final String creationNameBid,
-            @Size(max = Constants.SIZE_125) final String revisionNameBid,
-            @Size(max = Constants.SIZE_125) final String dealNameBid,
-            @Size(max = Constants.SIZE_125) final String dealTypeBid,
-            @Size(max = Constants.SIZE_125) final String sourceListIdBid,
-            @Size(max = Constants.SIZE_125) final String sideBid) {
+            @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125) final String traderBid,
+            @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125) final String bookBid,
+            @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125) final String creationNameBid,
+            @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125) final String revisionNameBid,
+            @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125) final String dealNameBid,
+            @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125) final String dealTypeBid,
+            @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125) final String sourceListIdBid,
+            @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125) final String sideBid) {
         super();
         this.bidListId = id;
         this.account = accountBid;

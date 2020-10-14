@@ -86,10 +86,9 @@ public class BidListService implements IBidListService {
                 LOGGER.error(
                         "Failed to update bidList: the revision name can not be empty.");
                 return null;
-            } else if (bid.getBidListDate().isAfter(LocalDateTime.now())
-                    || bid.getBidListDate() == null) {
-                LOGGER.error(
-                        "The trade date can not be after actual date or null. Please check the format: dd/MM/yyyy HH:mm");
+            } else if (existingBid.getBidListDate() != null
+                    && bid.getBidListDate() != existingBid.getBidListDate()) {
+                LOGGER.error("The trade date can't be changed.");
                 return null;
             }
             bid.setRevisionDate(LocalDateTime.now());

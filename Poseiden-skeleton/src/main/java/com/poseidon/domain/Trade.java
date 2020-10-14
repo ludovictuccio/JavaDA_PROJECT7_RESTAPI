@@ -32,14 +32,14 @@ public class Trade {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer tradeId;
 
-    @NotNull
+    @NotNull(message = "Account can't be empty.")
     @Column(name = "account")
-    @Size(min = Constants.SIZE_1, max = Constants.SIZE_30, message = "Account can't be empty. Size must be between 1 & 30.")
+    @Size(min = Constants.SIZE_1, max = Constants.SIZE_30, message = "Size must be between 1 & 30.")
     private String account;
 
-    @NotNull
+    @NotNull(message = "Type can't be empty.")
     @Column(name = "type")
-    @Size(min = Constants.SIZE_1, max = Constants.SIZE_30, message = "Account can't be empty. Size must be between 1 & 30.")
+    @Size(min = Constants.SIZE_1, max = Constants.SIZE_30, message = "Size must be between 1 & 30.")
     private String type;
 
     @Column(name = "buy_quantity")
@@ -60,28 +60,28 @@ public class Trade {
     private LocalDateTime tradeDate; // a date before actual date
 
     @Column(name = "security")
-    @Size(max = Constants.SIZE_125)
+    @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125)
     private String security;
 
     @Column(name = "status")
-    @Size(max = Constants.SIZE_10)
+    @Size(max = Constants.SIZE_10, message = "Status size must be equal or less than 10")
     private String status;
 
     @Column(name = "trader")
-    @Size(max = Constants.SIZE_125)
+    @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125)
     private String trader;
 
     @Column(name = "benchmark")
-    @Size(max = Constants.SIZE_125)
+    @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125)
     private String benchmark;
 
     @Column(name = "book")
-    @Size(max = Constants.SIZE_125)
+    @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125)
     private String book;
 
     @NotBlank(message = "The creation name can't be empty.")
     @Column(name = "creation_name")
-    @Size(max = Constants.SIZE_125)
+    @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125)
     private String creationName;
 
     @JsonFormat(pattern = Constants.DATE_PATTERN)
@@ -90,7 +90,7 @@ public class Trade {
     private LocalDateTime creationDate; // for add new trade
 
     @Column(name = "revision_name")
-    @Size(max = Constants.SIZE_125)
+    @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125)
     private String revisionName; // for update
 
     @JsonFormat(pattern = Constants.DATE_PATTERN)
@@ -99,19 +99,19 @@ public class Trade {
     private LocalDateTime revisionDate; // for update
 
     @Column(name = "deal_name")
-    @Size(max = Constants.SIZE_125)
+    @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125)
     private String dealName;
 
     @Column(name = "deal_type")
-    @Size(max = Constants.SIZE_125)
+    @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125)
     private String dealType;
 
     @Column(name = "source_list_id")
-    @Size(max = Constants.SIZE_125)
+    @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125)
     private String sourceListId;
 
     @Column(name = "side")
-    @Size(max = Constants.SIZE_125)
+    @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125)
     private String side;
 
     public Trade(
@@ -120,17 +120,17 @@ public class Trade {
             final Double buyQuantityTrade, final Double sellQuantityTrade,
             final Double buyPriceTrade, final Double sellPriceTrade,
             final LocalDateTime date,
-            @Size(max = Constants.SIZE_125) final String securityTrade,
-            @Size(max = Constants.SIZE_10) final String statusTrade,
-            @Size(max = Constants.SIZE_125) final String traderTrade,
-            @Size(max = Constants.SIZE_125) final String benchmarkTrade,
-            @Size(max = Constants.SIZE_125) final String bookTrade,
-            @Size(max = Constants.SIZE_125) final String creationNameTrade,
-            @Size(max = Constants.SIZE_125) final String revisionNameTrade,
-            @Size(max = Constants.SIZE_125) final String dealNameTrade,
-            @Size(max = Constants.SIZE_125) final String dealTypeTrade,
-            @Size(max = Constants.SIZE_125) final String sourceListIdTrade,
-            @Size(max = Constants.SIZE_125) final String sideTrade) {
+            @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125) final String securityTrade,
+            @Size(max = Constants.SIZE_10, message = "Status size must be equal or less than 10") final String statusTrade,
+            @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125) final String traderTrade,
+            @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125) final String benchmarkTrade,
+            @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125) final String bookTrade,
+            @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125) final String creationNameTrade,
+            @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125) final String revisionNameTrade,
+            @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125) final String dealNameTrade,
+            @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125) final String dealTypeTrade,
+            @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125) final String sourceListIdTrade,
+            @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125) final String sideTrade) {
         super();
         this.account = accountTrade;
         this.type = typeTrade;

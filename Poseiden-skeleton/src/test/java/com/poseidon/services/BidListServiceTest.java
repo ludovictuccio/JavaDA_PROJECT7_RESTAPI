@@ -398,9 +398,11 @@ public class BidListServiceTest {
 
     @Test
     @Tag("UPDATE")
-    @DisplayName("Update - ERROR - Null bidlist date")
-    public void givenNullBidListDate_whenUpdate_thenReturnSaved() {
+    @DisplayName("Update - ERROR - Bidlist date changed")
+    public void givenChangedBidListDate_whenUpdate_thenReturnSaved() {
         // GIVEN
+        bid.setBidListDate(LocalDateTime.now().minusMonths(1));
+
         BidList bidInfosToUpdate = new BidList();
         bidInfosToUpdate.setBidListId(10);
         bidInfosToUpdate.setAccount("new account");
@@ -408,7 +410,7 @@ public class BidListServiceTest {
         bidInfosToUpdate.setBidQuantity(150.98d);
         bidInfosToUpdate.setBook("book");
         bidInfosToUpdate.setRevisionName("revision");
-        bidInfosToUpdate.setBidListDate(null);
+        bidInfosToUpdate.setBidListDate(LocalDateTime.now().minusHours(15));
 
         when(bidListRepository.save(bid)).thenReturn(bid);
         when(bidListRepository.save(bidInfosToUpdate))

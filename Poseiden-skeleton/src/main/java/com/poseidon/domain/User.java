@@ -27,32 +27,32 @@ public class User {
     @Column(name = "id")
     private Long id = System.nanoTime();
 
-    @Size(max = Constants.SIZE_125)
+    @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125)
     @Column(unique = true)
     @NotBlank(message = "Username is mandatory")
     private String username;
 
     @Pattern(regexp = Constants.PASSWORD_PATTERN, message = "The password must include a digit, an uppercase and lowercase letter and a special character, without space.")
-    @Size(max = Constants.SIZE_125)
+    @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125)
     @Column(name = "password")
     @NotBlank(message = "Password is mandatory")
     private String password;
 
-    @Size(max = Constants.SIZE_125)
+    @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125)
     @Column(name = "fullname")
     @NotBlank(message = "FullName is mandatory")
     private String fullname;
 
-    @Size(max = Constants.SIZE_125)
+    @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125)
     @Column(name = "role")
     @NotBlank(message = "Role is mandatory")
     private String role;
 
     public User(
-            @Size(max = Constants.SIZE_125) @NotBlank(message = "Username is mandatory") final String usernameUser,
-            @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=*-])(?=\\S+$).{8,}$", message = "The password must include a digit, an uppercase and lowercase letter and a special character, without space.") @Size(max = Constants.SIZE_125) @NotBlank(message = "Password is mandatory") final String passwordUser,
-            @Size(max = Constants.SIZE_125) @NotBlank(message = "FullName is mandatory") final String fullnameUser,
-            @Size(max = Constants.SIZE_125) @NotBlank(message = "Role is mandatory") final String roleUser) {
+            @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125) @NotBlank(message = "Username is mandatory") final String usernameUser,
+            @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=*-])(?=\\S+$).{8,}$", message = "The password must include a digit, an uppercase and lowercase letter and a special character, without space.") @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125) @NotBlank(message = "Password is mandatory") final String passwordUser,
+            @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125) @NotBlank(message = "FullName is mandatory") final String fullnameUser,
+            @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125) @NotBlank(message = "Role is mandatory") final String roleUser) {
         super();
         this.username = usernameUser;
         this.password = passwordUser;

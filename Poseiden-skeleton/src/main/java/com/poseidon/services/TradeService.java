@@ -44,9 +44,6 @@ public class TradeService implements ITradeService {
             LOGGER.error(
                     "The revision name can not be no-empty. It's use for trade update process.");
             return null;
-        } else if (trade.getCreationName().isBlank()) {
-            LOGGER.error("The creation name can not be empty.");
-            return null;
         }
         trade.setCreationDate(LocalDateTime.now());
         tradeRepository.save(trade);

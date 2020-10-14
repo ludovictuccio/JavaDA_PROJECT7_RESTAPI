@@ -26,25 +26,26 @@ public class Rating {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Size(max = Constants.SIZE_125)
+    @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125)
     @Column(name = "moodys_rating")
     private String moodysRating;
 
-    @Size(max = Constants.SIZE_125)
+    @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125)
     @Column(name = "sandp_rating")
     private String sandPRating;
 
-    @Size(max = Constants.SIZE_125)
+    @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125)
     @Column(name = "fitch_rating")
     private String fitchRating;
 
-    @PositiveOrZero
+    @PositiveOrZero(message = "Order number must be a positive number (or equal to 0) not already used.")
     @Column(name = "order_number", unique = true)
     private Integer orderNumber;
 
-    public Rating(@Size(max = Constants.SIZE_125) final String moodys,
-            @Size(max = Constants.SIZE_125) final String sandp,
-            @Size(max = Constants.SIZE_125) final String fitch,
+    public Rating(
+            @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125) final String moodys,
+            @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125) final String sandp,
+            @Size(max = Constants.SIZE_125, message = Constants.MAX_SIZE_125) final String fitch,
             Integer ordernumb) {
         super();
         this.moodysRating = moodys;
