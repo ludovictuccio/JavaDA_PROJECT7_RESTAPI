@@ -60,7 +60,7 @@ public class UserControllerApiRestIT {
         String jsonContent = objectMapper.writeValueAsString(userToCreate);
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/api/user/add")
+                .perform(MockMvcRequestBuilders.post("/api/user")
                         .contentType(APPLICATION_JSON).content(jsonContent))
                 .andExpect(status().isCreated())
                 .andDo(MockMvcResultHandlers.print())
@@ -79,7 +79,7 @@ public class UserControllerApiRestIT {
         String jsonContent = objectMapper.writeValueAsString(userToCreate);
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/api/user/add")
+                .perform(MockMvcRequestBuilders.post("/api/user")
                         .contentType(APPLICATION_JSON).content(jsonContent))
                 .andExpect(status().isCreated())
                 .andDo(MockMvcResultHandlers.print())
@@ -101,7 +101,7 @@ public class UserControllerApiRestIT {
         String jsonContent = objectMapper.writeValueAsString(userToCreate);
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/api/user/add")
+                .perform(MockMvcRequestBuilders.post("/api/user")
                         .contentType(APPLICATION_JSON).content(jsonContent))
                 .andExpect(status().isBadRequest())
                 .andDo(MockMvcResultHandlers.print())
@@ -123,7 +123,7 @@ public class UserControllerApiRestIT {
         String jsonContent = objectMapper.writeValueAsString(userToCreate);
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/api/user/add")
+                .perform(MockMvcRequestBuilders.post("/api/user")
                         .contentType(APPLICATION_JSON).content(jsonContent))
                 .andExpect(status().isBadRequest())
                 .andDo(MockMvcResultHandlers.print())
@@ -141,7 +141,7 @@ public class UserControllerApiRestIT {
                 new User("username2", "Password1&99", "fullname99", "user"));
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.get("/api/user/get")
+                .perform(MockMvcRequestBuilders.get("/api/user")
                         .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk()).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk()).andReturn();
@@ -153,7 +153,7 @@ public class UserControllerApiRestIT {
     public void givenZeroUsersInDb_whenGet_thenReturnEmptyList()
             throws Exception {
         this.mockMvc
-                .perform(MockMvcRequestBuilders.get("/api/user/get")
+                .perform(MockMvcRequestBuilders.get("/api/user")
                         .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk()).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk()).andReturn();
@@ -173,7 +173,7 @@ public class UserControllerApiRestIT {
                 .writeValueAsString(existingUsernameForUpdate);
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.put("/api/user/update")
+                .perform(MockMvcRequestBuilders.put("/api/user")
                         .contentType(APPLICATION_JSON).content(jsonContent))
                 .andExpect(status().isOk());
     }
@@ -192,7 +192,7 @@ public class UserControllerApiRestIT {
                 .writeValueAsString(existingUsernameForUpdate);
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.put("/api/user/update")
+                .perform(MockMvcRequestBuilders.put("/api/user")
                         .contentType(APPLICATION_JSON).content(jsonContent))
                 .andExpect(status().isBadRequest());
     }
@@ -211,7 +211,7 @@ public class UserControllerApiRestIT {
                 .writeValueAsString(existingUsernameForUpdate);
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.put("/api/user/update")
+                .perform(MockMvcRequestBuilders.put("/api/user")
                         .contentType(APPLICATION_JSON).content(jsonContent))
                 .andExpect(status().isBadRequest());
     }
@@ -230,7 +230,7 @@ public class UserControllerApiRestIT {
                 .writeValueAsString(existingUsernameForUpdate);
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.put("/api/user/update")
+                .perform(MockMvcRequestBuilders.put("/api/user")
                         .contentType(APPLICATION_JSON).content(jsonContent))
                 .andExpect(status().isBadRequest());
     }
@@ -249,7 +249,7 @@ public class UserControllerApiRestIT {
                 .writeValueAsString(existingUsernameForUpdate);
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.put("/api/user/update")
+                .perform(MockMvcRequestBuilders.put("/api/user")
                         .contentType(APPLICATION_JSON).content(jsonContent))
                 .andExpect(status().isBadRequest());
     }
@@ -268,7 +268,7 @@ public class UserControllerApiRestIT {
                 .writeValueAsString(existingUsernameForUpdate);
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.put("/api/user/update")
+                .perform(MockMvcRequestBuilders.put("/api/user")
                         .contentType(APPLICATION_JSON).content(jsonContent))
                 .andExpect(status().isBadRequest());
     }
@@ -281,7 +281,7 @@ public class UserControllerApiRestIT {
         userService.saveUser(
                 new User("username1", "validPassword1&", "fullname", "user"));
 
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/user/delete")
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/user")
                 .contentType(APPLICATION_JSON).param("username", "username1"))
                 .andExpect(status().isOk());
     }
@@ -294,7 +294,7 @@ public class UserControllerApiRestIT {
         userService.saveUser(
                 new User("username1", "validPassword1&", "fullname", "user"));
 
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/user/delete")
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/user")
                 .contentType(APPLICATION_JSON).param("username", "unknow"))
                 .andExpect(status().isBadRequest());
     }
@@ -308,7 +308,7 @@ public class UserControllerApiRestIT {
                 new User("username1", "validPassword1&", "fullname", "user"));
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.delete("/api/user/delete")
+                .perform(MockMvcRequestBuilders.delete("/api/user")
                         .contentType(APPLICATION_JSON).param("username", ""))
                 .andExpect(status().isBadRequest());
     }
@@ -322,7 +322,7 @@ public class UserControllerApiRestIT {
                 new User("username1", "validPassword1&", "fullname", "user"));
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.delete("/api/user/delete")
+                .perform(MockMvcRequestBuilders.delete("/api/user")
                         .contentType(APPLICATION_JSON).param("username", "  "))
                 .andExpect(status().isBadRequest());
     }

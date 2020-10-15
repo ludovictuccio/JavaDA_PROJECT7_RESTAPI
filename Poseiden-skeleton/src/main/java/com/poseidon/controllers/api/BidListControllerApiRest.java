@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,7 +25,6 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @Validated
-@RequestMapping("/api/bidList")
 public class BidListControllerApiRest {
 
     private static final Logger LOGGER = LogManager
@@ -44,7 +42,7 @@ public class BidListControllerApiRest {
      * @return ResponseEntity (created or bad request)
      */
     @ApiOperation(value = "ADD Bid List", notes = "API REST - Need param bid account, type and quantity - Return ResponseEntity 201 created or 400 bad request.")
-    @PostMapping("/add")
+    @PostMapping("/api/bidList")
     public ResponseEntity<BidList> addBidList(
             @Valid @RequestParam final String bidAccount,
             @Valid @RequestParam final String bidType,
@@ -66,7 +64,7 @@ public class BidListControllerApiRest {
      *
      * @return all bid list
      */
-    @GetMapping("/get")
+    @GetMapping("/api/bidList")
     @ApiOperation(value = "GET Bid List", notes = "API REST - Return all bid list.")
     public List<BidList> getBidList() {
         LOGGER.info("GET request SUCCESS for: /api/bidList/get");
@@ -82,7 +80,7 @@ public class BidListControllerApiRest {
      * @return ResponseEntity (ok or bad request)
      */
     @ApiOperation(value = "UPDATE Bid List", notes = "API REST - Need param bid account, bid type and a Bid entity - Return ResponseEntity 200 OK or 400 bad request.")
-    @PutMapping("/update")
+    @PutMapping("/api/bidList")
     public ResponseEntity<BidList> updateBidList(
             @Valid @RequestBody final BidList bid,
             @Valid @RequestParam final String bidAccount,
@@ -106,7 +104,7 @@ public class BidListControllerApiRest {
      * @return ResponseEntity (created or bad request)
      */
     @ApiOperation(value = "DELETE Bid List", notes = "API REST - Need param bid id and bid account (to confirm that good bid list deleting process) - Return ResponseEntity 200 OK or 400 bad request.")
-    @DeleteMapping("/delete")
+    @DeleteMapping("/api/bidList")
     public ResponseEntity<BidList> deleteBidList(
             @Valid @RequestParam final Integer bidId,
             @Valid @RequestParam final String bidAccount) {

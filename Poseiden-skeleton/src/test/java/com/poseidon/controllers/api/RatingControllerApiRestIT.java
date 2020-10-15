@@ -58,7 +58,7 @@ public class RatingControllerApiRestIT {
         String jsonContent = objectMapper.writeValueAsString(ratingToCreate);
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/api/rating/add")
+                .perform(MockMvcRequestBuilders.post("/api/rating")
                         .contentType(APPLICATION_JSON).content(jsonContent))
                 .andExpect(status().isCreated())
                 .andDo(MockMvcResultHandlers.print())
@@ -75,7 +75,7 @@ public class RatingControllerApiRestIT {
         String jsonContent = objectMapper.writeValueAsString(ratingToCreate);
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/api/rating/add")
+                .perform(MockMvcRequestBuilders.post("/api/rating")
                         .contentType(APPLICATION_JSON).content(jsonContent))
                 .andExpect(status().isCreated())
                 .andDo(MockMvcResultHandlers.print())
@@ -95,7 +95,7 @@ public class RatingControllerApiRestIT {
         String jsonContent = objectMapper.writeValueAsString(ratingToCreate);
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/api/rating/add")
+                .perform(MockMvcRequestBuilders.post("/api/rating")
                         .contentType(APPLICATION_JSON).content(jsonContent))
                 .andExpect(status().isBadRequest())
                 .andDo(MockMvcResultHandlers.print())
@@ -114,7 +114,7 @@ public class RatingControllerApiRestIT {
         String jsonContent = objectMapper.writeValueAsString(ratingToCreate);
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/api/rating/add")
+                .perform(MockMvcRequestBuilders.post("/api/rating")
                         .contentType(APPLICATION_JSON).content(jsonContent))
                 .andExpect(status().isBadRequest())
                 .andDo(MockMvcResultHandlers.print())
@@ -132,7 +132,7 @@ public class RatingControllerApiRestIT {
                 new Rating("moodys 2", "sandprating 2", "fitch 2", 20));
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.get("/api/rating/get")
+                .perform(MockMvcRequestBuilders.get("/api/rating")
                         .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk()).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk()).andReturn();
@@ -144,7 +144,7 @@ public class RatingControllerApiRestIT {
     public void givenZeroRatingInDb_whenGet_thenReturnEmptyList()
             throws Exception {
         this.mockMvc
-                .perform(MockMvcRequestBuilders.get("/api/rating/get")
+                .perform(MockMvcRequestBuilders.get("/api/rating")
                         .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk()).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk()).andReturn();
@@ -164,7 +164,7 @@ public class RatingControllerApiRestIT {
         String jsonContent = objectMapper.writeValueAsString(ratingForUpdate);
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.put("/api/rating/update")
+                .perform(MockMvcRequestBuilders.put("/api/rating")
                         .contentType(APPLICATION_JSON).param("id", "120")
                         .content(jsonContent))
                 .andExpect(status().isBadRequest());
@@ -184,7 +184,7 @@ public class RatingControllerApiRestIT {
         String jsonContent = objectMapper.writeValueAsString(ratingForUpdate);
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.put("/api/rating/update")
+                .perform(MockMvcRequestBuilders.put("/api/rating")
                         .contentType(APPLICATION_JSON).param("id", "10")
                         .content(jsonContent))
                 .andExpect(status().isBadRequest());
@@ -196,7 +196,7 @@ public class RatingControllerApiRestIT {
     public void givenZeroRating_whenDeleteInvalidId_thenReturnBadRequest()
             throws Exception {
         this.mockMvc
-                .perform(MockMvcRequestBuilders.delete("/api/rating/delete")
+                .perform(MockMvcRequestBuilders.delete("/api/rating")
                         .contentType(APPLICATION_JSON).param("id", "99"))
                 .andExpect(status().isBadRequest());
     }

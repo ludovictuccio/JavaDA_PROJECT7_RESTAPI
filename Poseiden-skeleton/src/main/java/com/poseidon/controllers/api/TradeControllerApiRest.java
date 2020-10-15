@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,7 +25,6 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @Validated
-@RequestMapping("/api/trade")
 public class TradeControllerApiRest {
 
     private static final Logger LOGGER = LogManager
@@ -42,7 +40,7 @@ public class TradeControllerApiRest {
      * @return ResponseEntity (created or bad request)
      */
     @ApiOperation(value = "ADD Trade", notes = "API REST - Need Trade entity - Return ResponseEntity 201 created or 400 bad request.")
-    @PostMapping("/add")
+    @PostMapping("/api/trade")
     public ResponseEntity<Trade> addTrade(
             @Valid @RequestBody final Trade trade) {
 
@@ -62,7 +60,7 @@ public class TradeControllerApiRest {
      * @return all trades
      */
     @ApiOperation(value = "GET Trade", notes = "API REST - Return all trades list.")
-    @GetMapping("/get")
+    @GetMapping("/api/trade")
     public List<Trade> getAllTrade() {
         LOGGER.info("GET request SUCCESS for: /api/trade/get");
         return tradeService.findAllTrade();
@@ -76,7 +74,7 @@ public class TradeControllerApiRest {
      * @return ResponseEntity (ok or bad request)
      */
     @ApiOperation(value = "UPDATE Trade", notes = "API REST - Need Trade entity and param trade id - Return ResponseEntity 200 OK or 400 bad request.")
-    @PutMapping("/update")
+    @PutMapping("/api/trade")
     public ResponseEntity<Trade> updateTrade(
             @Valid @RequestParam final Integer id,
             @Valid @RequestBody final Trade trade) {
@@ -98,7 +96,7 @@ public class TradeControllerApiRest {
      * @return ResponseEntity (ok or bad request)
      */
     @ApiOperation(value = "DELETE Trade", notes = "API REST - Need param trade id - Return ResponseEntity 200 OK or 400 bad request.")
-    @DeleteMapping("/delete")
+    @DeleteMapping("/api/trade")
     public ResponseEntity<Trade> deleteTrade(
             @Valid @RequestParam final Integer id) {
         boolean result = tradeService.deleteTrade(id);

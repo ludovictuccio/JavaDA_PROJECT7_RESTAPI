@@ -13,7 +13,7 @@ public class MyCustomErrorController implements ErrorController {
 
     @Override
     public String getErrorPath() {
-        return null;
+        return "/error";
     }
 
     @RequestMapping("/error")

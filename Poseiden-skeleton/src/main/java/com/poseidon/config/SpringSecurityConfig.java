@@ -42,10 +42,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/bidList/**", "/curvePoint/**", "/rating/**",
-                        "/ruleName/**", "/trade/**", "/api/bidList/**",
-                        "/api/curvePoint/**", "/api/rating/**",
-                        "/api/ruleName/**", "/api/trade/**")
-                .authenticated().antMatchers("/user/**", "/api/user/**")
+                        "/ruleName/**", "/trade/**", "/api/bidList",
+                        "/api/curvePoint", "/api/rating", "/api/ruleName",
+                        "/api/trade")
+                .authenticated().antMatchers("/user/**", "/api/user")
                 .hasAnyAuthority("ADMIN").and().csrf().disable().httpBasic()
                 .and().formLogin().defaultSuccessUrl("/bidList/list").and()
                 .logout().logoutUrl("/app-logout").logoutSuccessUrl("/");

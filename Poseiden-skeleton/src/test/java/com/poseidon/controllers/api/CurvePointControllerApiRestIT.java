@@ -48,7 +48,7 @@ public class CurvePointControllerApiRestIT {
     @DisplayName("Create - OK - Max value")
     public void givenMaxValue_whenCreate_thenReturnCreated() throws Exception {
         this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/api/curvePoint/add")
+                .perform(MockMvcRequestBuilders.post("/api/curvePoint")
                         .contentType(APPLICATION_JSON).param("curveId", "127")
                         .param("term", "150").param("value", "1500"))
                 .andExpect(status().isCreated())
@@ -61,7 +61,7 @@ public class CurvePointControllerApiRestIT {
     @DisplayName("Create - OK - Min value")
     public void givenMinValue_whenCreate_thenReturnCreated() throws Exception {
         this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/api/curvePoint/add")
+                .perform(MockMvcRequestBuilders.post("/api/curvePoint")
                         .contentType(APPLICATION_JSON).param("curveId", "0")
                         .param("term", "150").param("value", "1500"))
                 .andExpect(status().isCreated())
@@ -75,7 +75,7 @@ public class CurvePointControllerApiRestIT {
     public void givenNegativeCurveId_whenCreate_thenReturnBadRequest()
             throws Exception {
         this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/api/curvePoint/add")
+                .perform(MockMvcRequestBuilders.post("/api/curvePoint")
                         .contentType(APPLICATION_JSON).param("curveId", "-1")
                         .param("term", "150").param("value", "1500"))
                 .andExpect(status().isBadRequest())
@@ -89,7 +89,7 @@ public class CurvePointControllerApiRestIT {
     public void givenLetterForId_whenCreate_thenReturnBadRequest()
             throws Exception {
         this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/api/curvePoint/add")
+                .perform(MockMvcRequestBuilders.post("/api/curvePoint")
                         .contentType(APPLICATION_JSON).param("curveId", "a")
                         .param("term", "150").param("value", "1500"))
                 .andExpect(status().isBadRequest())
@@ -103,7 +103,7 @@ public class CurvePointControllerApiRestIT {
     public void givenCharacterForId_whenCreate_thenReturnBadRequest()
             throws Exception {
         this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/api/curvePoint/add")
+                .perform(MockMvcRequestBuilders.post("/api/curvePoint")
                         .contentType(APPLICATION_JSON).param("curveId", "/")
                         .param("term", "150").param("value", "1500"))
                 .andExpect(status().isBadRequest())
@@ -117,7 +117,7 @@ public class CurvePointControllerApiRestIT {
     public void givenCharacterForTerm_whenCreate_thenReturnBadRequest()
             throws Exception {
         this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/api/curvePoint/add")
+                .perform(MockMvcRequestBuilders.post("/api/curvePoint")
                         .contentType(APPLICATION_JSON).param("curveId", "15")
                         .param("term", "*").param("value", "1500"))
                 .andExpect(status().isBadRequest())
@@ -131,7 +131,7 @@ public class CurvePointControllerApiRestIT {
     public void givenLetterForTerm_whenCreate_thenReturnBadRequest()
             throws Exception {
         this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/api/curvePoint/add")
+                .perform(MockMvcRequestBuilders.post("/api/curvePoint")
                         .contentType(APPLICATION_JSON).param("curveId", "15")
                         .param("term", "p").param("value", "1500"))
                 .andExpect(status().isBadRequest())
@@ -145,7 +145,7 @@ public class CurvePointControllerApiRestIT {
     public void givenLetterForValue_whenCreate_thenReturnBadRequest()
             throws Exception {
         this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/api/curvePoint/add")
+                .perform(MockMvcRequestBuilders.post("/api/curvePoint")
                         .contentType(APPLICATION_JSON).param("curveId", "15")
                         .param("term", "150").param("value", "l"))
                 .andExpect(status().isBadRequest())
@@ -159,7 +159,7 @@ public class CurvePointControllerApiRestIT {
     public void givenCharacterForValue_whenCreate_thenReturnBadRequest()
             throws Exception {
         this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/api/curvePoint/add")
+                .perform(MockMvcRequestBuilders.post("/api/curvePoint")
                         .contentType(APPLICATION_JSON).param("curveId", "15")
                         .param("term", "150").param("value", "-"))
                 .andExpect(status().isBadRequest())
@@ -175,7 +175,7 @@ public class CurvePointControllerApiRestIT {
         curvePointService.saveCurvePoint(125, 150d, 160d);
         curvePointService.saveCurvePoint(15, 10d, 10d);
         this.mockMvc
-                .perform(MockMvcRequestBuilders.get("/api/curvePoint/get")
+                .perform(MockMvcRequestBuilders.get("/api/curvePoint")
                         .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk()).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk()).andReturn();
@@ -187,7 +187,7 @@ public class CurvePointControllerApiRestIT {
     public void givenZeroCurvePointInDb_whenGet_thenReturnEmptyList()
             throws Exception {
         this.mockMvc
-                .perform(MockMvcRequestBuilders.get("/api/curvePoint/get")
+                .perform(MockMvcRequestBuilders.get("/api/curvePoint")
                         .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk()).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk()).andReturn();
@@ -199,7 +199,7 @@ public class CurvePointControllerApiRestIT {
     public void givenCurveToDelete_whenUnknowId_thenReturnBadRequest()
             throws Exception {
         this.mockMvc
-                .perform(MockMvcRequestBuilders.delete("/api/curvePoint/delete")
+                .perform(MockMvcRequestBuilders.delete("/api/curvePoint")
                         .contentType(APPLICATION_JSON).param("id", "9999"))
                 .andExpect(status().isBadRequest());
     }
@@ -212,7 +212,7 @@ public class CurvePointControllerApiRestIT {
 
         curvePointService.saveCurvePoint(95, 150d, 160d);
         this.mockMvc
-                .perform(MockMvcRequestBuilders.delete("/api/curvePoint/delete")
+                .perform(MockMvcRequestBuilders.delete("/api/curvePoint")
                         .contentType(APPLICATION_JSON).param("id", "letter"))
                 .andExpect(status().isBadRequest());
     }
@@ -225,7 +225,7 @@ public class CurvePointControllerApiRestIT {
 
         curvePointService.saveCurvePoint(95, 150d, 160d);
         this.mockMvc
-                .perform(MockMvcRequestBuilders.delete("/api/curvePoint/delete")
+                .perform(MockMvcRequestBuilders.delete("/api/curvePoint")
                         .contentType(APPLICATION_JSON).param("id", "*"))
                 .andExpect(status().isBadRequest());
     }

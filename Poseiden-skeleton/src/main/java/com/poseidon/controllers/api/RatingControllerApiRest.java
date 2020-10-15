@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,7 +25,6 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @Validated
-@RequestMapping("/api/rating")
 public class RatingControllerApiRest {
 
     private static final Logger LOGGER = LogManager
@@ -42,7 +40,7 @@ public class RatingControllerApiRest {
      * @return ResponseEntity (created or bad request)
      */
     @ApiOperation(value = "ADD Rating", notes = "API REST - Need Rating entity - Return ResponseEntity 201 created or 400 bad request.")
-    @PostMapping("/add")
+    @PostMapping("/api/rating")
     public ResponseEntity<Rating> addRating(
             @Valid @RequestBody final Rating rating) {
 
@@ -62,7 +60,7 @@ public class RatingControllerApiRest {
      * @return all rating
      */
     @ApiOperation(value = "GET Rating", notes = "API REST - Return all rating list.")
-    @GetMapping("/get")
+    @GetMapping("/api/rating")
     public List<Rating> getAllRating() {
         LOGGER.info("GET request SUCCESS for: /api/rating/get");
         return ratingService.findAllRating();
@@ -76,7 +74,7 @@ public class RatingControllerApiRest {
      * @return ResponseEntity (ok or bad request)
      */
     @ApiOperation(value = "UPDATE Rating", notes = "API REST - Need Rating entity and param rating id - Return ResponseEntity 200 OK or 400 bad request.")
-    @PutMapping("/update")
+    @PutMapping("/api/rating")
     public ResponseEntity<Rating> updateRating(
             @Valid @RequestParam final Integer id,
             @Valid @RequestBody final Rating rating) {
@@ -98,7 +96,7 @@ public class RatingControllerApiRest {
      * @return ResponseEntity (ok or bad request)
      */
     @ApiOperation(value = "DELETE Rating", notes = "API REST - Need param rating id - Return ResponseEntity 200 OK or 400 bad request.")
-    @DeleteMapping("/delete")
+    @DeleteMapping("/api/rating")
     public ResponseEntity<Rating> deleteBidList(
             @Valid @RequestParam final Integer id) {
         boolean result = ratingService.deleteRating(id);
