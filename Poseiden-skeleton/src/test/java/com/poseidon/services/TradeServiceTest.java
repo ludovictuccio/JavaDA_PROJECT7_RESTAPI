@@ -80,6 +80,27 @@ public class TradeServiceTest {
 
     @Test
     @Tag("SAVE")
+    @DisplayName("Save Trade - OK - Trade date null")
+    public void givenValidTrade_whenSaveWithTradeDateNull_thenReturnSaved() {
+        // GIVEN
+        trade.setTradeDate(null);
+        trade.setCreationName("Creation name");
+
+        // WHEN
+        result = tradeService.saveTrade(trade);
+
+        // THEN
+        assertThat(result.getTradeId()).isEqualTo(1);
+        assertThat(result.getCreationDate()).isNotNull();
+        assertThat(result.getRevisionDate()).isNull();
+        assertThat(result.getAccount()).isEqualTo("account");
+        assertThat(result.getType()).isEqualTo("type");
+        assertThat(result.getBuyQuantity()).isEqualTo(10d);
+        verify(tradeRepository, times(1)).save(trade);
+    }
+
+    @Test
+    @Tag("SAVE")
     @DisplayName("Save Trade - ERROR - Empty creation name type")
     public void givenEmptyCreationName_whenSave_thenReturnNull() {
         // GIVEN

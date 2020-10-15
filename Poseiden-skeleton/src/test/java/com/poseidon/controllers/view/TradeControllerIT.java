@@ -115,4 +115,21 @@ public class TradeControllerIT {
                 .andReturn();
     }
 
+    @Test
+    @Tag("/trade/delete")
+    @DisplayName("Delete - Error - Invalid id")
+    public void aaaa() throws Exception {
+
+        Trade trade = new Trade("account", "type", 100d, 10d, null, null,
+                LocalDateTime.now().minusMonths(10), null, null, null, null,
+                null, "creation name", null, null, null, null, null);
+        tradeRepository.save(trade);
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.get("/trade/delete/7777777")
+                        .contentType(MediaType.ALL))
+                .andDo(MockMvcResultHandlers.print()).andReturn();
+
+    }
+
 }

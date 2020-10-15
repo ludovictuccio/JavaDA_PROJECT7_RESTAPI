@@ -369,6 +369,35 @@ public class BidListServiceTest {
 
     @Test
     @Tag("UPDATE")
+    @DisplayName("Update - ERROR - Not same bidlist date")
+    public void givenBid_whenUpdateWithNotSameBidListDate_thenReturnNull() {
+        // GIVEN
+        bid.setBidListDate(LocalDateTime.now().minusHours(11));
+
+        BidList bidInfosToUpdate = new BidList();
+        bidInfosToUpdate.setBidListId(10);
+        bidInfosToUpdate.setAccount("new account");
+        bidInfosToUpdate.setType("new type");
+        bidInfosToUpdate.setBidQuantity(150.98d);
+        bidInfosToUpdate.setBook("book");
+        bidInfosToUpdate.setRevisionName("revision");
+        bidInfosToUpdate.setBidListDate(LocalDateTime.now().minusMonths(1));
+
+        when(bidListRepository.save(bid)).thenReturn(bid);
+        when(bidListRepository.findById(10)).thenReturn(Optional.of(bid));
+
+        // WHEN
+        result = bidListService.updateBid(bidInfosToUpdate, "Account Test",
+                "Type Test");
+
+        // THEN
+        assertThat(result).isNull();
+        verify(bidListRepository, times(0)).delete(bid);
+        verify(bidListRepository, times(0)).save(result);
+    }
+
+    @Test
+    @Tag("UPDATE")
     @DisplayName("Update - ERROR - Invalid bid list date (after actual date)")
     public void givenInvalidBidListDate_whenUpdate_thenReturnSaved() {
         // GIVEN

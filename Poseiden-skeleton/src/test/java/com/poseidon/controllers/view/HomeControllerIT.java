@@ -24,7 +24,7 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class LogincontrollerIT {
+public class HomeControllerIT {
 
     private MockMvc mvc;
 
@@ -41,13 +41,6 @@ public class LogincontrollerIT {
     public void requiresAuthentication() throws Exception {
         mvc.perform(get("/")).andExpect(status().isOk());
     }
-
-//    @Test
-//    public void httpBasicAuthenticationSuccess() throws Exception {
-//        mvc.perform(get("/").with(httpBasic("ludo45", "poseidon")))
-//                .andExpect(status().isOk())
-//                .andExpect(authenticated().withUsername("ludo45"));
-//    }
 
     @Test
     @Tag("Form")
