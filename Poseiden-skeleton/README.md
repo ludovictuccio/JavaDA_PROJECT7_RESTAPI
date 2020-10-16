@@ -2,7 +2,7 @@
 
 The Java application **'Poseidon'** is run with Maven and Spring Boot, on server port 9090.
 <p>Views controllers and API REST controllers are implemented with CRUD.</p>
-<p>Only admins can manage user accounts on web app.</p>
+<p>Only admins can manage user accounts.</p>
 
 ## Informations / Technical
 
@@ -62,9 +62,9 @@ https://dev.mysql.com/downloads/installer/
 
 # API REST
 
-## <<< Users >>>
+## >>> /v1/user <<<
 
-**POST** - http://localhost:9090/api/user/add >>> Add a new user. Username is unique, password has a regexp and role are admin or user.
+**POST** - Add a new user. Username is unique, password has a regexp and role are admin or user.
 <pre><code>
 	{
 	        "username": "myusername",
@@ -74,9 +74,9 @@ https://dev.mysql.com/downloads/installer/
 	}
 		</pre></code>
 
-**GET** - http://localhost:9090/api/user/get>>> Get all users list.
+**GET** - Get all users list.
 
-**PUT** -  http://localhost:9090/api/user/update> >>> Update user's informations. Username can't be changed.
+**PUT** - Update user's informations. Username can't be changed.
 <pre><code>
 	{
 	        "username": "myusername",
@@ -86,15 +86,15 @@ https://dev.mysql.com/downloads/installer/
 	}
 		</pre></code>
 
-**DELETE** -  http://localhost:9090/api/user/delete> >>> Delete an user: param 'username'.
+**DELETE** - Delete an user: param 'username'.
 
-## <<< Bid List >>>
+## >>> /v1/bidList  <<<
 
-**POST** - http://localhost:9090/api/bidList/add >>> Add a new bid list. Param: 'bidAccount', 'bidType', 'bidQuantity'.
+**POST** - Add a new bid list. Param: 'bidAccount', 'bidType', 'bidQuantity'.
 
-**GET** - http://localhost:9090/api/bidList/get>>> Get all bid list.
+**GET** - Get all bid list.
 
-**PUT** -  http://localhost:9090/api/bidList/update> >>> Update a bid list. 'bidListDate' must be a date-time before actual date. Revision name can't be empty.	
+**PUT** - Update a bid list. 'bidListDate' must be a date-time before actual date. Revision name can't be empty.	
 <pre><code>
     {
         "bidListId": 1,
@@ -120,15 +120,15 @@ https://dev.mysql.com/downloads/installer/
     }
 		</pre></code>
 
-**DELETE** -  http://localhost:9090/api/bidList/delete> >>> Delete a bid list: param 'bidId' with 'bidAccount' for security before delete it.
+**DELETE** - Delete a bid list: param 'bidId' with 'bidAccount' for security before delete it.
 
-## <<< Curve Point >>>
+## >>> /v1/curvePoint <<< 
 
-**POST** - http://localhost:9090/api/curvePoint/add >>> Add a new Curve Point. Param: 'curveId', 'term', 'value'.
+**POST** - Add a new Curve Point. Param: 'curveId', 'term', 'value'.
 
-**GET** - http://localhost:9090/api/curvePoint/get>>> Get all Curve Point list.
+**GET** - Get all Curve Point list.
 
-**PUT** -  http://localhost:9090/api/curvePoint/update> >>> Update a Currve Point.
+**PUT** - Update a Currve Point.
 <pre><code>
     {
         "id": 14,
@@ -138,11 +138,11 @@ https://dev.mysql.com/downloads/installer/
     }
 </pre></code>
 
-**DELETE** -  http://localhost:9090/api/curvePoint/delete> >>> Delete a Curve Point: param 'id'.
+**DELETE** - Delete a Curve Point: param 'id'.
 
-## <<< Rating >>>
+## >>> /v1/rating <<< 
 
-**POST** - http://localhost:9090/api/rating/add >>> Add a new Rating.
+**POST** - Add a new Rating.
 <pre><code>
     {
         "moodysRating": "moodys",
@@ -152,9 +152,9 @@ https://dev.mysql.com/downloads/installer/
     }
 </pre></code>
 
-**GET** - http://localhost:9090/api/rating/get>>> Get all Rating list.
+**GET** - Get all Rating list.
 
-**PUT** -  http://localhost:9090/api/rating/update> >>> Update a Rating. Param 'id' and body. Order number can't be changed.
+**PUT** - Update a Rating. Param 'id' and body. Order number can't be changed.
 <pre><code>
     {
         "moodysRating": "moodys",
@@ -164,11 +164,11 @@ https://dev.mysql.com/downloads/installer/
     }
 </pre></code>
 
-**DELETE** -  http://localhost:9090/api/rating/delete> >>> Delete a Rating: param 'id'.
+**DELETE** - Delete a Rating: param 'id'.
 
-## <<< Rule Name >>>
+## >>> /v1/rulename <<<
 
-**POST** - http://localhost:9090/api/rulename/add >>> Add a new Rule Name.
+**POST** - Add a new Rule Name.
 <pre><code>
     {
 		"name" : "name",
@@ -180,9 +180,9 @@ https://dev.mysql.com/downloads/installer/
     }
 </pre></code>
 
-**GET** - http://localhost:9090/api/rulename/get>>> Get all Rule Name list.
+**GET** - Get all Rule Name list.
 
-**PUT** -  http://localhost:9090/api/rulename/update> >>> Update a Rule Name. Param 'id' and body.
+**PUT** - Update a Rule Name. Param 'id' and body.
 <pre><code>
     {
         "name": "updated",
@@ -194,11 +194,11 @@ https://dev.mysql.com/downloads/installer/
     }
 </pre></code>
 
-**DELETE** -  http://localhost:9090/api/rulename/delete> >>> Delete a Rule Name: param 'id'.
+**DELETE** - Delete a Rule Name: param 'id'.
 
-## <<< Trade >>>
+## >>> /v1/trade <<< 
 
-**POST** - http://localhost:9090/api/rulename/add >>> Add a new Trade. 'account' and 'type' and 'creationName' can't be empty, 'tradeDate' must be a date before actual date. 'revisionName' must be empty.
+**POST** - Add a new Trade. 'account' and 'type' and 'creationName' can't be empty, 'tradeDate' must be a date before actual date. 'revisionName' must be empty.
 <pre><code>
     {
 		"account" : "account",
@@ -222,9 +222,9 @@ https://dev.mysql.com/downloads/installer/
     }
 </pre></code>
 
-**GET** - http://localhost:9090/api/rulename/get>>> Get all Trade list.
+**GET** - Get all Trade list.
 
-**PUT** -  http://localhost:9090/api/rulename/update> >>> Update a Trade. Param 'id'. 'account' and 'type' and 'revisionName' can't be empty, 'tradeDate' must be a date before actual date. 'creationName' can't be changed.
+**PUT** - Update a Trade. Param 'id'. 'account' and 'type' and 'revisionName' can't be empty, 'tradeDate' must be a date before actual date. 'creationName' can't be changed.
 <pre><code>
     {
         "account": "account",
@@ -250,4 +250,4 @@ https://dev.mysql.com/downloads/installer/
     }
 </pre></code>
 
-**DELETE** -  http://localhost:9090/api/rulename/delete> >>> Delete a Trade: param 'id'.
+**DELETE** - Delete a Trade: param 'id'.
