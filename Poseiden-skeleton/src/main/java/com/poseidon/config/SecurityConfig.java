@@ -56,8 +56,8 @@ public class SecurityConfig {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http.antMatcher("/v1/user").authorizeRequests().anyRequest()
-                    .hasAnyAuthority("ADMIN").and().httpBasic().and()
-                    .sessionManagement()
+                    .hasAnyAuthority("ADMIN").and().csrf().disable().httpBasic()
+                    .and().formLogin().and().sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         }
     }
@@ -75,8 +75,8 @@ public class SecurityConfig {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http.antMatcher("/v1/**").authorizeRequests().anyRequest()
-                    .hasAnyAuthority("ADMIN", "USER").and().httpBasic().and()
-                    .sessionManagement()
+                    .hasAnyAuthority("ADMIN", "USER").and().csrf().disable()
+                    .httpBasic().and().formLogin().and().sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         }
     }
