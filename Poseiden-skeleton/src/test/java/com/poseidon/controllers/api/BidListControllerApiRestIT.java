@@ -40,6 +40,8 @@ public class BidListControllerApiRestIT {
     @Autowired
     private BidListRepository bidListRepository;
 
+    private static String uri = "/v1/bidList";
+
     @BeforeEach
     public void setUpPerTest() {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
@@ -51,7 +53,7 @@ public class BidListControllerApiRestIT {
     @DisplayName("Create - OK")
     public void givenValidInfos_whenPost_thenReturnCreated() throws Exception {
         this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/api/bidList")
+                .perform(MockMvcRequestBuilders.post(uri)
                         .contentType(APPLICATION_JSON)
                         .param("bidAccount", "myAccount")
                         .param("bidType", "type").param("bidQuantity", "15"))
@@ -65,7 +67,7 @@ public class BidListControllerApiRestIT {
     @DisplayName("Create - ERROR - Bad quantity - letters")
     public void givenLettersForQuantity_whenPost_thenReturnBadRequest()
             throws Exception {
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/api/bidList")
+        this.mockMvc.perform(MockMvcRequestBuilders.post(uri)
                 .contentType(APPLICATION_JSON).param("bidAccount", "myAccount")
                 .param("bidType", "type").param("bidQuantity", "gg"))
                 .andExpect(status().isBadRequest());
@@ -76,7 +78,7 @@ public class BidListControllerApiRestIT {
     @DisplayName("Create - ERROR - Bad quantity - negative")
     public void givenNegativeQuantity_whenPost_thenReturnBadRequest()
             throws Exception {
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/api/bidList")
+        this.mockMvc.perform(MockMvcRequestBuilders.post(uri)
                 .contentType(APPLICATION_JSON).param("bidAccount", "myAccount")
                 .param("bidType", "type").param("bidQuantity", "-50"))
                 .andExpect(status().isBadRequest());
@@ -87,7 +89,7 @@ public class BidListControllerApiRestIT {
     @DisplayName("Create - ERROR - Bad quantity - character")
     public void givenCharacterForQuantity_whenPost_thenReturnBadRequest()
             throws Exception {
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/api/bidList")
+        this.mockMvc.perform(MockMvcRequestBuilders.post(uri)
                 .contentType(APPLICATION_JSON).param("bidAccount", "myAccount")
                 .param("bidType", "type").param("bidQuantity", "*"))
                 .andExpect(status().isBadRequest());
@@ -99,7 +101,7 @@ public class BidListControllerApiRestIT {
     public void givenEmptyAccount_whenPost_thenReturnBadRequest()
             throws Exception {
         this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/api/bidList")
+                .perform(MockMvcRequestBuilders.post(uri)
                         .contentType(APPLICATION_JSON).param("bidAccount", "")
                         .param("bidType", "type").param("bidQuantity", "100"))
                 .andExpect(status().isBadRequest());
@@ -110,7 +112,7 @@ public class BidListControllerApiRestIT {
     @DisplayName("Create - ERROR - Bad Type - Empty")
     public void givenEmptyType_whenPost_thenReturnBadRequest()
             throws Exception {
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/api/bidList")
+        this.mockMvc.perform(MockMvcRequestBuilders.post(uri)
                 .contentType(APPLICATION_JSON).param("bidAccount", "Account")
                 .param("bidType", "").param("bidQuantity", "100"))
                 .andExpect(status().isBadRequest());
@@ -127,7 +129,7 @@ public class BidListControllerApiRestIT {
         bid.setBidQuantity(15d);
         bidListRepository.save(bid);
         this.mockMvc
-                .perform(MockMvcRequestBuilders.get("/api/bidList")
+                .perform(MockMvcRequestBuilders.get(uri)
                         .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk()).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk()).andReturn();
@@ -139,7 +141,7 @@ public class BidListControllerApiRestIT {
     public void givenZeroBidInDb_whenGet_thenReturnEmptyList()
             throws Exception {
         this.mockMvc
-                .perform(MockMvcRequestBuilders.get("/api/bidList")
+                .perform(MockMvcRequestBuilders.get(uri)
                         .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk()).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk()).andReturn();
@@ -163,7 +165,7 @@ public class BidListControllerApiRestIT {
                 "NEW BOOK", null, "revision name", null, null, null, null);
         String jsonContent = objectMapper.writeValueAsString(bidToUpdate);
 
-        this.mockMvc.perform(MockMvcRequestBuilders.put("/api/bidList")
+        this.mockMvc.perform(MockMvcRequestBuilders.put(uri)
                 .contentType(APPLICATION_JSON).param("bidAccount", "Account")
                 .param("bidType", "Type").content(jsonContent))
                 .andExpect(status().isOk());
@@ -187,7 +189,7 @@ public class BidListControllerApiRestIT {
                 "NEW BOOK", null, "revision name", null, null, null, null);
         String jsonContent = objectMapper.writeValueAsString(bidToUpdate);
 
-        this.mockMvc.perform(MockMvcRequestBuilders.put("/api/bidList")
+        this.mockMvc.perform(MockMvcRequestBuilders.put(uri)
                 .contentType(APPLICATION_JSON).param("bidAccount", "other")
                 .param("bidType", "Type").content(jsonContent))
                 .andExpect(status().isBadRequest());
@@ -211,7 +213,7 @@ public class BidListControllerApiRestIT {
                 "NEW BOOK", null, "revision name", null, null, null, null);
         String jsonContent = objectMapper.writeValueAsString(bidToUpdate);
 
-        this.mockMvc.perform(MockMvcRequestBuilders.put("/api/bidList")
+        this.mockMvc.perform(MockMvcRequestBuilders.put(uri)
                 .contentType(APPLICATION_JSON).param("bidAccount", "Account")
                 .param("bidType", "other").content(jsonContent))
                 .andExpect(status().isBadRequest());
@@ -234,7 +236,7 @@ public class BidListControllerApiRestIT {
                 null, null);
         String jsonContent = objectMapper.writeValueAsString(bidToUpdate);
 
-        this.mockMvc.perform(MockMvcRequestBuilders.put("/api/bidList")
+        this.mockMvc.perform(MockMvcRequestBuilders.put(uri)
                 .contentType(APPLICATION_JSON).param("bidAccount", "Account")
                 .param("bidType", "Type").content(jsonContent))
                 .andExpect(status().isBadRequest());
@@ -257,7 +259,7 @@ public class BidListControllerApiRestIT {
                 null);
         String jsonContent = objectMapper.writeValueAsString(bidToUpdate);
 
-        this.mockMvc.perform(MockMvcRequestBuilders.put("/api/bidList")
+        this.mockMvc.perform(MockMvcRequestBuilders.put(uri)
                 .contentType(APPLICATION_JSON).param("bidAccount", "Account")
                 .param("bidType", "Type").content(jsonContent))
                 .andExpect(status().isBadRequest());
@@ -276,7 +278,7 @@ public class BidListControllerApiRestIT {
         bidListRepository.findAll().get(0).setBidListId(1);
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.delete("/api/bidList")
+                .perform(MockMvcRequestBuilders.delete(uri)
                         .contentType(APPLICATION_JSON).param("bidId", "1")
                         .param("bidAccount", ""))
                 .andExpect(status().isBadRequest());
@@ -295,7 +297,7 @@ public class BidListControllerApiRestIT {
         bidListRepository.findAll().get(0).setBidListId(1);
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.delete("/api/bidList")
+                .perform(MockMvcRequestBuilders.delete(uri)
                         .contentType(APPLICATION_JSON).param("bidId", "-15")
                         .param("bidAccount", "Account"))
                 .andExpect(status().isBadRequest());

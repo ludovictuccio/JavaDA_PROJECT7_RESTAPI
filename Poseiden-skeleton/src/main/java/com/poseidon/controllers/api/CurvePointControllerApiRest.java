@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,6 +26,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @Validated
+@RequestMapping("/v1/curvePoint")
 public class CurvePointControllerApiRest {
 
     private static final Logger LOGGER = LogManager
@@ -42,7 +44,7 @@ public class CurvePointControllerApiRest {
      * @return ResponseEntity (created or bad request)
      */
     @ApiOperation(value = "ADD Curve Point", notes = "API REST - Need Curve Point entity - Return ResponseEntity 201 created or 400 bad request.")
-    @PostMapping("/api/curvePoint")
+    @PostMapping
     public ResponseEntity<CurvePoint> addCurvePoint(
             @Valid @RequestParam final Integer curveId,
             @Valid @RequestParam final Double term,
@@ -65,7 +67,7 @@ public class CurvePointControllerApiRest {
      * @return all curve points
      */
     @ApiOperation(value = "GET Curve Point", notes = "API REST - Returnall curve points list")
-    @GetMapping("/api/curvePoint")
+    @GetMapping
     public List<CurvePoint> getAllCurvePoints() {
         LOGGER.info("GET request SUCCESS for: /api/curvePoint/get");
         return curvePointService.findAllCurvePoints();
@@ -78,7 +80,7 @@ public class CurvePointControllerApiRest {
      * @return ResponseEntity (ok or bad request)
      */
     @ApiOperation(value = "UPDATE Curve Point", notes = "API REST - Need Curve Point entity - Return ResponseEntity 200 OK or 400 bad request.")
-    @PutMapping("/api/curvePoint")
+    @PutMapping
     public ResponseEntity<CurvePoint> updateCurvePoint(
             @Valid @RequestBody final CurvePoint curvePoint) {
 
@@ -100,7 +102,7 @@ public class CurvePointControllerApiRest {
      * @return ResponseEntity (ok or bad request)
      */
     @ApiOperation(value = "DELETE Curve Point", notes = "API REST - Need Curve Point id - Return ResponseEntity 200 OK or 400 bad request.")
-    @DeleteMapping("/api/curvePoint")
+    @DeleteMapping
     public ResponseEntity<CurvePoint> deleteBidList(
             @Valid @RequestParam final Integer id) {
 

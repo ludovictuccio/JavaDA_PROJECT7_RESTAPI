@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,6 +26,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @Validated
+@RequestMapping("/v1/rulename")
 public class RuleNameControllerApiRest {
 
     private static final Logger LOGGER = LogManager
@@ -40,7 +42,7 @@ public class RuleNameControllerApiRest {
      * @return ResponseEntity (created or bad request)
      */
     @ApiOperation(value = "ADD Rule Name", notes = "API REST - Need RuleName entity - Return ResponseEntity 201 created or 400 bad request.")
-    @PostMapping("/api/rulename")
+    @PostMapping
     public ResponseEntity<RuleName> addRuleName(
             @Valid @RequestBody final RuleName ruleName) {
 
@@ -60,7 +62,7 @@ public class RuleNameControllerApiRest {
      * @return all rulename
      */
     @ApiOperation(value = "GET Rule Name", notes = "API REST - Return all rule name list.")
-    @GetMapping("/api/rulename")
+    @GetMapping
     public List<RuleName> getAllRuleName() {
         LOGGER.info("GET request SUCCESS for: /api/rulename/get");
         return ruleNameService.findAllRuleNames();
@@ -74,7 +76,7 @@ public class RuleNameControllerApiRest {
      * @return ResponseEntity (ok or bad request)
      */
     @ApiOperation(value = "UPDATE Rule Name", notes = "API REST - Need RuleName entity and param rulename id - Return ResponseEntity 200 OK or 400 bad request.")
-    @PutMapping("/api/rulename")
+    @PutMapping
     public ResponseEntity<RuleName> updateRuleName(
             @Valid @RequestParam final Integer id,
             @Valid @RequestBody final RuleName ruleName) {
@@ -96,7 +98,7 @@ public class RuleNameControllerApiRest {
      * @return ResponseEntity (ok or bad request)
      */
     @ApiOperation(value = "DELETE Rule Name", notes = "API REST - Need param rulename id - Return ResponseEntity 200 OK or 400 bad request.")
-    @DeleteMapping("/api/rulename")
+    @DeleteMapping
     public ResponseEntity<RuleName> deleteRuleName(
             @Valid @RequestParam final Integer id) {
         boolean result = ruleNameService.deleteRuleName(id);

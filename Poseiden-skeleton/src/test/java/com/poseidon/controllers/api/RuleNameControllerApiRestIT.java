@@ -42,6 +42,8 @@ public class RuleNameControllerApiRestIT {
     @Autowired
     private RuleNameRepository ruleNameRepository;
 
+    private static String uri = "/v1/rulename";
+
     @BeforeEach
     public void setUpPerTest() {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
@@ -59,7 +61,7 @@ public class RuleNameControllerApiRestIT {
         String jsonContent = objectMapper.writeValueAsString(rulenameToCreate);
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/api/rulename")
+                .perform(MockMvcRequestBuilders.post(uri)
                         .contentType(APPLICATION_JSON).content(jsonContent))
                 .andExpect(status().isCreated())
                 .andDo(MockMvcResultHandlers.print())
@@ -76,7 +78,7 @@ public class RuleNameControllerApiRestIT {
         String jsonContent = objectMapper.writeValueAsString(rulenameToCreate);
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/api/rulename")
+                .perform(MockMvcRequestBuilders.post(uri)
                         .contentType(APPLICATION_JSON).content(jsonContent))
                 .andExpect(status().isCreated())
                 .andDo(MockMvcResultHandlers.print())
@@ -95,7 +97,7 @@ public class RuleNameControllerApiRestIT {
         String jsonContent = objectMapper.writeValueAsString(rulenameToCreate);
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/api/rulename")
+                .perform(MockMvcRequestBuilders.post(uri)
                         .contentType(APPLICATION_JSON).content(jsonContent))
                 .andExpect(status().isBadRequest())
                 .andDo(MockMvcResultHandlers.print())
@@ -113,7 +115,7 @@ public class RuleNameControllerApiRestIT {
                 "json 2", "template 2", "sql str 2", "sql part 2"));
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.get("/api/rulename")
+                .perform(MockMvcRequestBuilders.get(uri)
                         .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk()).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk()).andReturn();
@@ -125,7 +127,7 @@ public class RuleNameControllerApiRestIT {
     public void givenZeroRuleNameInDb_whenGet_thenReturnEmptyList()
             throws Exception {
         this.mockMvc
-                .perform(MockMvcRequestBuilders.get("/api/rulename")
+                .perform(MockMvcRequestBuilders.get(uri)
                         .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk()).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk()).andReturn();
@@ -145,7 +147,7 @@ public class RuleNameControllerApiRestIT {
         String jsonContent = objectMapper.writeValueAsString(rulenameToUpdate);
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.put("/api/rulename")
+                .perform(MockMvcRequestBuilders.put(uri)
                         .contentType(APPLICATION_JSON).param("id", "99")
                         .content(jsonContent))
                 .andExpect(status().isBadRequest());
@@ -157,7 +159,7 @@ public class RuleNameControllerApiRestIT {
     public void givenZeroRuleName_whenDeleteInvalidId_thenReturnBadRequest()
             throws Exception {
         this.mockMvc
-                .perform(MockMvcRequestBuilders.delete("/api/rulename")
+                .perform(MockMvcRequestBuilders.delete(uri)
                         .contentType(APPLICATION_JSON).param("id", "99"))
                 .andExpect(status().isBadRequest());
     }

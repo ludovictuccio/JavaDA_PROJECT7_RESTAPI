@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,6 +26,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @Validated
+@RequestMapping("/v1/user")
 public class UserControllerApiRest {
 
     private static final Logger LOGGER = LogManager
@@ -40,7 +42,7 @@ public class UserControllerApiRest {
      * @return ResponseEntity (created or bad request)
      */
     @ApiOperation(value = "ADD User", notes = "API REST - Need User entity - Return ResponseEntity 201 created or 400 bad request.")
-    @PostMapping("/api/user")
+    @PostMapping
     public ResponseEntity<User> addUser(@Valid @RequestBody final User user) {
 
         User result = userService.saveUser(user);
@@ -59,7 +61,7 @@ public class UserControllerApiRest {
      * @return all Users
      */
     @ApiOperation(value = "GET User", notes = "API REST - Return all users list.")
-    @GetMapping("/api/user")
+    @GetMapping
     public List<User> getAllUsers() {
         LOGGER.info("GET request SUCCESS for: /api/user/get");
         return userService.findAllUsers();
@@ -72,7 +74,7 @@ public class UserControllerApiRest {
      * @return ResponseEntity (ok or bad request)
      */
     @ApiOperation(value = "UPDATE User", notes = "API REST - Need User entity - Return ResponseEntity 200 OK or 400 bad request.")
-    @PutMapping("/api/user")
+    @PutMapping
     public ResponseEntity<User> updateUser(
             @Valid @RequestBody final User user) {
 
@@ -93,7 +95,7 @@ public class UserControllerApiRest {
      * @return ResponseEntity (ok or bad request)
      */
     @ApiOperation(value = "DELETE User", notes = "API REST - Need param username - Return ResponseEntity 200 OK or 400 bad request.")
-    @DeleteMapping("/api/user")
+    @DeleteMapping
     public ResponseEntity<User> deleteUser(
             @Valid @RequestParam final String username) {
         boolean result = userService.deleteUser(username);

@@ -44,6 +44,8 @@ public class TradeControllerApiRestIT {
     @Autowired
     private TradeRepository tradeRepository;
 
+    private static String uri = "/v1/trade";
+
     @BeforeEach
     public void setUpPerTest() {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
@@ -64,7 +66,7 @@ public class TradeControllerApiRestIT {
         String jsonContent = objectMapper.writeValueAsString(tradeToCreate);
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/api/trade")
+                .perform(MockMvcRequestBuilders.post(uri)
                         .contentType(APPLICATION_JSON).content(jsonContent))
                 .andExpect(status().isCreated())
                 .andDo(MockMvcResultHandlers.print())
@@ -85,7 +87,7 @@ public class TradeControllerApiRestIT {
         String jsonContent = objectMapper.writeValueAsString(tradeToCreate);
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/api/trade")
+                .perform(MockMvcRequestBuilders.post(uri)
                         .contentType(APPLICATION_JSON).content(jsonContent))
                 .andExpect(status().isBadRequest())
                 .andDo(MockMvcResultHandlers.print())
@@ -106,7 +108,7 @@ public class TradeControllerApiRestIT {
         String jsonContent = objectMapper.writeValueAsString(tradeToCreate);
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/api/trade")
+                .perform(MockMvcRequestBuilders.post(uri)
                         .contentType(APPLICATION_JSON).content(jsonContent))
                 .andExpect(status().isBadRequest())
                 .andDo(MockMvcResultHandlers.print())
@@ -127,7 +129,7 @@ public class TradeControllerApiRestIT {
         String jsonContent = objectMapper.writeValueAsString(tradeToCreate);
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/api/trade")
+                .perform(MockMvcRequestBuilders.post(uri)
                         .contentType(APPLICATION_JSON).content(jsonContent))
                 .andExpect(status().isBadRequest())
                 .andDo(MockMvcResultHandlers.print())
@@ -149,7 +151,7 @@ public class TradeControllerApiRestIT {
                 "dealName2", "dealType2", "sourceListId", "side2"));
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.get("/api/trade")
+                .perform(MockMvcRequestBuilders.get(uri)
                         .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk()).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk()).andReturn();
@@ -161,7 +163,7 @@ public class TradeControllerApiRestIT {
     public void givenZeroTradesInDb_whenGet_thenReturnEmptyList()
             throws Exception {
         this.mockMvc
-                .perform(MockMvcRequestBuilders.get("/api/trade")
+                .perform(MockMvcRequestBuilders.get(uri)
                         .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk()).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk()).andReturn();
@@ -184,7 +186,7 @@ public class TradeControllerApiRestIT {
         String jsonContent = objectMapper.writeValueAsString(tradeToUpdate);
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.put("/api/trade")
+                .perform(MockMvcRequestBuilders.put(uri)
                         .contentType(APPLICATION_JSON).param("id", "99")
                         .content(jsonContent))
                 .andExpect(status().isBadRequest());
@@ -196,7 +198,7 @@ public class TradeControllerApiRestIT {
     public void givenZeroTrade_whenDeleteInvalidId_thenReturnBadRequest()
             throws Exception {
         this.mockMvc
-                .perform(MockMvcRequestBuilders.delete("/api/trade")
+                .perform(MockMvcRequestBuilders.delete(uri)
                         .contentType(APPLICATION_JSON).param("id", "99"))
                 .andExpect(status().isBadRequest());
     }
